@@ -1,0 +1,492 @@
+<?php
+namespace evans;
+
+/**
+ * Test Content
+ *
+ * Class to create test content on the fly for multiple situations.
+ *
+ * Run any of the methods in this class to get random data of a particular type.
+ * All methods are static and can be called indepenently of the type of data
+ * you're trying to create (i.e. posts, cpts, or even cutom table data).
+ *
+ * @package    WordPress
+ * @subpackage Evans
+ * @author     Old Town Media
+ */
+class TestContent{
+
+	/**
+	 * Title function.
+	 *
+	 * Builds a short random title.
+	 *
+	 * @see substr
+	 *
+	 * @param int $num_words Number of words to return.
+	 * @return string Random title string.
+	 */
+	public static function title( $num_words = '' ){
+
+		$title = '';
+
+		$random_words = array(
+			'lorem',
+			'ipsum',
+			'dolor',
+			'sit',
+			'amet',
+			'consectetur',
+			'adipiscing',
+			'elit',
+			'sed',
+			'porttitor',
+			'augue',
+			'vitae',
+			'ante',
+			'posuere',
+			'aecenas',
+			'ultricies',
+			'neque',
+			'ut',
+			'enim',
+			'pharetra',
+			'sodales',
+			'pellentesque',
+			'gravida',
+			'mauris',
+			'pellentesque',
+			'cum',
+			'sociis',
+			'natoque',
+			'penatibus',
+			'et',
+			'magnis',
+			'dis'
+
+		);
+
+		// If we didn't choose a count, make one
+		if ( empty( $num_words ) ){
+			$num_words = rand( 2, 10 );
+		}
+
+		// Pull random words
+		for( $i = 1; $i <= $num_words; $i++ ){
+			$title .= $random_words[ rand( 0, 31 ) ] . " ";
+		}
+
+		return substr( $title, 0, -1 );
+
+	}
+
+
+	/**
+	 * Paragraphs full of random tags.
+	 *
+	 * Returns raond full TinyMCE-compatible paragraphs with random content such
+	 * as tables, images, quotes, etc.
+	 *
+	 * @return string Paragraph(s) of text.
+	 */
+	public static function paragraphs(){
+
+		$content = '';
+
+		$random_content_types = array(
+			"<p>OK, so images can get quite complicated as we have a few variables to work with! For example the image below has had a caption entered in the WordPress image upload dialog box, this creates a [caption] shortcode which then in turn wraps the whole thing in a <code>div</code> with inline styling! Maybe one day they'll be able to use the <code>figure</code> and <code>figcaption</code> elements for all this. Additionally, images can be wrapped in links which, if you're using anything other than <code>color</code> or <code>text-decoration</code> to style your links can be problematic.</p>",
+			'<div id="attachment_28" class="wp-caption alignnone" style="width: 510px"><a href="#"><img src="http://www.wpfill.me.s3-website-us-east-1.amazonaws.com/img/img_large.png" alt="Your Alt Tag" title="bmxisbest" width="500" height="300" class="size-large wp-image-28"></a><p class="wp-caption-text">This is the optional caption.</p></div>',
+			"<p>The next issue we face is image alignment, users get the option of <em>None</em>, <em>Left</em>, <em>Right</em> &amp; <em>Center</em>. On top of this, they also get the options of <em>Thumbnail</em>, <em>Medium</em>, <em>Large</em> &amp; <em>Fullsize</em>. You'll probably want to add floats to style the image position so important to remember to clear these to stop images popping below the bottom of your articles.</p>",
+			"<table>
+<thead>
+<tr>
+<th>Table Head Column One</th>
+<th>Table Head Column Two</th>
+<th>Table Head Column Three</th>
+</tr>
+</thead>
+<tfoot>
+<tr>
+<td>Table Footer Column One</td>
+<td>Table Footer Column Two</td>
+<td>Table Footer Column Three</td>
+</tr>
+</tfoot>
+<tbody>
+<tr>
+<td>Table Row Column One</td>
+<td>Short Text</td>
+<td>Testing a table cell with a longer amount of text to see what happens, you're not using tables for site layouts are you?</td>
+</tr>
+<tr>
+<td>Table Row Column One</td>
+<td>Table Row Column Two</td>
+<td>Table Row Column Three</td>
+</tr>
+<tr>
+<td>Table Row Column One</td>
+<td>Table Row Column Two</td>
+<td>Table Row Column Three</td>
+</tr>
+<tr>
+<td>Table Row Column One</td>
+<td>Table Row Column Two</td>
+<td>Table Row Column Three</td>
+</tr>
+<tr>
+<td>Table Row Column One</td>
+<td>Table Row Column Two</td>
+<td>Table Row Column Three</td>
+</tr>
+</tbody>
+</table>",
+			'<ol>
+<li>Ordered list item one.</li>
+<li>Ordered list item two.</li>
+<li>Ordered list item three.</li>
+<li>Ordered list item four.</li>
+<li>By the way, Wordpress does not let you create nested lists through the visual editor.</li>
+</ol>
+',
+			'<ul>
+<li>Unordered list item one.</li>
+<li>Unordered list item two.</li>
+<li>Unordered list item three.</li>
+<li>Unordered list item four.</li>
+<li>By the way, Wordpress does not let you create nested lists through the visual editor.</li>
+</ul>',
+			"<blockquote>
+Currently WordPress blockquotes are just wrapped in blockquote tags and have no clear way for the user to define a source. Maybe one day they'll be more semantic (and easier to style) like the version below.
+</blockquote>
+<blockquote cite='http://html5doctor.com/blockquote-q-cite/'>
+<p>HTML5 comes to our rescue with the footer element, allowing us to add semantically separate information about the quote.</p>
+<footer>
+<cite>
+<a href='http://html5doctor.com/blockquote-q-cite/'>Oli Studholme, HTML5doctor.com</a>
+</cite>
+</footer>
+</blockquote>",
+			'<h1>Level One Heading</h1>
+<h2>Level Two Heading</h2>
+<h3>Level Three Heading</h3>
+<h4>Level Four Heading</h4>
+<h5>Level Five Heading</h5>
+<h6>Level Six Heading</h6>',
+			"<p>This is a standard paragraph created using the WordPress TinyMCE text editor. It has a <strong>strong tag</strong>, an <em>em tag</em> and a <del>strikethrough</del> which is actually just the del element. There are a few more inline elements which are not in the WordPress admin but we should check for incase your users get busy with the copy and paste. These include <cite>citations</cite>, <abbr title='abbreviation'>abbr</abbr>, bits of <code>code</code> and <var>variables</var>, <q>inline quotations</q>, <ins datetime='2011-12-08T20:19:53+00:00'>inserted text</ins>, text that is <s>no longer accurate</s> or something <mark>so important</mark> you might want to mark it. We can also style subscript and superscript characters like C0<sub>2</sub>, here is our 2<sup>nd</sup> example. If they are feeling non-semantic they might even use <b>bold</b>, <i>italic</i>, <big>big</big> or <small>small</small> elements too.&nbsp;Incidentally, these HTML4.01 tags have been given new life and semantic meaning in HTML5, you may be interested in reading this <a title='HTML5 Semantics' href='http://csswizardry.com/2011/01/html5-and-text-level-semantics'>article by Harry Roberts</a> which gives a nice excuse to test a link.&nbsp;&nbsp;It is also worth noting in the 'kitchen sink' view you can also add <span style='text-decoration: underline;'>underline</span>&nbsp;styling and set <span style='color: #ff0000;'>text color</span> with pesky inline CSS.</p>
+<p style='text-align: left;'>Additionally, WordPress also sets text alignment with inline styles, like this left aligned paragraph.&nbsp;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</p>
+<p style='text-align: right;'>This is a right aligned paragraph.&nbsp;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</p>
+<p style='text-align: justify;'>This is a justified paragraph.&nbsp;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</p>
+<p style='padding-left: 30px;'>Finally, you also have the option of an indented paragraph.&nbsp;Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Cras mattis consectetur purus sit amet fermentum.</p> <p>And last, and by no means least, users can also apply the <code>Address</code> tag to text like this:</p> <address>123 Example Street,
+Testville,
+West Madeupsburg,
+CSSland,
+1234</address> <p>...so there you have it, all our text elements</p>",
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt luctus eros, a tincidunt massa aliquet sit amet. Sed faucibus, eros non lacinia porttitor, risus odio efficitur sapien, id porta urna massa ac est. Cras efficitur lacinia magna eget tempus. Fusce ex felis, finibus consectetur mi at, finibus rhoncus augue. In ut tortor lacinia, rutrum mauris vel, maximus tortor. Praesent ac arcu nec eros pharetra tristique. Morbi congue leo sed ipsum fermentum vulputate. Ut nulla eros, porta varius pulvinar eget, bibendum quis dolor. Morbi sed diam eu dui semper ornare nec quis nisl.',
+			'Sed porttitor augue vitae ante posuere sodales iaculis nec neque. Etiam dapibus nulla id vulputate tempus. Quisque tempus nisi dui, a commodo nulla sodales ut. Nulla nec odio tempus, sodales diam quis, feugiat odio. Nulla tincidunt tincidunt turpis, eget cursus felis tempor lacinia. Aenean molestie libero ut erat luctus aliquam. Sed vel enim quis nisl lacinia posuere. Ut fringilla ligula ligula, nec rhoncus mi suscipit id. Praesent volutpat blandit felis, et suscipit elit vulputate sit amet. Morbi sit amet justo quis sem rutrum euismod. Pellentesque at dictum sem, sed condimentum ex. Vivamus massa nisi, convallis in semper sit amet, venenatis convallis lectus. Nunc tristique, ex ac rutrum vehicula, arcu ex efficitur justo, sed euismod ligula nulla ut purus.',
+		);
+
+		for( $i = 1; $i < 6; $i++ ){
+			$content .= $random_content_types[rand( 0, 9 )];
+		}
+
+		return $content;
+
+	}
+
+
+	/**
+	 * Plain text.
+	 *
+	 * Return paragraphs of plain text.
+	 *
+	 * @return string Plain text paragraphs.
+	 */
+	public static function plain_text(){
+
+		$paragraphs = array(
+			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt luctus eros, a tincidunt massa aliquet sit amet. Sed faucibus, eros non lacinia porttitor, risus odio efficitur sapien, id porta urna massa ac est. Cras efficitur lacinia magna eget tempus. Fusce ex felis, finibus consectetur mi at, finibus rhoncus augue. In ut tortor lacinia, rutrum mauris vel, maximus tortor. Praesent ac arcu nec eros pharetra tristique. Morbi congue leo sed ipsum fermentum vulputate. Ut nulla eros, porta varius pulvinar eget, bibendum quis dolor. Morbi sed diam eu dui semper ornare nec quis nisl.',
+			'Sed porttitor augue vitae ante posuere sodales iaculis nec neque. Etiam dapibus nulla id vulputate tempus. Quisque tempus nisi dui, a commodo nulla sodales ut. Nulla nec odio tempus, sodales diam quis, feugiat odio. Nulla tincidunt tincidunt turpis, eget cursus felis tempor lacinia. Aenean molestie libero ut erat luctus aliquam. Sed vel enim quis nisl lacinia posuere. Ut fringilla ligula ligula, nec rhoncus mi suscipit id. Praesent volutpat blandit felis, et suscipit elit vulputate sit amet. Morbi sit amet justo quis sem rutrum euismod. Pellentesque at dictum sem, sed condimentum ex. Vivamus massa nisi, convallis in semper sit amet, venenatis convallis lectus. Nunc tristique, ex ac rutrum vehicula, arcu ex efficitur justo, sed euismod ligula nulla ut purus.',
+			'Maecenas ultricies neque ut enim pharetra sodales. Etiam dolor sapien, commodo sed sollicitudin eget, porttitor quis lorem. Praesent euismod eros sed tortor sagittis, ut pretium ex vehicula. Nam ut magna et nunc vestibulum pulvinar. Vivamus tempor, ex eu cursus aliquam, tellus eros semper orci, id ultrices dui tellus commodo mauris. In mauris odio, lobortis id lectus in, tincidunt malesuada sem. Proin eu posuere metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla auctor, odio ut euismod luctus, metus dolor molestie urna, iaculis rutrum nulla massa ac erat. Fusce suscipit eget odio ut tincidunt. Morbi vulputate aliquet placerat. Vivamus imperdiet posuere vehicula.',
+			'Pellentesque gravida, mauris pellentesque facilisis viverra, odio quam auctor nunc, in lacinia odio ex vitae erat. Quisque posuere aliquet mi, id aliquet nulla malesuada ut. Nulla facilisi. Integer bibendum augue eget dapibus aliquam. In tempor, mauris in pharetra euismod, nunc metus fringilla metus, nec tincidunt lectus orci id justo. Nam semper risus a odio hendrerit suscipit. Curabitur dignissim, odio sed fringilla auctor, risus libero ullamcorper felis, et vestibulum neque ex a dolor. Suspendisse eu ullamcorper orci, id bibendum lacus. In at est sed ligula ullamcorper venenatis at vel ipsum. Integer libero justo, fermentum nec nisl non, bibendum bibendum tortor. Proin venenatis odio nec nisi facilisis, nec condimentum massa mollis. Donec efficitur libero quis congue aliquam. Duis sollicitudin vitae quam vitae pharetra.',
+			'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fringilla, est ac pulvinar pharetra, justo erat semper ante, sit amet blandit orci nibh nec nunc. Nam purus nibh, auctor lacinia imperdiet eget, bibendum et tellus. Fusce venenatis odio id nunc ultrices porta sed ut lorem. Aenean mollis neque quis nunc venenatis, sit amet tristique libero vulputate. Proin molestie dignissim ultricies. Aenean in iaculis ligula. Nunc sollicitudin, nisl non cursus suscipit, tortor nibh congue odio, quis facilisis leo ipsum auctor velit. In tincidunt imperdiet orci in vehicula. Nam tempus scelerisque sem quis aliquet. Pellentesque ipsum libero, dictum at leo eu, vulputate condimentum metus. Phasellus tincidunt nunc vel sem posuere placerat. Curabitur nec dolor et dui egestas pulvinar non vitae mauris. Sed convallis pellentesque sapien, sit amet tempus ex. Maecenas fringilla lobortis cursus.',
+			'Nulla eu vestibulum metus. In leo lacus, vehicula at commodo eget, imperdiet vitae diam. Aliquam rutrum, massa eget pellentesque euismod, orci risus lobortis quam, et sollicitudin lectus augue quis nisi. Sed non justo at tellus mattis facilisis. Etiam feugiat sodales neque, at gravida lorem laoreet et. Donec convallis rhoncus sodales. Morbi erat mi, pulvinar quis ultrices a, luctus vel mauris. Aliquam vitae iaculis metus. Fusce tincidunt placerat nibh. Suspendisse lobortis libero massa, sit amet dapibus quam sodales eu.',
+			'In rhoncus mollis purus vitae ornare. Pellentesque nisi mauris, sodales vitae tortor sed, malesuada placerat massa. Integer eleifend imperdiet dolor at luctus. Donec ullamcorper dolor id auctor suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed ligula ipsum. Ut pulvinar iaculis volutpat. Phasellus dictum lorem non nulla pharetra, eget tincidunt justo ornare. Nulla dolor ligula, finibus id lectus vel, ornare porttitor diam. Nunc vehicula finibus commodo. Aliquam in commodo metus, a sodales libero. Donec vel dolor sed dolor ullamcorper fringilla in eu sapien. Phasellus lacinia lacus quis quam vestibulum, quis fringilla justo auctor. Integer quis ipsum porta, accumsan eros eget, pretium purus. Vestibulum eget leo tincidunt, porttitor urna a, vestibulum risus. Duis finibus neque sit amet nisi viverra, et vestibulum urna tincidunt.',
+			'Curabitur ligula magna, tempus eget ex sed, fringilla viverra justo. Nullam elit lacus, faucibus eget mi eget, posuere sagittis nisl. Sed tincidunt placerat tellus in porta. Morbi eu nibh ac lorem vehicula finibus vel a nunc. Donec iaculis leo quam, ac mattis massa ullamcorper quis. Suspendisse elementum sollicitudin augue ornare sollicitudin. Aenean laoreet orci non lectus hendrerit, ut pellentesque justo tempor. In hac habitasse platea dictumst. Ut et nibh et leo condimentum tempor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sodales sed nulla at rutrum. Suspendisse quis pulvinar neque. Donec vestibulum, nunc id hendrerit placerat, nisl libero tristique nunc, sed semper mi nisl quis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis hendrerit fringilla tortor, interdum sodales sapien pharetra quis.',
+			'Vivamus sed neque molestie, lobortis elit in, laoreet augue. Etiam tincidunt sodales bibendum. Quisque ultrices, ante sed maximus dignissim, ex elit pharetra ex, a sagittis massa nisi eget massa. Aliquam dolor risus, tincidunt eu urna tincidunt, consectetur porttitor lacus. Fusce feugiat dolor ut efficitur elementum. Morbi auctor maximus rutrum. Pellentesque cursus est sed lacus consequat, vestibulum mattis urna imperdiet. Duis quis porta lectus. Quisque pulvinar ex at lacus mattis sollicitudin. Morbi gravida, leo et blandit fringilla, neque risus gravida elit, vel maximus sem magna id sapien.',
+			'Fusce semper erat tortor, at pulvinar risus luctus suscipit. Phasellus quis enim nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas semper dapibus odio, nec pellentesque sem laoreet sit amet. Maecenas ut enim tellus. Fusce malesuada mattis sem, porta interdum ex fermentum quis. Ut eget quam mi. In molestie volutpat feugiat. Nulla vel viverra nunc. Integer lobortis nisl vitae placerat egestas. Curabitur tristique nulla at libero blandit, a eleifend augue tempus.',
+		);
+
+		return $paragraphs[ rand( 0, 9 ) ];
+
+	}
+
+
+	/**
+	 * Image.
+	 *
+	 * Fetch a random image, make sure it is formatted right, download it, and
+	 * put it in the media library.
+	 *
+	 * @see $this::get_image_link(), download_url, media_handle_sideload
+	 *
+	 * @param int $post_id Post ID.
+	 * @return mixed Attachment ID or WP Error.
+	 */
+	public static function image( $post_id ){
+		$file_array = array();
+
+		// Get the image from the API
+		$url = self::get_image_link();
+
+		// If the returned string is empty or it's not a string, try again.
+		if ( empty( $url ) || !is_string( $url ) ){
+
+			// Try again
+			$url = self::get_image_link();
+
+			// If it fails again, just give up
+			if ( empty( $url ) || !is_string( $url ) ){
+				return;
+			}
+
+		}
+
+		// Download the file
+	    $tmp = \download_url( $url );
+
+	    preg_match( '/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $url, $matches );
+
+        $file_array['name'] = basename( $matches[0] );
+        $file_array['tmp_name'] = $tmp;
+
+	    // Check for download errors
+	    if ( is_wp_error( $tmp ) ) {
+	        @unlink( $file_array[ 'tmp_name' ] );
+	        return $tmp->get_error_message();
+	    }
+
+		// Pull the image into the media library
+	    $image_id = media_handle_sideload( $file_array, $post_id );
+
+	    // Check for handle sideload errors.
+	    if ( is_wp_error( $image_id ) ) {
+	        @unlink( $file_array['tmp_name'] );
+	        return $image_id->get_error_message();
+	    }
+
+	    return $image_id;
+
+	}
+
+
+	/**
+	 * Fetch an image url from the splashbase API.
+	 *
+	 * @see cURL functions, preg_match
+	 *
+	 * @return string Image URL.
+	 */
+	private static function get_image_link(){
+
+		// cURL an image API for a completely random photo
+		$curl = curl_init( "http://www.splashbase.co/api/v1/images/random?images_only=true" );
+
+		curl_setopt( $curl, CURLOPT_RETURNTRANSFER, TRUE );
+
+		$curl_response = curl_exec( $curl );
+
+		// If our cURL failed
+		if ( $curl_response === false ) {
+		    $info = curl_getinfo( $curl );
+		    curl_close( $curl );
+		    die( 'error occured during curl exec. Additional info: ' . var_export( $info ) );
+		}
+
+		curl_close( $curl );
+
+		// Decode the data
+		$response = json_decode( $curl_response, true );
+
+		// Check to make sure that the return contains a valid image extensions
+		preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $response['url'], $matches);
+
+		if ( !empty( $matches ) ){
+			return $response['url'];
+		}
+
+	}
+
+
+	/**
+	 * Date.
+	 *
+	 * Return a date in the future (up to 60 days out) in the format prescribed.
+	 *
+	 * @param string $format PHP Date format.
+	 * @return mixed Date in the format requested.
+	 */
+	public static function date( $format ){
+
+		$num_days = rand( 1, 60 );
+		return date( $format, strtotime( " +$num_days days" ) );
+
+	}
+
+
+	/**
+	 * Time.
+	 *
+	 * Return a random time in various formats
+	 *
+	 * @return string Time string
+	 */
+	public static function time(){
+
+		$times = array(
+			'8:00 am',
+			'5:00PM',
+			'13:00',
+			'2015',
+			date( 'G:i', strtotime( " +".rand( 4, 24 )." hours" ) ),
+			date( 'g:i', strtotime( " +".rand( 4, 24 )." hours" ) ),
+			date( 'G:i A', strtotime( " +".rand( 4, 24 )." hours" ) )
+		);
+
+		return $times[ rand( 0, 6 ) ];
+
+	}
+
+
+	/**
+	 * Timezone.
+	 *
+	 * Return a random timezone from a subset of available options.
+	 *
+	 * @return string Timezone
+	 */
+	public static function timezone(){
+
+		$timezones = array(
+			'America/Denver',
+			'America/New_York',
+			'America/Los_Angeles',
+			'Europe/London',
+			'Europe/Paris',
+			'Europe/Zurich',
+			'Europe/Dublin',
+			'Atlantic/Reykjavik',
+			'Australia/Brisbane',
+			'UTC+0',
+			'UTC+7',
+			'UTC-1',
+			'UTC'
+		);
+
+		return $timezones[ rand( 0, 12 ) ];
+
+	}
+
+
+
+	/**
+	 * Phone.
+	 *
+	 * Returns a random phone # in multiple international formats.
+	 *
+	 * @return string Phone #.
+	 */
+	public static function phone(){
+
+		$phone_numbers = array(
+			'7203893101',
+			'303-555-1251',
+			'(720) 895 0969',
+			'(303)-278-2078',
+			'1-907-486-1102',
+			'011-44-871-789-3642',
+			'1-800-437-7950',
+			'1-503-254-1000',
+			'1-845-354-9912',
+			'+1 253-243-3381',
+			'+43 780 0047112'
+		);
+
+		return $phone_numbers[ rand( 0, 10 ) ];
+
+	}
+
+
+	/**
+	 * Email.
+	 *
+	 * Returns a random email address in random lengths/formats.
+	 *
+	 * @return string Email address.
+	 */
+	public static function email(){
+
+		$email_addresses = array(
+			'mike@oldtownmediainc.com',
+			'me@me.com',
+			'joe@smith.org+15',
+			'jane@janedoe.com',
+			'help@github.com',
+			'brian_roberts@comcast.com',
+			'inigo@iaminigomontoyayoukilledmyfatherpreparetodie.com',
+			'witch@theyellowbrickroad.com'
+		);
+
+		return $email_addresses[ rand( 0, 7 ) ];
+
+	}
+
+
+	/**
+	 * Link.
+	 *
+	 * Returns link in a completely random format.
+	 *
+	 * @see site_url
+	 *
+	 * @return string URL.
+	 */
+	public static function link(){
+
+		$links = array(
+			'http://google.com',
+			'https://www.twitter.com',
+			site_url( '/?iam=anextravariable' ),
+			'github.com',
+			'http://filebase.com',
+			'www.oldtownmediainc.com',
+			'http://facebook.com',
+			'https://www.eff.org'
+		);
+
+		return $links[ rand( 0, 7 ) ];
+
+	}
+
+	/**
+	 * Oembed.
+	 *
+	 * Returns a random oembed-compatible link.
+	 *
+	 * @return string URL.
+	 */
+	public static function oembed(){
+
+		$links = array(
+			'https://www.youtube.com/watch?v=A85-YQsm6pY',
+			'https://vimeo.com/140327103',
+			'https://twitter.com/WordPress/status/664594697093009408',
+			'https://embed-ssl.ted.com/talks/regina_hartley_why_the_best_hire_might_not_have_the_perfect_resume.html',
+			'http://www.slideshare.net/laurengalanter/choose-your-own-career-adventure',
+			'https://www.instagram.com/p/-eyLo0RMfX',
+		);
+
+		return $links[ rand( 0, 5 ) ];
+
+	}
+
+}
