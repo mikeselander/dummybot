@@ -46,11 +46,13 @@ class AdminPage{
 
 	public function load_scripts( $hook ){
 
-		if( $hook != 'tools.php' ){
-			return;
-		}
-
 		wp_enqueue_script( 'test-content-js', plugins_url( 'assets/admin.js' , dirname( __FILE__ ) ) );
+
+		$data = array(
+			'nonce'	=> wp_create_nonce( 'handle-test-data' )
+		);
+
+		wp_localize_script( 'test-content-js', 'test_content', $data );
 
 	}
 

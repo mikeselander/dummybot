@@ -19,13 +19,13 @@ class Create{
 	 *
 	 * @access private
 	 *
-	 * @see $this-get_cpt_supports, $this->get_cpt_metaboxes, $this->create_test_object
+	 * @see $this-get_cpt_supports, $this->get_metaboxes, $this->create_test_object
 	 *
 	 * @param string $cptslug a custom post type ID.
 	 * @param boolean $true Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	private function create_post_type_content( $cptslug, $echo = false, $num = '' ){
+	public function create_post_type_content( $cptslug, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $cptslug ) ){
@@ -34,7 +34,7 @@ class Create{
 
 		// Gather the necessary data to create the posts
 		$supports 	= $this->get_cpt_supports( $cptslug );
-		$metaboxes	= $this->get_cpt_metaboxes( $cptslug );
+		$metaboxes	= $this->get_metaboxes( $cptslug );
 
 		// If we forgot to put in a quantity, make one for us
 		if ( empty( $num ) ){
@@ -209,6 +209,21 @@ class Create{
 	}
 
 
+	private function get_metaboxes( $cptslug ){
+
+		if ( class_exists( 'CMB2_Bootstrap_212', false ) ) {
+			$fields = $this->get_cmb2_metaboxes( $cptslug );
+		}
+
+		if ( class_exists( 'cmb_Meta_Box', false ) ) {
+			$fields = $this->get_cmb1_metaboxes( $cptslug );
+		}
+
+		return $fields;
+
+	}
+
+
 	/**
 	 * Gets all CMB2 custom metaboxes associated with a post type.
 	 *
@@ -218,12 +233,12 @@ class Create{
 	 *
 	 * @access private
 	 *
-	 * @see cmb2_meta_boxescmb
+	 * @see cmb2_meta_boxes
 	 *
 	 * @param string $cptslug a custom post type ID.
 	 * @return array Array of fields.
 	 */
-	private function get_cpt_metaboxes( $cptslug ){
+	private function get_cmb2_metaboxes( $cptslug ){
 
 		$fields = array();
 
@@ -235,6 +250,48 @@ class Create{
 
 			// If the custom post type ID matches this set of fields, set & stop
 			if ( in_array( $cptslug, $metabox_array['object_types'] ) ) {
+
+				// If this is the first group of fields, simply set the value
+				// Else, merge this group with the previous one
+				if ( empty( $fields ) ){
+					$fields = $metabox_array['fields'];
+				} else {
+					$fields = array_merge( $fields, $metabox_array['fields'] );
+				}
+			}
+
+		}
+
+		return $fields;
+
+	}
+
+	/**
+	 * Gets all CMB2 custom metaboxes associated with a post type.
+	 *
+	 * Loops through all custom metabox fields registered with CMB2 and
+	 * looks through them for matches on the given post type ID. Returns a single
+	 * array of all boxes associated with the post type.
+	 *
+	 * @access private
+	 *
+	 * @see cmb_meta_boxes
+	 *
+	 * @param string $cptslug a custom post type ID.
+	 * @return array Array of fields.
+	 */
+	private function get_cmb1_metaboxes( $cptslug ){
+
+		$fields = array();
+
+		// Get all metaboxes from CMB2 library
+		$all_metaboxes = apply_filters( 'cmb_meta_boxes', array() );
+
+		// Loop through all possible sets of metaboxes
+		foreach ( $all_metaboxes as $metabox_array ){
+
+			// If the custom post type ID matches this set of fields, set & stop
+			if ( in_array( $cptslug, $metabox_array['pages'] ) ) {
 
 				// If this is the first group of fields, simply set the value
 				// Else, merge this group with the previous one
