@@ -19,10 +19,10 @@ class Create{
 	 *
 	 * @access private
 	 *
-	 * @see $this-get_cpt_supports, $this->get_metaboxes, $this->create_test_object
+	 * @see $this->get_cpt_supports, $this->get_metaboxes, $this->create_test_object
 	 *
 	 * @param string $cptslug a custom post type ID.
-	 * @param boolean $true Whether or not to echo. Optional.
+	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
 	public function create_post_type_content( $cptslug, $echo = false, $num = '' ){
@@ -209,16 +209,35 @@ class Create{
 	}
 
 
+	/**
+	 * Decide which cmb library to try and loop to get our metaboxes.
+	 *
+	 * Due to supporting multiple CMB libraries, we need to check which library
+	 * is used on our site and then run the appropriate function. Currently
+	 * supported libraries are CMB2 & Custom Metaboxes and Fields.
+	 *
+	 * @access private
+	 *
+	 * @see get_cmb2_metaboxes, get_cmb1_metaboxes
+	 *
+	 * @param string $cptslug Post Type slug ID.
+	 * @return array Fields to fill in for our post object.
+	 */
 	private function get_metaboxes( $cptslug ){
 
+		$fields = array();
+
+		// CMB2
 		if ( class_exists( 'CMB2_Bootstrap_212', false ) ) {
 			$fields = $this->get_cmb2_metaboxes( $cptslug );
 		}
 
+		// Custom Metaboxes and Fields (CMB1)
 		if ( class_exists( 'cmb_Meta_Box', false ) ) {
 			$fields = $this->get_cmb1_metaboxes( $cptslug );
 		}
 
+		// Return our array
 		return $fields;
 
 	}
@@ -266,8 +285,9 @@ class Create{
 
 	}
 
+
 	/**
-	 * Gets all CMB2 custom metaboxes associated with a post type.
+	 * Gets all CMB1 custom metaboxes associated with a post type.
 	 *
 	 * Loops through all custom metabox fields registered with CMB2 and
 	 * looks through them for matches on the given post type ID. Returns a single
