@@ -1,5 +1,5 @@
 <?php
-namespace evans;
+namespace testContent;
 
 /**
  * Class to build test data for custom post types.
@@ -8,125 +8,7 @@ namespace evans;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class BuildTestData{
-
-	/**
-	 * Hooks function.
-	 *
-	 * This function is used to avoid loading any unnecessary functions/code.
-	 *
-	 * @see admin_menu, wp_ajax actions
-	 */
-	public function hooks(){
-
-		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
-		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
-		add_action('admin_enqueue_scripts', array( $this, 'load_scripts' ) );
-
-	}
-
-	/**
-	 * Add the admin-side menu item for creating & deleting test data.
-	 *
-	 * @see add_submenu_page
-	 */
-	public function add_menu_item() {
-
-		add_submenu_page(
-			'tools.php',
-			__( 'Create Test Data', 'evans-mu' ),
-			__( 'Test Data', 'evans-mu' ),
-			'manage_options',
-			'evans_mu-test_data',
-			array( $this, 'admin_page' )
-		);
-
-	}
-
-
-	public function load_scripts( $hook ){
-
-		if( $hook != 'tools.php' ){
-			return;
-		}
-
-		wp_enqueue_script( 'test-content-js', plugins_url( 'assets/admin.js' , dirname( __FILE__ ) ) );
-
-	}
-
-
-	/**
-	 * Ajax callback function for triggering the creation & deletion of test data.
-	 *
-	 * @see wp_ajax filter, $this->add_menu_item
-	 */
-	public function handle_test_data_callback() {
-
-		$cptslug	= $_REQUEST['cptslug'];
-		$action		= $_REQUEST['todo'];
-		$nonce		= $_REQUEST['nonce'];
-
-		// Verify that we have a proper logged in user and it's the right person
-		if ( empty( $nonce ) || !wp_verify_nonce( $nonce, 'handle-test-data' ) ){
-			return;
-		}
-
-		if ( $action == 'delete' ){
-
-			$this->delete_test_content( $cptslug, true );
-
-		} elseif ( $action == 'create' ){
-
-			$this->create_post_type_content( $cptslug, true, 1 );
-
-		}
-
-		die();
-
-	}
-
-	/**
-	 * Print out our admin page to control test data.
-	 */
-	public function admin_page(){
-
-		$html = "";
-
-		$html .= '<div class="wrap" id="options_editor">' . "\n";
-
-			$html .= '<h2>' . __( 'Create Test Data' , 'evans-mu' ) . '</h2>' . "\n";
-
-			// Loop through all other cpts
-			$post_types = get_post_types( array( 'public' => true ), 'objects' );
-
-			foreach ( $post_types as $post_type ) {
-
-				// Skip Attachments
-				if ( $post_type->name == 'attachment' ){
-					continue;
-				}
-
-				$html .= "<div class='test-data-cpt'>";
-
-					$html .= "<h3>";
-
-						$html .= "<span style='width: 20%; display: inline-block;'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
-						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
-
-					$html .= "</h3>";
-
-				$html .= "</div>";
-
-			}
-
-			$html .= "<pre style='display: block; width:95%; height:300px; overflow-y: scroll; background: #fff; padding: 10px;' id='status-updates'></pre>";
-
-		$html .= "</div>";
-
-		echo $html;
-
-	}
+class Create{
 
 	/**
 	 * Create test data posts.
@@ -166,100 +48,6 @@ class BuildTestData{
 
 			if ( $echo === true ){
 				echo $return;
-			}
-
-		}
-
-	}
-
-
-	/**
-	 * Delete test data posts.
-	 *
-	 * This function will search for all posts of a particular post type ($cptslug)
-	 * and delete them all using a particular cmb flag that we set when creating
-	 * the posts. Validates the user first.
-	 *
-	 * @access private
-	 *
-	 * @see WP_Query, wp_delete_post
-	 *
-	 * @param string $cptslug a custom post type ID.
-	 */
-	private function delete_test_content( $cptslug, $echo = false ){
-
-		// Check that $cptslg has a string.
-		// Also make sure that the current user is logged in & has full permissions.
-		if ( empty( $cptslug ) || !is_user_logged_in() || !current_user_can( 'delete_posts' ) ){
-			return;
-		}
-
-		// Find our test data by the unique flag we set when we created the data
-		$query = array(
-			'post_type' 		=> $cptslug,
-			'posts_per_page'	=> 500,
-			'meta_query' 		=> array(
-				array(
-					'key'     => 'evans_test_content',
-					'value'   => '__test__',
-					'compare' => '=',
-				),
-			),
-		);
-
-		$objects = new \WP_Query( $query );
-
-		if ( $objects->have_posts() ){
-
-			while ( $objects->have_posts() ) : $objects->the_post();
-
-				// Find any media associated with the test post and delete it as well
-				$this->delete_associated_media( get_the_id() );
-
-				if ( $echo === true ){
-					echo "Deleted ".get_post_type( get_the_id() )." " . get_the_id()."
-";
-				}
-
-				// Force delete the post
-				wp_delete_post( get_the_id(), true );
-
-			endwhile;
-
-			echo "Deleted objects\n";
-
-		}
-
-	}
-
-
-	/**
-	 * Find and delete attachments associated with a post ID.
-	 *
-	 * This function finds each attachment that is associated with a post ID
-	 * and deletes it completely from the site. This is to prevent leftover
-	 * random images from sitting on the site forever.
-	 *
-	 * @access private
-	 *
-	 * @see get_attached_media, wp_delete_attachment
-	 *
-	 * @param int $pid a custom post type ID.
-	 */
-	private function delete_associated_media( $pid ){
-
-		if ( !is_int( $pid ) ){
-			return;
-		}
-
-		// Get our images
-		$media = get_attached_media( 'image', $pid );
-
-		if ( !empty( $media ) ){
-
-			// Loop through the media & delete each one
-			foreach ( $media as $attachment ){
-				wp_delete_attachment( $attachment->ID, true );
 			}
 
 		}
@@ -649,6 +437,3 @@ class BuildTestData{
 	} // end random_metabox_content
 
 }
-
-$content = new BuildTestData;
-$content->hooks();
