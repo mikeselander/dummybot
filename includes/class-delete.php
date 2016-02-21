@@ -48,14 +48,20 @@ class Delete{
 
 		if ( $objects->have_posts() ){
 
+			$events = array();
+
 			while ( $objects->have_posts() ) : $objects->the_post();
 
 				// Find any media associated with the test post and delete it as well
 				$this->delete_associated_media( get_the_id() );
 
 				if ( $echo === true ){
-					echo "Deleted ".get_post_type( get_the_id() )." " . get_the_id()."
-";
+					$events[] = array(
+						'type'		=> 'deleted',
+						'pid'		=> get_the_id(),
+						'post_type'	=> get_post_type( get_the_id() ),
+						'link'		=> ''
+					);
 				}
 
 				// Force delete the post
@@ -63,7 +69,14 @@ class Delete{
 
 			endwhile;
 
-			echo "Deleted objects\n";
+			$obj = get_post_type_object( $cptslug );
+
+			$events[] = array(
+				'type'		=> 'general',
+				'message'	=> 'Deleted ' . $obj->labels->all_items
+			);
+
+			echo \json_encode( $events );
 
 		}
 

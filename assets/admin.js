@@ -26,13 +26,23 @@ jQuery(document).ready(function($) {
 
 			jQuery.post( ajaxurl, data, function(response) {}).done(function(response){
 
-				if ( todo == 'create' ){
-					countedResponse = count + '. ' + response;
-				} else {
-					countedResponse = response;
-				}
+				var parsed = JSON.parse( response );
 
-				jQuery( '#status-updates' ).append( countedResponse );
+				if ( todo == 'create' ){
+					jQuery( '#status-updates' ).append( 'Created ' + parsed.post_type + ' ' + parsed.pid + ': ' + parsed.link + '\n' );
+				} else {
+
+					count = parsed.length;
+
+					for( i=0; i<count; i++ ){
+						if ( parsed[i].type == 'deleted' ){
+							jQuery( '#status-updates' ).append( 'Deleted ' + parsed[i].post_type + ' ' + parsed[i].pid + '\n' );
+						} else {
+							jQuery( '#status-updates' ).append( parsed[i].message );
+						}
+					}
+
+				}
 
 			});
 

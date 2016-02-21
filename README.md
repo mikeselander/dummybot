@@ -16,8 +16,11 @@ We are still working on adding more functionality and would love input or PRs fo
 
 ## Planned to support in future
 * ACF
+* Generically added cmbs
 * taxonomies/terms
 * individual metadata
+* Users
+* Theme/plugin options
 
 ### General Notes
 * Uses namespace `testContent`

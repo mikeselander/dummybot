@@ -47,7 +47,7 @@ class Create{
 			$return = $this->create_test_object( $cptslug, $supports, $metaboxes );
 
 			if ( $echo === true ){
-				echo $return;
+				echo \json_encode( $return );
 			}
 
 		}
@@ -124,8 +124,14 @@ class Create{
 		if ( is_wp_error( $return ) ){
 			return $return;
 		} else {
-			return "Created " . get_post_type( $post_id ) . " $post_id: " . admin_url( '/post.php?post='.$post_id.'&action=edit' ) . "
-";
+			return array(
+				'type'		=> 'created',
+				'pid'		=> $post_id,
+				'post_type'	=> get_post_type( $post_id ),
+				'link'		=> admin_url( '/post.php?post='.$post_id.'&action=edit' )
+			);
+
+			//return "Created " . get_post_type( $post_id ) . " $post_id: " . admin_url( '/post.php?post='.$post_id.'&action=edit' ) . ";
 		}
 
 	}
