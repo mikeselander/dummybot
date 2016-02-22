@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 						if ( parsed[i].type == 'deleted' ){
 							jQuery( '#status-updates' ).append( 'Deleted ' + parsed[i].post_type + ' ' + parsed[i].pid + '\n' );
 						} else {
-							jQuery( '#status-updates' ).append( parsed[i].message );
+							jQuery( '#status-updates' ).append( parsed[i].message + '\n' );
 						}
 					}
 
