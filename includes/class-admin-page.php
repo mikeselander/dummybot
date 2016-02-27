@@ -66,12 +66,13 @@ class AdminPage{
 	/**
 	 * Ajax callback function for triggering the creation & deletion of test data.
 	 *
-	 * @see wp_ajax filter, $this->add_menu_item
+	 * @see wp_ajax filter, $this->add_menu_item, $this->creation_routing
 	 */
 	public function handle_test_data_callback() {
 
 		$cptslug	= $_REQUEST['cptslug'];
 		$action		= $_REQUEST['todo'];
+		$type		= $_REQUEST['type'];
 		$nonce		= $_REQUEST['nonce'];
 
 		// Verify that we have a proper logged in user and it's the right person
@@ -79,20 +80,50 @@ class AdminPage{
 			return;
 		}
 
-		$create_content = new Create;
-		$delete_content = new Delete;
-
 		if ( $action == 'delete' ){
 
-			$delete_content->delete_test_content( $cptslug, true );
+			$this->deletion_routing( $_REQUEST );
 
 		} elseif ( $action == 'create' ){
 
-			$create_content->create_post_type_content( $cptslug, true, 1 );
+			$this->creation_routing( $_REQUEST );
 
 		}
 
 		die();
+
+	}
+
+
+	/**
+	 * Choose which type of creation needs to be accomplished and route through
+	 * the correct class.
+	 */
+	private function creation_routing( $data ){
+
+		if ( $data['type'] == 'post' ){
+
+			$create_content = new CreatePost;
+			$create_content->create_post_type_content( $data['cptslug'], true, 1 );
+
+		}
+
+	}
+
+
+	/**
+	 * Choose which type of deletion needs to be accomplished and route through
+	 * the correct method of Delete.
+	 */
+	private function deletion_routing( $data ){
+
+		$delete_content = new Delete;
+
+		if ( $data['type'] == 'post' ){
+
+			$delete_content->delete_post( $data['cptslug'], true );
+
+		}
 
 	}
 
@@ -123,8 +154,8 @@ class AdminPage{
 					$html .= "<h3>";
 
 						$html .= "<span style='width: 20%; display: inline-block;'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
-						$html .= " <a href='javascript:void(0);' data-cpt='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-cpt='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-cpt='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
 
 					$html .= "</h3>";
 

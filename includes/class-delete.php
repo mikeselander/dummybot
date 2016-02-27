@@ -23,7 +23,7 @@ class Delete{
 	 *
 	 * @param string $cptslug a custom post type ID.
 	 */
-	public function delete_test_content( $cptslug, $echo = false ){
+	public function delete_post( $cptslug, $echo = false ){
 
 		// Check that $cptslg has a string.
 		// Also make sure that the current user is logged in & has full permissions.

@@ -4,13 +4,15 @@ jQuery(document).ready(function($) {
 	jQuery( '.handle-test-data' ).on( 'click', function(){
 
 		var todo = jQuery( this ).data( 'todo' ),
-			cpt = jQuery( this ).data( 'cpt' );
+			cpt = jQuery( this ).data( 'cpt' ),
+			type = jQuery( this ).data( 'type' );
 
 		// Setup data on our help
 		var data = {
 			'action' : 'handle_test_data',
 			'todo' : todo,
 			'cptslug' : cpt,
+			'type' : type,
 			'nonce' : test_content.nonce
 		};
 

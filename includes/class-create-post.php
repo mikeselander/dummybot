@@ -8,7 +8,7 @@ namespace testContent;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class Create{
+class CreatePost{
 
 	/**
 	 * Create test data posts.
@@ -130,8 +130,6 @@ class Create{
 				'post_type'	=> get_post_type( $post_id ),
 				'link'		=> admin_url( '/post.php?post='.$post_id.'&action=edit' )
 			);
-
-			//return "Created " . get_post_type( $post_id ) . " $post_id: " . admin_url( '/post.php?post='.$post_id.'&action=edit' ) . ";
 		}
 
 	}
