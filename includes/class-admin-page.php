@@ -70,9 +70,7 @@ class AdminPage{
 	 */
 	public function handle_test_data_callback() {
 
-		$cptslug	= $_REQUEST['cptslug'];
 		$action		= $_REQUEST['todo'];
-		$type		= $_REQUEST['type'];
 		$nonce		= $_REQUEST['nonce'];
 
 		// Verify that we have a proper logged in user and it's the right person
@@ -104,7 +102,12 @@ class AdminPage{
 		if ( $data['type'] == 'post' ){
 
 			$create_content = new CreatePost;
-			$create_content->create_post_type_content( $data['cptslug'], true, 1 );
+			$create_content->create_post_type_content( $data['slug'], true, 1 );
+
+		} elseif( $data['type'] == 'term' ){
+
+			$create_content = new CreateTerm;
+			$create_content->create_terms( $data['slug'], true, 1 );
 
 		}
 
@@ -121,7 +124,7 @@ class AdminPage{
 
 		if ( $data['type'] == 'post' ){
 
-			$delete_content->delete_post( $data['cptslug'], true );
+			$delete_content->delete_post( $data['slug'], true );
 
 		}
 
@@ -154,8 +157,23 @@ class AdminPage{
 					$html .= "<h3>";
 
 						$html .= "<span style='width: 20%; display: inline-block;'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-cpt='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-cpt='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
+
+						$taxonomies = get_object_taxonomies( $post_type->name );
+
+						if ( !empty( $taxonomies ) ){
+							foreach( $taxonomies as $tax ){
+
+								if ( $tax == 'post_format' ){
+									continue;
+								}
+
+								$taxonomy = get_taxonomy( $tax );
+
+								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category' style='margin-top: 4px; font-size: 1.2em'></span> Create ".$taxonomy->labels->name."</a>";
+							}
+						}
 
 					$html .= "</h3>";
 

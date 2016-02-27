@@ -4,14 +4,14 @@ jQuery(document).ready(function($) {
 	jQuery( '.handle-test-data' ).on( 'click', function(){
 
 		var todo = jQuery( this ).data( 'todo' ),
-			cpt = jQuery( this ).data( 'cpt' ),
+			slug = jQuery( this ).data( 'slug' ),
 			type = jQuery( this ).data( 'type' );
 
 		// Setup data on our help
 		var data = {
 			'action' : 'handle_test_data',
 			'todo' : todo,
-			'cptslug' : cpt,
+			'slug' : slug,
 			'type' : type,
 			'nonce' : test_content.nonce
 		};
@@ -31,7 +31,17 @@ jQuery(document).ready(function($) {
 				var parsed = JSON.parse( response );
 
 				if ( todo == 'create' ){
-					jQuery( '#status-updates' ).append( 'Created ' + parsed.post_type + ' ' + parsed.pid + ': ' + parsed.link + '\n' );
+
+					// Assemble different strings if post or term
+					if ( parsed.object == 'post' ){
+						var type = parsed.post_type,
+							id = parsed.pid;
+					} else if( parsed.object == 'term' ){
+						var type = parsed.taxonomy,
+							id = parsed.tid;
+					}
+
+					jQuery( '#status-updates' ).append( 'Created ' + type + ' ' + id + ': ' + parsed.link + '\n' );
 				} else {
 
 					count = parsed.length;

@@ -13,7 +13,7 @@ class Delete{
 	/**
 	 * Delete test data posts.
 	 *
-	 * This function will search for all posts of a particular post type ($cptslug)
+	 * This function will search for all posts of a particular post type ($slug)
 	 * and delete them all using a particular cmb flag that we set when creating
 	 * the posts. Validates the user first.
 	 *
@@ -21,19 +21,19 @@ class Delete{
 	 *
 	 * @see WP_Query, wp_delete_post
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 */
-	public function delete_post( $cptslug, $echo = false ){
+	public function delete_post( $slug, $echo = false ){
 
 		// Check that $cptslg has a string.
 		// Also make sure that the current user is logged in & has full permissions.
-		if ( empty( $cptslug ) || !is_user_logged_in() || !current_user_can( 'delete_posts' ) ){
+		if ( empty( $slug ) || !is_user_logged_in() || !current_user_can( 'delete_posts' ) ){
 			return;
 		}
 
 		// Find our test data by the unique flag we set when we created the data
 		$query = array(
-			'post_type' 		=> $cptslug,
+			'post_type' 		=> $slug,
 			'posts_per_page'	=> 500,
 			'meta_query' 		=> array(
 				array(
@@ -69,7 +69,7 @@ class Delete{
 
 			endwhile;
 
-			$obj = get_post_type_object( $cptslug );
+			$obj = get_post_type_object( $slug );
 
 			$events[] = array(
 				'type'		=> 'general',

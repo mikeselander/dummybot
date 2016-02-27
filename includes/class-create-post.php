@@ -21,20 +21,20 @@ class CreatePost{
 	 *
 	 * @see $this->get_cpt_supports, $this->get_metaboxes, $this->create_test_object
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_post_type_content( $cptslug, $echo = false, $num = '' ){
+	public function create_post_type_content( $slug, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
-		if ( empty( $cptslug ) ){
+		if ( empty( $slug ) ){
 			return;
 		}
 
 		// Gather the necessary data to create the posts
-		$supports 	= $this->get_cpt_supports( $cptslug );
-		$metaboxes	= $this->get_metaboxes( $cptslug );
+		$supports 	= $this->get_cpt_supports( $slug );
+		$metaboxes	= $this->get_metaboxes( $slug );
 
 		// If we forgot to put in a quantity, make one for us
 		if ( empty( $num ) ){
@@ -44,7 +44,7 @@ class CreatePost{
 		// Create test posts
 		for( $i = 0; $i < $num; $i++ ){
 
-			$return = $this->create_test_object( $cptslug, $supports, $metaboxes );
+			$return = $this->create_test_object( $slug, $supports, $metaboxes );
 
 			if ( $echo === true ){
 				echo \json_encode( $return );
@@ -66,11 +66,11 @@ class CreatePost{
 	 *
 	 * @see TestContent, wp_insert_post, add_post_meta, update_post_meta, $this->random_metabox_content
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 * @param array $supports Features that the post type supports.
 	 * @param array $supports All CMB2 metaboxes attached to the post type.
 	 */
-	private function create_test_object( $cptslug, $supports, $metaboxes ){
+	private function create_test_object( $slug, $supports, $metaboxes ){
 		$return = '';
 
 		// Get a random title
@@ -80,7 +80,7 @@ class CreatePost{
 		$post = array(
 		  'post_name'      => sanitize_title( $title ),
 		  'post_status'    => 'publish',
-		  'post_type'      => $cptslug,
+		  'post_type'      => $slug,
 		  'ping_status'    => 'closed',
 		  'comment_status' => 'closed',
 		);
@@ -102,11 +102,11 @@ class CreatePost{
 		add_post_meta( $post_id, 'evans_test_content', '__test__', true );
 
 		// Add thumbnail if supported
-		if ( $supports['thumbnail'] === true || in_array( $cptslug, array( 'post', 'page' ) ) ){
+		if ( $supports['thumbnail'] === true || in_array( $slug, array( 'post', 'page' ) ) ){
 			 update_post_meta( $post_id, '_thumbnail_id', TestContent::image( $post_id ) );
 		}
 
-		$taxonomies = get_object_taxonomies( $cptslug );
+		$taxonomies = get_object_taxonomies( $slug );
 
 		// Assign the post to terms
 		if ( !empty( $taxonomies ) ){
@@ -126,6 +126,7 @@ class CreatePost{
 		} else {
 			return array(
 				'type'		=> 'created',
+				'object'	=> 'post',
 				'pid'		=> $post_id,
 				'post_type'	=> get_post_type( $post_id ),
 				'link'		=> admin_url( '/post.php?post='.$post_id.'&action=edit' )
@@ -142,15 +143,15 @@ class CreatePost{
 	 *
 	 * @see post_type_supports
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 * @return array Array of necessary supports booleans.
 	 */
-	private function get_cpt_supports( $cptslug ){
+	private function get_cpt_supports( $slug ){
 
 		$supports = array(
-			'title'		=> post_type_supports( $cptslug, 'title' ),
-			'editor'	=> post_type_supports( $cptslug, 'editor' ),
-			'thumbnail'	=> post_type_supports( $cptslug, 'thumbnail' )
+			'title'		=> post_type_supports( $slug, 'title' ),
+			'editor'	=> post_type_supports( $slug, 'editor' ),
+			'thumbnail'	=> post_type_supports( $slug, 'thumbnail' )
 		);
 
 		return $supports;
@@ -224,21 +225,21 @@ class CreatePost{
 	 *
 	 * @see get_cmb2_metaboxes, get_cmb1_metaboxes
 	 *
-	 * @param string $cptslug Post Type slug ID.
+	 * @param string $slug Post Type slug ID.
 	 * @return array Fields to fill in for our post object.
 	 */
-	private function get_metaboxes( $cptslug ){
+	private function get_metaboxes( $slug ){
 
 		$fields = array();
 
 		// CMB2
 		if ( class_exists( 'CMB2_Bootstrap_212', false ) ) {
-			$fields = $this->get_cmb2_metaboxes( $cptslug );
+			$fields = $this->get_cmb2_metaboxes( $slug );
 		}
 
 		// Custom Metaboxes and Fields (CMB1)
 		if ( class_exists( 'cmb_Meta_Box', false ) ) {
-			$fields = $this->get_cmb1_metaboxes( $cptslug );
+			$fields = $this->get_cmb1_metaboxes( $slug );
 		}
 
 		// Return our array
@@ -258,10 +259,10 @@ class CreatePost{
 	 *
 	 * @see cmb2_meta_boxes
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 * @return array Array of fields.
 	 */
-	private function get_cmb2_metaboxes( $cptslug ){
+	private function get_cmb2_metaboxes( $slug ){
 
 		$fields = array();
 
@@ -272,7 +273,7 @@ class CreatePost{
 		foreach ( $all_metaboxes as $metabox_array ){
 
 			// If the custom post type ID matches this set of fields, set & stop
-			if ( in_array( $cptslug, $metabox_array['object_types'] ) ) {
+			if ( in_array( $slug, $metabox_array['object_types'] ) ) {
 
 				// If this is the first group of fields, simply set the value
 				// Else, merge this group with the previous one
@@ -301,10 +302,10 @@ class CreatePost{
 	 *
 	 * @see cmb_meta_boxes
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 * @return array Array of fields.
 	 */
-	private function get_cmb1_metaboxes( $cptslug ){
+	private function get_cmb1_metaboxes( $slug ){
 
 		$fields = array();
 
@@ -315,7 +316,7 @@ class CreatePost{
 		foreach ( $all_metaboxes as $metabox_array ){
 
 			// If the custom post type ID matches this set of fields, set & stop
-			if ( in_array( $cptslug, $metabox_array['pages'] ) ) {
+			if ( in_array( $slug, $metabox_array['pages'] ) ) {
 
 				// If this is the first group of fields, simply set the value
 				// Else, merge this group with the previous one

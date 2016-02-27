@@ -21,14 +21,14 @@ class CreateTerm{
 	 *
 	 * @see $this->get_cpt_supports, $this->get_metaboxes, $this->create_test_object
 	 *
-	 * @param string $cptslug a custom post type ID.
+	 * @param string $slug a custom post type ID.
 	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_terms( $tax_slug, $echo = false, $num = '' ){
+	public function create_terms( $slug, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
-		if ( empty( $cptslug ) ){
+		if ( empty( $slug ) ){
 			return;
 		}
 
@@ -40,7 +40,7 @@ class CreateTerm{
 		// Create test posts
 		for( $i = 0; $i < $num; $i++ ){
 
-			$return = $this->create_test_object( $tax_slug );
+			$return = $this->create_test_object( $slug );
 
 			if ( $echo === true ){
 				echo \json_encode( $return );
@@ -62,11 +62,9 @@ class CreateTerm{
 	 *
 	 * @see TestContent, wp_insert_post, add_post_meta, update_post_meta, $this->random_metabox_content
 	 *
-	 * @param string $cptslug a custom post type ID.
-	 * @param array $supports Features that the post type supports.
-	 * @param array $supports All CMB2 metaboxes attached to the post type.
+	 * @param string $slug a custom post type ID.
 	 */
-	private function create_test_object( $tax_slug ){
+	private function create_test_object( $slug ){
 		$return = '';
 
 		// Get a random title
@@ -74,7 +72,7 @@ class CreateTerm{
 
 		$return = wp_insert_term(
 			$title,
-			$tax_slug,
+			$slug,
 			array(
 				'description'=> TestContent::title(),
 				'slug' => sanitize_title( $title ),
@@ -91,9 +89,10 @@ class CreateTerm{
 		} else {
 			return array(
 				'type'		=> 'created',
-				'tid'		=> $post_id,
-				'taxonomy'	=> $tax_slug,
-				'link'		=> admin_url( '/post.php?post='.$post_id.'&action=edit' )
+				'object'	=> 'term',
+				'tid'		=> $return['term_id'],
+				'taxonomy'	=> $slug,
+				'link'		=> admin_url( '/edit-tags.php?action=edit&taxonomy='.$slug.'&tag_ID='.$return['term_id'] )
 			);
 		}
 
