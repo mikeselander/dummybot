@@ -145,6 +145,8 @@ class AdminPage{
 			// Loop through all other cpts
 			$post_types = get_post_types( array( 'public' => true ), 'objects' );
 
+			$html .= "<table>";
+
 			foreach ( $post_types as $post_type ) {
 
 				// Skip Attachments
@@ -160,10 +162,15 @@ class AdminPage{
 						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
 						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
 
-						$taxonomies = get_object_taxonomies( $post_type->name );
+					$html .= "</h3>";
+
+					$taxonomies = get_object_taxonomies( $post_type->name );
 
 						if ( !empty( $taxonomies ) ){
+
 							foreach( $taxonomies as $tax ){
+
+								$html .= "<h3>";
 
 								if ( $tax == 'post_format' ){
 									continue;
@@ -171,11 +178,14 @@ class AdminPage{
 
 								$taxonomy = get_taxonomy( $tax );
 
+								$html .= "<span style='width: 20%; display: inline-block; font-size: .9em'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$taxonomy->labels->name."</span>";
+
 								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category' style='margin-top: 4px; font-size: 1.2em'></span> Create ".$taxonomy->labels->name."</a>";
+
+								$html .= "</h3>";
+
 							}
 						}
-
-					$html .= "</h3>";
 
 				$html .= "</div>";
 
