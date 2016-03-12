@@ -47,10 +47,8 @@ class AdminPage{
 
 	/**
 	 * Load our script in the admin section and serve in data.
-	 *
-	 * @param string $hook Specific hook for the admin page that we're dealing with.
 	 */
-	public function load_scripts( $hook ){
+	public function load_scripts(){
 
 		wp_enqueue_script( 'test-content-js', plugins_url( 'assets/admin.js' , dirname( __FILE__ ) ) );
 

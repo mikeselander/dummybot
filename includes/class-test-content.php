@@ -261,7 +261,7 @@ CSSland,
 
 	    // Check for download errors
 	    if ( is_wp_error( $tmp ) ) {
-	        @unlink( $file_array[ 'tmp_name' ] );
+	        unlink( $file_array[ 'tmp_name' ] );
 	        return $tmp->get_error_message();
 	    }
 
@@ -270,7 +270,7 @@ CSSland,
 
 	    // Check for handle sideload errors.
 	    if ( is_wp_error( $image_id ) ) {
-	        @unlink( $file_array['tmp_name'] );
+	        unlink( $file_array['tmp_name'] );
 	        return $image_id->get_error_message();
 	    }
 
@@ -504,6 +504,7 @@ CSSland,
 		// Switch through our video types. Expecting to add more in the future
 		switch( $type ){
 
+			// YouTube videos
 			case 'youtube' :
 				$links = array(
 					'https://www.youtube.com/watch?v=tntOCGkgt98',
@@ -519,6 +520,7 @@ CSSland,
 
 				break;
 
+			// Vimeo videos
 			case 'vimeo' :
 				$links = array(
 					'https://vimeo.com/156161909',
@@ -533,6 +535,11 @@ CSSland,
 				);
 
 				break;
+
+			// Fallback
+			default:
+
+				$links = array();
 
 		}
 

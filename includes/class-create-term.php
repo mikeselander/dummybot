@@ -37,7 +37,7 @@ class CreateTerm{
 			$num = rand( 5, 30 );
 		}
 
-		// Create test posts
+		// Create test terms
 		for( $i = 0; $i < $num; $i++ ){
 
 			$return = $this->create_test_object( $slug );
@@ -52,7 +52,7 @@ class CreateTerm{
 
 
 	/**
-	 * Creates the individual test data post.
+	 * Creates the individual test data object.
 	 *
 	 * Create individual posts for testing with. Gathers basic information such
 	 * as title, content, thumbnail, etc. and inserts them with the post. Also
@@ -65,7 +65,6 @@ class CreateTerm{
 	 * @param string $slug a custom post type ID.
 	 */
 	private function create_test_object( $slug ){
-		$return = '';
 
 		// Get a random title
 		$title = TestContent::title();
@@ -81,7 +80,6 @@ class CreateTerm{
 
 		// Then, set a test content flag on the new post for later deletion
 		add_term_meta( $return['term_id'], 'evans_test_content', '__test__', true );
-
 
 		// Check if we have errors and return them or created message
 		if ( is_wp_error( $return ) ){
