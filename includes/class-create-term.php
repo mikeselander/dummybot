@@ -90,7 +90,8 @@ class CreateTerm{
 				'object'	=> 'term',
 				'tid'		=> $return['term_id'],
 				'taxonomy'	=> $slug,
-				'link'		=> admin_url( '/edit-tags.php?action=edit&taxonomy='.$slug.'&tag_ID='.$return['term_id'] )
+				'link_edit'	=> admin_url( '/edit-tags.php?action=edit&taxonomy='.$slug.'&tag_ID='.$return['term_id'] ),
+				'link_view'	=> get_term_link( $return['term_id'] )
 			);
 		}
 

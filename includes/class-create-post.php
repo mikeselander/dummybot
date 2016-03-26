@@ -129,7 +129,8 @@ class CreatePost{
 				'object'	=> 'post',
 				'pid'		=> $post_id,
 				'post_type'	=> get_post_type( $post_id ),
-				'link'		=> admin_url( '/post.php?post='.$post_id.'&action=edit' )
+				'link_edit'	=> admin_url( '/post.php?post='.$post_id.'&action=edit' ),
+				'link_view'	=> get_permalink( $post_id ),
 			);
 		}
 

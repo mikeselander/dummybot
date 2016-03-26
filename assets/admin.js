@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
 							id = parsed.tid;
 					}
 
-					jQuery( '#status-updates' ).append( innerCount + ': Created ' + type + ' ' + id + ': ' + parsed.link + '\n' );
+					jQuery( '#status-updates' ).append( innerCount + ': Created ' + type + ' ' + id + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
 
 					innerCount++;
 
