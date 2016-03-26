@@ -145,6 +145,13 @@ class AdminPage{
 
 			$html .= "<div>";
 
+			$html .= "<div class='test-data-cpt'>";
+				$html .= "<h3>";
+					$html .= "<span style='width: 20%; display: inline-block;'>Quantity</span>";
+					$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>Set to 0 to keep random</i></small>";
+				$html .= "</h3>";
+			$html .= "</div>";
+
 			// Loop through every post type available on the site
 			foreach ( $post_types as $post_type ) {
 
