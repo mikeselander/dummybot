@@ -35,8 +35,8 @@ class AdminPage{
 
 		add_submenu_page(
 			'tools.php',
-			__( 'Create Test Data', 'evans-mu' ),
-			__( 'Test Data', 'evans-mu' ),
+			__( 'Create Test Data', 'otm-test-content' ),
+			__( 'Test Data', 'otm-test-content' ),
 			'manage_options',
 			'create-test-data',
 			array( $this, 'admin_page' )
@@ -138,30 +138,37 @@ class AdminPage{
 
 		$html .= '<div class="wrap" id="options_editor">' . "\n";
 
-			$html .= '<h2>' . __( 'Create Test Data' , 'evans-mu' ) . '</h2>' . "\n";
+			$html .= '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";
 
 			// Loop through all other cpts
 			$post_types = get_post_types( array( 'public' => true ), 'objects' );
 
-			$html .= "<table>";
+			$html .= "<div>";
 
+			// Loop through every post type available on the site
 			foreach ( $post_types as $post_type ) {
 
-				// Skip Attachments
-				if ( $post_type->name == 'attachment' ){
+				$skipped_cpts = array(
+					'attachment'
+				);
+
+				// Skip banned cpts
+				if ( in_array( $post_type->name, $skipped_cpts ) ){
 					continue;
 				}
 
 				$html .= "<div class='test-data-cpt'>";
 
+					// Create row for the post/page/cpt
 					$html .= "<h3>";
 
 						$html .= "<span style='width: 20%; display: inline-block;'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> Create Test Data</a>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> Delete Test Data</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> ".__( 'Create Test Data', 'otm-test-content' )."</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Delete Test Data', 'otm-test-content' )."</a>";
 
 					$html .= "</h3>";
 
+					// Create row for each taxonomy associated with the post/page/cpt
 					$taxonomies = get_object_taxonomies( $post_type->name );
 
 						if ( !empty( $taxonomies ) ){
@@ -170,7 +177,12 @@ class AdminPage{
 
 								$html .= "<h3>";
 
-								if ( $tax == 'post_format' ){
+								$skipped_taxonomies = array(
+									'post_format'
+								);
+
+								// Skip banned taxonomies
+								if ( in_array( $tax, $skipped_taxonomies ) ){
 									continue;
 								}
 
@@ -178,7 +190,7 @@ class AdminPage{
 
 								$html .= "<span style='width: 20%; display: inline-block; font-size: .9em'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$taxonomy->labels->name."</span>";
 
-								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category' style='margin-top: 4px; font-size: 1.2em'></span> Create ".$taxonomy->labels->name."</a>";
+								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
 
 								$html .= "</h3>";
 

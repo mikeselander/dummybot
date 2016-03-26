@@ -357,6 +357,7 @@ class CreatePost{
 			return;
 		}
 
+		// Fetch the appropriate type of data and return
 		switch( $cmb['type'] ){
 
 			case 'text':
