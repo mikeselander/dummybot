@@ -23,10 +23,16 @@ jQuery(document).ready(function($) {
 			var count = 1;
 		}
 
+		// Assign variable to handle AJAX numbering
+		var innerCount = 1;
+
 		// Loop through our count
 		for( var i=1; i<=count; i++ ){
 
-			jQuery.post( ajaxurl, data, function(response) {}).done(function(response){
+			jQuery.post(
+				ajaxurl,
+				data,
+				function(response) {}).done(function(response){
 
 				var parsed = JSON.parse( response );
 
@@ -41,17 +47,22 @@ jQuery(document).ready(function($) {
 							id = parsed.tid;
 					}
 
-					jQuery( '#status-updates' ).append( 'Created ' + type + ' ' + id + ': ' + parsed.link + '\n' );
+					jQuery( '#status-updates' ).append( innerCount + ': Created ' + type + ' ' + id + ': ' + parsed.link + '\n' );
+
+					innerCount++;
+
 				} else {
 
 					count = parsed.length;
 
 					for( i=0; i<count; i++ ){
 						if ( parsed[i].type == 'deleted' ){
-							jQuery( '#status-updates' ).append( 'Deleted ' + parsed[i].post_type + ' ' + parsed[i].pid + '\n' );
+							jQuery( '#status-updates' ).append( innerCount + ': Deleted ' + parsed[i].post_type + ' ' + parsed[i].pid + '\n' );
 						} else {
 							jQuery( '#status-updates' ).append( parsed[i].message + '\n' );
 						}
+
+						innerCount++;
 					}
 
 				}
