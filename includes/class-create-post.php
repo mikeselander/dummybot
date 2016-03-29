@@ -234,7 +234,7 @@ class CreatePost{
 		$fields = array();
 
 		// CMB2
-		if ( class_exists( 'CMB2_Bootstrap_212', false ) ) {
+		if ( class_exists( 'CMB2', false ) ) {
 			$fields = $this->get_cmb2_metaboxes( $slug );
 		}
 

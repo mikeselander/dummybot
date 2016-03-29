@@ -17,11 +17,12 @@ class AdminPage{
 	 *
 	 * @see admin_menu, wp_ajax actions
 	 */
-	public function hooks(){
+	public function hooks( $file ){
 
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_scripts' ) );
+		add_filter( 'plugin_action_links_' . plugin_basename( $file ) , array( $this, 'add_settings_link' ) );
 
 	}
 
@@ -41,6 +42,20 @@ class AdminPage{
 			'create-test-data',
 			array( $this, 'admin_page' )
 		);
+
+	}
+
+	/**
+	 * Add 'build test content' link to plugin list table.
+	 *
+	 * @param  array $links Existing links
+	 * @return array 		Modified links
+	 */
+	public function add_settings_link( $links ) {
+
+		$settings_link = '<a href="tools.php?page=create-test-data">' . __( 'Build Test Content', 'otm-test-content' ) . '</a>';
+  		array_push( $links, $settings_link );
+  		return $links;
 
 	}
 
@@ -217,6 +232,3 @@ class AdminPage{
 	}
 
 }
-
-$admin_page = new AdminPage;
-$admin_page->hooks();

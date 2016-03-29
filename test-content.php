@@ -24,3 +24,6 @@ foreach ( $dirs as $dir ){
 	    require_once $filename;
 	}
 }
+
+$admin_page = new testContent\AdminPage;
+$admin_page->hooks( __FILE__ );
