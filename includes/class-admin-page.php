@@ -23,6 +23,7 @@ class AdminPage{
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_scripts' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( $file ) , array( $this, 'add_settings_link' ) );
+		add_action( 'admin_notices', array( $this, 'internet_connected_admin_notice' ) );
 
 	}
 
@@ -56,6 +57,41 @@ class AdminPage{
 		$settings_link = '<a href="tools.php?page=create-test-data">' . __( 'Build Test Content', 'otm-test-content' ) . '</a>';
   		array_push( $links, $settings_link );
   		return $links;
+
+	}
+
+
+	/**
+	 * Admin notice to notify a user that images won't work on test dat.
+	 *
+	 * Adds an admin notice that first checks if a user is connected to the
+	 * Internet, and the test fails displays a notice informing the user that
+	 * images will not pull into test data.
+	 */
+	public function internet_connected_admin_notice(){
+
+		// Get the current admin screen & verify that we're on the right one
+		// before continuing.
+		$screen = get_current_screen();
+
+		if ( $screen->base != 'tools_page_create-test-data' ){
+			return;
+		}
+
+		// Define our test point and try to reach out to the URL
+		$test_url = 'http://www.splashbase.co/api/v1/images/';
+		$response = wp_remote_get( $test_url );
+
+		// Check the response
+		if ( is_array( $response ) ) {
+			// We got a response so early return
+			return;
+		} else {
+			// We didn't get a reponse so print the notice out
+			echo '<div class="notice notice-error is-dismissible">';
+		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'otm-test-content' ).'</p>';
+		    echo '</div>';
+		}
 
 	}
 
