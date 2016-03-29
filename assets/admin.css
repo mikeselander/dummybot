@@ -1,0 +1,22 @@
+.test-data-cpt span.label{
+	width: 20%;
+	display: inline-block;
+}
+
+.test-data-cpt span.label.term-label{
+	font-size: .9em;
+}
+
+.handle-test-data .dashicons{
+	margin-top: 4px;
+	font-size: 1.2em
+}
+
+.test-data-status-box{
+	display: block;
+	width:95%;
+	height:300px;
+	overflow-y: scroll;
+	background: #fff;
+	padding: 10px;
+}

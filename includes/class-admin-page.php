@@ -21,7 +21,6 @@ class AdminPage{
 
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'load_scripts' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( $file ) , array( $this, 'add_settings_link' ) );
 		add_action( 'admin_notices', array( $this, 'internet_connected_admin_notice' ) );
 
@@ -35,7 +34,7 @@ class AdminPage{
 	 */
 	public function add_menu_item() {
 
-		add_submenu_page(
+		$page = add_submenu_page(
 			'tools.php',
 			__( 'Create Test Content', 'otm-test-content' ),
 			__( 'Test Content', 'otm-test-content' ),
@@ -43,6 +42,8 @@ class AdminPage{
 			'create-test-data',
 			array( $this, 'admin_page' )
 		);
+
+		add_action( 'admin_print_styles-' . $page, array( $this, 'load_scripts' ) );
 
 	}
 
@@ -102,6 +103,7 @@ class AdminPage{
 	public function load_scripts(){
 
 		wp_enqueue_script( 'test-content-js', plugins_url( 'assets/admin.js' , dirname( __FILE__ ) ) );
+		wp_enqueue_style( 'test-content-css', plugins_url( 'assets/admin.css' , dirname( __FILE__ ) ) );
 
 		$data = array(
 			'nonce'	=> wp_create_nonce( 'handle-test-data' )
@@ -202,7 +204,7 @@ class AdminPage{
 
 			$html .= "<div class='test-data-cpt'>";
 				$html .= "<h3>";
-					$html .= "<span style='width: 20%; display: inline-block;'>Quantity</span>";
+					$html .= "<span class='label'>Quantity</span>";
 					$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>Set to 0 to keep random</i></small>";
 				$html .= "</h3>";
 			$html .= "</div>";
@@ -224,9 +226,9 @@ class AdminPage{
 					// Create row for the post/page/cpt
 					$html .= "<h3>";
 
-						$html .= "<span style='width: 20%; display: inline-block;'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus' style='margin-top: 6px; font-size: 1.2em'></span> ".__( 'Create Test Data', 'otm-test-content' )."</a>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Delete Test Data', 'otm-test-content' )."</a>";
+						$html .= "<span class='label'>" . $post_type->labels->name . "</span>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus'></span> ".__( 'Create Test Data', 'otm-test-content' )."</a>";
+						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash'></span> ".__( 'Delete Test Data', 'otm-test-content' )."</a>";
 
 					$html .= "</h3>";
 
@@ -250,11 +252,11 @@ class AdminPage{
 
 								$taxonomy = get_taxonomy( $tax );
 
-								$html .= "<span style='width: 20%; display: inline-block; font-size: .9em'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$taxonomy->labels->name."</span>";
+								$html .= "<span class='label term-label'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$taxonomy->labels->name."</span>";
 
-								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
+								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category'></span> ".__( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
 
-								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Delete', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
+								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash'></span> ".__( 'Delete', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
 
 								$html .= "</h3>";
 
@@ -265,7 +267,7 @@ class AdminPage{
 
 			}
 
-			$html .= "<pre style='display: block; width:95%; height:300px; overflow-y: scroll; background: #fff; padding: 10px;' id='status-updates'></pre>";
+			$html .= "<pre class='test-data-status-box' id='status-updates'></pre>";
 
 		$html .= "</div>";
 
