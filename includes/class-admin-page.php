@@ -36,8 +36,8 @@ class AdminPage{
 
 		add_submenu_page(
 			'tools.php',
-			__( 'Create Test Data', 'otm-test-content' ),
-			__( 'Test Data', 'otm-test-content' ),
+			__( 'Create Test Content', 'otm-test-content' ),
+			__( 'Test Content', 'otm-test-content' ),
 			'manage_options',
 			'create-test-data',
 			array( $this, 'admin_page' )

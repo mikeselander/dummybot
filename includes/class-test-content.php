@@ -84,7 +84,7 @@ class TestContent{
 	/**
 	 * Paragraphs full of random tags.
 	 *
-	 * Returns raond full TinyMCE-compatible paragraphs with random content such
+	 * Returns full TinyMCE-compatible paragraphs with random content such
 	 * as tables, images, quotes, etc.
 	 *
 	 * @return string Paragraph(s) of text.
@@ -197,7 +197,7 @@ CSSland,
 	/**
 	 * Plain text.
 	 *
-	 * Return paragraphs of plain text.
+	 * Returns paragraphs of plain text.
 	 *
 	 * @return string Plain text paragraphs.
 	 */
@@ -320,7 +320,7 @@ CSSland,
 	/**
 	 * Date.
 	 *
-	 * Return a date in the future (up to 60 days out) in the format prescribed.
+	 * Returns a date in the future (up to 60 days out) in the format prescribed.
 	 *
 	 * @param string $format PHP Date format.
 	 * @return mixed Date in the format requested.
@@ -336,7 +336,7 @@ CSSland,
 	/**
 	 * Time.
 	 *
-	 * Return a random time in various formats
+	 * Returns a random time in various formats
 	 *
 	 * @return string Time string
 	 */
@@ -360,7 +360,7 @@ CSSland,
 	/**
 	 * Timezone.
 	 *
-	 * Return a random timezone from a subset of available options.
+	 * Returns a random timezone from a subset of available options.
 	 *
 	 * @return string Timezone
 	 */

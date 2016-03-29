@@ -1,42 +1,52 @@
-# Test Content Suite
+# Test Content Generator
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oldtownmedia/test-content-suite/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oldtownmedia/test-content-suite/?branch=master)
 
-A test content creator plugin for WordPress posts.
+A test content creator plugin for WordPress posts, pages, CPTs, and terms from a convenient admin page.
 
-An offshoot of our Evans library, this library is used just for quickly and easily spinning up test content in WordPress. Currently the only metadata supported is CMB2-created types. This will expand as we grow the library.
+An offshoot of our Evans library, this library is used for quickly and easily spinning up test content in WordPress. All data is random in length, return, format, etc. so that you can quickly and accurately test your site for edge cases.
 
-#### This is an incomplete plugin currently used for internal purposes. Breaking changes might be made. 
+The panel to spin up content can be found under `Tools->Test Content`.
 
-We are still working on adding more functionality and would love input or PRs for a particular feature.
-
-## Currently support metabox libraries
+## Currently supported metabox libraries
 * [CMB2](https://github.com/WebDevStudios/CMB2)
 * [Custom-metaboxes and fields](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)
 
 ## Planned to support in future
-* ACF
+* ACF-added metaboxes
 * Generically added cmbs
-* taxonomies/terms
 * individual metadata
 * Users
 * Theme/plugin options
 
 ### General Notes
 * Uses namespace `testContent`
-* Currently only supports whole posts/cpts on an automatic level
+* Currently only supports whole posts/cpts/terms on an automatic level
 
 
 ### Test Data
 
-You can spin up test data in a variety of formats using the `testContent\TestContent` class. There are a variety of formats and all methods are static only because you only need each one one at a time. Methods inclue: 
+You can spin up test data in a variety of formats using the `testContent\TestContent` class. There are a variety of formats and all methods are static because you only need one at a time. This class can be easily used stand-alone
+
+**Available methods:**
 
 ```php
-title()
-paragraphs()
-plain_text()
-image()
-date()
-phone()
-email()
+title()			// Random-length Lorem Ipsum title.
+paragraphs()	// TinyMCE-compatible paragraphs with random content suchas tables, images, quotes, etc.
+plain_text()	// Paragraphs of plain text.
+image()			// Fetch a random image, make sure it is formatted right, download it, and put it in the media library.
+date()			// Date in the future (up to 60 days out) in the format prescribed.
+time()			// Time in various formats
+timezone()		// Timezone from a subset of available options.
+phone()			// Phone # in multiple international formats.
+email()			// Email address in random lengths/formats.
+link()			// URL in a completely random format.
+oembed()		// oembed-compatible link.
+video()			// (safe) Video link from YouTube or Vimeo
 ```
+
+#### This is in active development - breaking changes might be made. 
+
+You will most likely not be affected by any since this plugin has no update mechanism. We will not remove any features, but might change HOW they are implemented without any notice. Soon, we will add filters & actions for you to be able to extend particular pieces but will not do this until we are satisfied that a section can be extended without breaking changes.
+
+We are still working on adding more functionality and would love input, PRs, or requests for a particular feature.
