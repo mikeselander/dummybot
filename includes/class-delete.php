@@ -23,7 +23,7 @@ class Delete{
 	 *
 	 * @param string $slug a custom post type ID.
 	 */
-	public function delete_post( $slug, $echo = false ){
+	public function delete_posts( $slug, $echo = false ){
 
 		// Check that $cptslg has a string.
 		// Also make sure that the current user is logged in & has full permissions.
@@ -111,6 +111,68 @@ class Delete{
 			foreach ( $media as $attachment ){
 				wp_delete_attachment( $attachment->ID, true );
 			}
+
+		}
+
+	}
+
+	/**
+	 * Delete test data terms.
+	 *
+	 * This function will search for all terms of a particular taxonomy ($slug)
+	 * and delete them all using a particular term_meta flag that we set when creating
+	 * the posts. Validates the user first.
+	 *
+	 * @access private
+	 *
+	 * @see WP_Query, wp_delete_post
+	 *
+	 * @param string $slug a custom post type ID.
+	 */
+	public function delete_terms( $slug, $echo = false ){
+
+		// Query for our terms
+		$args = array(
+		    'hide_empty' => false,
+		    'meta_query' => array(
+		        array(
+		           'key'       => 'evans_test_content',
+		           'value'     => '__test__',
+		           'compare'   => '='
+		        )
+		    )
+		);
+
+		$terms = get_terms( $slug, $args );
+
+		if ( !empty( $terms ) ){
+
+			$events = array();
+
+			foreach ( $terms as $term ){
+
+				if ( $echo === true ){
+					$events[] = array(
+						'type'		=> 'deleted',
+						'pid'		=> $term->term_id,
+						'post_type'	=> $slug,
+						'link'		=> ''
+					);
+				}
+
+				// Delete our term
+				wp_delete_term( $term->term_id, $slug );
+
+			}
+
+			$taxonomy = get_taxonomy( $slug );
+
+			$events[] = array(
+				'type'		=> 'general',
+				'message'	=> 'Deleted ' . $taxonomy->labels->name
+			);
+
+			echo \json_encode( $events );
 
 		}
 

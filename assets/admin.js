@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
 
+	// Simple script to bump down the status box to the bottom
 	function scrollToBottom( div ){
 		div.scrollTop = div.scrollHeight;
 	}

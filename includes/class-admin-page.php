@@ -173,7 +173,11 @@ class AdminPage{
 
 		if ( $data['type'] == 'post' ){
 
-			$delete_content->delete_post( $data['slug'], true );
+			$delete_content->delete_posts( $data['slug'], true );
+
+		} elseif ( $data['type'] == 'term' ){
+
+			$delete_content->delete_terms( $data['slug'], true );
 
 		}
 
@@ -249,6 +253,8 @@ class AdminPage{
 								$html .= "<span style='width: 20%; display: inline-block; font-size: .9em'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$taxonomy->labels->name."</span>";
 
 								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
+
+								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash' style='margin-top: 4px; font-size: 1.2em'></span> ".__( 'Delete', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
 
 								$html .= "</h3>";
 
