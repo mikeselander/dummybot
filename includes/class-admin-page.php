@@ -101,12 +101,8 @@ class AdminPage{
 			return;
 		}
 
-		// Define our test point and try to reach out to the URL
-		$test_url = 'http://www.splashbase.co/api/v1/images/';
-		$response = wp_remote_get( $test_url );
-
 		// Check the response
-		if ( is_array( $response ) ) {
+		if ( $this->test_splashbase_api() ) {
 			// We got a response so early return
 			return;
 		} else {
@@ -115,6 +111,67 @@ class AdminPage{
 		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'otm-test-content' ).'</p>';
 		    echo '</div>';
 		}
+
+	}
+
+
+	/**
+	 * A more intelligent check to see if we can connect to Splashbase or not.
+	 *
+	 * This function checks whether or not we can connect to the Internet, and
+	 * if we can, whether we can connect to Splashbase itself. This is used by
+	 * our admin notice function to check whether or not we should display a notice
+	 * to users warning them of issues with Splashbase.
+	 *
+	 * The purpose of this is to avoid useless bug-hunting when images don't work.
+	 *
+	 * @access private
+	 *
+	 * @see fsockopen, get_site_option, wp_remote_get
+	 *
+	 * @return boolean Status of connection to Splashbase.
+	 */
+	private function test_splashbase_api(){
+
+		/*
+		 * Test #1 - Check Internet connection in general
+		 */
+		// Attempt to open a socket connection to splashbase
+		$connected = @fsockopen( "www.google.com", 80 );
+
+		if ( !$connected ){
+			return false;
+		}
+
+		// Close out our 1st test
+		fclose( $connected );
+
+
+		/*
+		 * Test #2 - Check for Airplane Mode plugin status
+		 */
+		if ( class_exists( 'Airplane_Mode_Core' ) ){
+			// Is airplane mode active?
+			$airplane_mode = get_site_option( 'airplane-mode' );
+
+			if ( $airplane_mode === 'on' ){
+				return false;
+			}
+		}
+
+
+		/*
+		 * Test #3 - Check Splashbase itself
+		 */
+		$test_url = 'http://www.splashbase.co/api/v1/images/';
+		$response = wp_remote_get( $test_url );
+
+		if ( !is_array( $response ) ){
+			return false;
+		}
+
+		// We've made it this far, looks like everything checks out OK!
+		return true;
 
 	}
 
