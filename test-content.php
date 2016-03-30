@@ -7,6 +7,7 @@
  * Author: Old Town Media
  * Author URI: https://github.com/oldtownmedia/
  * Text Domain: otm-test-content
+ * Domain Path: /languages
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -17,6 +18,8 @@ $dirs = array(
 );
 
 /*
+ * Pseudo-autoload all necessary files
+ *
  * Loop through our directory array and require any PHP files without individual calls.
  */
 foreach ( $dirs as $dir ){

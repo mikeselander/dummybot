@@ -11,6 +11,15 @@ namespace testContent;
 class AdminPage{
 
 	/**
+	 * file
+	 * Parent file that calls this class.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $file;
+
+	/**
 	 * Hooks function.
 	 *
 	 * This function is used to avoid loading any unnecessary functions/code.
@@ -19,11 +28,24 @@ class AdminPage{
 	 */
 	public function hooks( $file ){
 
+		$this->file = $file;
+
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( $file ) , array( $this, 'add_settings_link' ) );
 		add_action( 'admin_notices', array( $this, 'internet_connected_admin_notice' ) );
 
+	}
+
+
+	/**
+	 * Load the textdomain for this plugin if translation is available
+	 *
+	 * @see load_plugin_textdomain
+	 */
+	function load_textdomain() {
+	    load_plugin_textdomain( 'otm-test-content', FALSE, basename( dirname( $this->file ) ) . '/languages/' );
 	}
 
 
@@ -106,7 +128,10 @@ class AdminPage{
 		wp_enqueue_style( 'test-content-css', plugins_url( 'assets/admin.css' , dirname( __FILE__ ) ) );
 
 		$data = array(
-			'nonce'	=> wp_create_nonce( 'handle-test-data' )
+			'nonce'			=> wp_create_nonce( 'handle-test-data' ),
+			'createdStr'	=> __( 'Created', 'otm-test-content' ),
+			'deletedStr'	=> __( 'Deleting', 'otm-test-content' ),
+			'creatingStr'	=> __( 'Creating', 'otm-test-content' ),
 		);
 
 		wp_localize_script( 'test-content-js', 'test_content', $data );
@@ -204,8 +229,8 @@ class AdminPage{
 
 			$html .= "<div class='test-data-cpt'>";
 				$html .= "<h3>";
-					$html .= "<span class='label'>Quantity</span>";
-					$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>Set to 0 to keep random</i></small>";
+					$html .= "<span class='label'>".__( 'Quantity', 'otm-test-content' )."</span>";
+					$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>".__( 'Set to 0 to keep random', 'otm-test-content' )."</i></small>";
 				$html .= "</h3>";
 			$html .= "</div>";
 

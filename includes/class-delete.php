@@ -73,7 +73,7 @@ class Delete{
 
 			$events[] = array(
 				'type'		=> 'general',
-				'message'	=> 'Deleted ' . $obj->labels->all_items
+				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $obj->labels->all_items
 			);
 
 			echo \json_encode( $events );
@@ -169,7 +169,7 @@ class Delete{
 
 			$events[] = array(
 				'type'		=> 'general',
-				'message'	=> 'Deleted ' . $taxonomy->labels->name
+				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $taxonomy->labels->name
 			);
 
 			echo \json_encode( $events );

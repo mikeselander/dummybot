@@ -57,7 +57,7 @@ jQuery(document).ready(function($) {
 							id = parsed.tid;
 					}
 
-					jQuery( '#status-updates' ).append( innerCount + ': Created ' + type + ' ' + id + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
+					jQuery( '#status-updates' ).append( innerCount + ':' + test_content.createdStr + ' ' + type + ' ' + id + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
 
 					// Re-up our number & scroll to bottom
 					innerCount++;
@@ -69,7 +69,7 @@ jQuery(document).ready(function($) {
 
 					for( i=0; i<count; i++ ){
 						if ( parsed[i].type == 'deleted' ){
-							jQuery( '#status-updates' ).append( innerCount + ': Deleted ' + parsed[i].post_type + ' ' + parsed[i].pid + '\n' );
+							jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.deletedStr + ' ' + parsed[i].post_type + ' ' + parsed[i].pid + '\n' );
 						} else {
 							jQuery( '#status-updates' ).append( parsed[i].message + '\n' );
 						}
@@ -87,7 +87,7 @@ jQuery(document).ready(function($) {
 
 		// Print data to the box
 		if ( jQuery( this ).data( 'todo' ) == 'create' ){
-			jQuery( '#status-updates' ).append( 'Creating ' + count + ' objects\n' );
+			jQuery( '#status-updates' ).append( test_content.creatingStr + ' ' + count + ' objects\n' );
 		}
 
 	});
