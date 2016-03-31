@@ -44,7 +44,7 @@ class AdminPage{
 	 *
 	 * @see load_plugin_textdomain
 	 */
-	function load_textdomain() {
+	public function load_textdomain() {
 	    load_plugin_textdomain( 'otm-test-content', FALSE, basename( dirname( $this->file ) ) . '/languages/' );
 	}
 
@@ -136,7 +136,7 @@ class AdminPage{
 		/*
 		 * Test #1 - Check Internet connection in general
 		 */
-		// Attempt to open a socket connection to splashbase
+		// Attempt to open a socket connection to Google
 		$connected = @fsockopen( "www.google.com", 80 );
 
 		if ( !$connected ){
