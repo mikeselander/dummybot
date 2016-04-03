@@ -8,9 +8,11 @@ An offshoot of our Evans library, this library is used for quickly and easily sp
 
 The panel to spin up content can be found under `Tools->Test Content`.
 
+
 ## Currently supported metabox libraries
 * [CMB2](https://github.com/WebDevStudios/CMB2)
 * [Custom-metaboxes and fields](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)
+
 
 ## Planned to support in future
 * ACF-added metaboxes
@@ -19,9 +21,14 @@ The panel to spin up content can be found under `Tools->Test Content`.
 * Users
 * Theme/plugin options
 
+
 ### General Notes
 * Uses namespace `testContent`
 * Currently only supports whole posts/cpts/terms on an automatic level
+
+
+### Admin Panel
+![Admin Panel Example](https://mikeselander.com/wp-content/uploads/2016/04/screenshot1.jpg)
 
 
 ### Test Data
@@ -44,6 +51,7 @@ link()			// URL in a completely random format.
 oembed()		// oembed-compatible link.
 video()			// (safe) Video link from YouTube or Vimeo
 ```
+
 
 #### This is in active development - breaking changes might be made. 
 
