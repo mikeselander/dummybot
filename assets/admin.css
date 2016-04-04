@@ -1,9 +1,13 @@
 .test-data-cpt span.label{
-	width: 20%;
-	display: inline-block;
+	display: block;
+	padding-bottom: 4px;
 }
 
-.test-data-cpt span.label.term-label{
+.test-data-cpt .term-box{
+	padding-left: 25px;
+}
+
+.test-data-cpt .term-box span.label{
 	font-size: .9em;
 }
 
@@ -19,4 +23,16 @@
 	overflow-y: scroll;
 	background: #fff;
 	padding: 10px;
+}
+
+@media screen and (min-width: 500px){
+	.test-data-cpt span.label{
+		width: 20%;
+		display: inline-block;
+		padding-bottom: 2px;
+	}
+
+	.test-data-cpt span.label + .button-primary{
+		clear: none;
+	}
 }

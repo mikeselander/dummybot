@@ -321,7 +321,7 @@ class AdminPage{
 
 							foreach( $taxonomies as $tax ){
 
-								$html .= "<h3>";
+								$html .= "<h3 class='term-box'>";
 
 								$skipped_taxonomies = array(
 									'post_format'
@@ -334,7 +334,7 @@ class AdminPage{
 
 								$taxonomy = get_taxonomy( $tax );
 
-								$html .= "<span class='label term-label'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$taxonomy->labels->name."</span>";
+								$html .= "<span class='label'>".$taxonomy->labels->name."</span>";
 
 								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category'></span> ".__( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
 
