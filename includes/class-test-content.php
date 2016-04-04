@@ -144,13 +144,40 @@ class TestContent{
 <li>Ordered list item one.</li>
 <li>Ordered list item two.</li>
 <li>Ordered list item three.</li>
-<li>Ordered list item four.</li>
+<li>Ordered list item four.
+	<ol>
+		<li>Ordered list item one.</li>
+		<li>Ordered list item two.
+			<ol>
+				<li>Ordered list item one.</li>
+				<li>Ordered list item two.</li>
+				<li>Ordered list item three.</li>
+				<li>Ordered list item four.</li>
+			</ol>
+		</li>
+		<li>Ordered list item three.</li>
+		<li>Ordered list item four.</li>
+	</ol>
+</li>
 <li>By the way, Wordpress does not let you create nested lists through the visual editor.</li>
 </ol>
 ',
 			'<ul>
 <li>Unordered list item one.</li>
 <li>Unordered list item two.</li>
+	<ul>
+		<li>Ordered list item one.</li>
+		<li>Ordered list item two.
+			<ul>
+				<li>Ordered list item one.</li>
+				<li>Ordered list item two.</li>
+				<li>Ordered list item three.</li>
+				<li>Ordered list item four.</li>
+			</ul>
+		</li>
+		<li>Ordered list item three.</li>
+		<li>Ordered list item four.</li>
+	</ul>
 <li>Unordered list item three.</li>
 <li>Unordered list item four.</li>
 <li>By the way, Wordpress does not let you create nested lists through the visual editor.</li>
@@ -183,10 +210,134 @@ CSSland,
 1234</address> <p>...so there you have it, all our text elements</p>",
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt luctus eros, a tincidunt massa aliquet sit amet. Sed faucibus, eros non lacinia porttitor, risus odio efficitur sapien, id porta urna massa ac est. Cras efficitur lacinia magna eget tempus. Fusce ex felis, finibus consectetur mi at, finibus rhoncus augue. In ut tortor lacinia, rutrum mauris vel, maximus tortor. Praesent ac arcu nec eros pharetra tristique. Morbi congue leo sed ipsum fermentum vulputate. Ut nulla eros, porta varius pulvinar eget, bibendum quis dolor. Morbi sed diam eu dui semper ornare nec quis nisl.',
 			'Sed porttitor augue vitae ante posuere sodales iaculis nec neque. Etiam dapibus nulla id vulputate tempus. Quisque tempus nisi dui, a commodo nulla sodales ut. Nulla nec odio tempus, sodales diam quis, feugiat odio. Nulla tincidunt tincidunt turpis, eget cursus felis tempor lacinia. Aenean molestie libero ut erat luctus aliquam. Sed vel enim quis nisl lacinia posuere. Ut fringilla ligula ligula, nec rhoncus mi suscipit id. Praesent volutpat blandit felis, et suscipit elit vulputate sit amet. Morbi sit amet justo quis sem rutrum euismod. Pellentesque at dictum sem, sed condimentum ex. Vivamus massa nisi, convallis in semper sit amet, venenatis convallis lectus. Nunc tristique, ex ac rutrum vehicula, arcu ex efficitur justo, sed euismod ligula nulla ut purus.',
+			'<table>
+<tbody>
+<tr>
+<td>!</td>
+<td>"</td>
+<td>#</td>
+<td>$</td>
+<td>%</td>
+<td>&amp;</td>
+<td>\'</td>
+<td>(</td>
+<td>)</td>
+<td>*</td>
+</tr>
+<tr>
+<td>+</td>
+<td>,</td>
+<td>-</td>
+<td>.</td>
+<td>/</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>:</td>
+<td>;</td>
+<td>&gt;</td>
+<td>=</td>
+<td>&lt;</td>
+</tr>
+<tr>
+<td>?</td>
+<td>@</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>H</td>
+</tr>
+<tr>
+<td>I</td>
+<td>J</td>
+<td>K</td>
+<td>L</td>
+<td>M</td>
+<td>N</td>
+<td>O</td>
+<td>P</td>
+<td>Q</td>
+<td>R</td>
+</tr>
+<tr>
+<td>S</td>
+<td>T</td>
+<td>U</td>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Y</td>
+<td>Z</td>
+<td>[</td>
+<td></td>
+</tr>
+<tr>
+<td>]</td>
+<td>^</td>
+<td>_</td>
+<td>`</td>
+<td>a</td>
+<td>b</td>
+<td>c</td>
+<td>d</td>
+<td>e</td>
+<td>f</td>
+</tr>
+<tr>
+<td>g</td>
+<td>h</td>
+<td>i</td>
+<td>j</td>
+<td>k</td>
+<td>l</td>
+<td>m</td>
+<td>n</td>
+<td>o</td>
+<td>p</td>
+</tr>
+<tr>
+<td>q</td>
+<td>r</td>
+<td>s</td>
+<td>t</td>
+<td>u</td>
+<td>v</td>
+<td>w</td>
+<td>x</td>
+<td>y</td>
+<td>z</td>
+</tr>
+<tr>
+<td>{</td>
+<td>|</td>
+<td>}</td>
+<td>~</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>'
 		);
 
 		for( $i = 1; $i < 6; $i++ ){
-			$content .= $random_content_types[rand( 0, 9 )];
+			$content .= $random_content_types[rand( 0, 10 )];
 		}
 
 		return $content;
