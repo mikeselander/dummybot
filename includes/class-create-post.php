@@ -270,7 +270,7 @@ class CreatePost{
 		// Get all metaboxes from CMB2 library
 		$all_metaboxes = apply_filters( 'cmb2_meta_boxes', array() );
 
-		// Loop through all possible sets of metaboxes
+		// Loop through all possible sets of metaboxes added the old way
 		foreach ( $all_metaboxes as $metabox_array ){
 
 			// If the custom post type ID matches this set of fields, set & stop
@@ -283,6 +283,32 @@ class CreatePost{
 				} else {
 					$fields = array_merge( $fields, $metabox_array['fields'] );
 				}
+			}
+
+		}
+
+		// Loop through all metaboxes added the new way
+		foreach ( \CMB2_Boxes::get_all() as $cmb ) {
+
+			// Establish correct cmb types
+			if ( is_string( $cmb->meta_box['object_types'] ) ){
+				if ( $cmb->meta_box['object_types'] == $slug ){
+					$match = true;
+				}
+			} else {
+				if ( in_array( $slug, $cmb->meta_box['object_types'] ) ){
+					$match = true;
+				}
+			}
+
+			if ( $match !== true ){
+				continue;
+			}
+
+			if ( empty( $fields ) ){
+				$fields = $cmb->meta_box['fields'];
+			} else {
+				$fields = array_merge( $fields, $cmb->meta_box['fields'] );
 			}
 
 		}
