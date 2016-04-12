@@ -290,6 +290,9 @@ class CreatePost{
 		// Loop through all metaboxes added the new way
 		foreach ( \CMB2_Boxes::get_all() as $cmb ) {
 
+			// Create the default
+			$match = false;
+
 			// Establish correct cmb types
 			if ( is_string( $cmb->meta_box['object_types'] ) ){
 				if ( $cmb->meta_box['object_types'] == $slug ){

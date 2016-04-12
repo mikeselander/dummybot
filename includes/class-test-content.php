@@ -333,11 +333,26 @@ CSSland,
 <td></td>
 </tr>
 </tbody>
-</table>'
+</table>',
+			'<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt luctus eros, a tincidunt massa aliquet sit amet. Sed faucibus, eros non lacinia porttitor, risus odio efficitur sapien, id porta urna massa ac est. Cras efficitur lacinia magna eget tempus. Fusce ex felis, finibus consectetur mi at, finibus rhoncus augue. In ut tortor lacinia, rutrum mauris vel, maximus tortor. Praesent ac arcu nec eros pharetra tristique. Morbi congue leo sed ipsum fermentum vulputate. Ut nulla eros, porta varius pulvinar eget, bibendum quis dolor. Morbi sed diam eu dui semper ornare nec quis nisl.</p>
+
+<p>Pellentesque gravida, mauris pellentesque facilisis viverra, odio quam auctor nunc, in lacinia odio ex vitae erat. Quisque posuere aliquet mi, id aliquet nulla malesuada ut. Nulla facilisi. Integer bibendum augue eget dapibus aliquam. In tempor, mauris in pharetra euismod, nunc metus fringilla metus, nec tincidunt lectus orci id justo. Nam semper risus a odio hendrerit suscipit. Curabitur dignissim, odio sed fringilla auctor, risus libero ullamcorper felis, et vestibulum neque ex a dolor. Suspendisse eu ullamcorper orci, id bibendum lacus. In at est sed ligula ullamcorper venenatis at vel ipsum. Integer libero justo, fermentum nec nisl non, bibendum bibendum tortor. Proin venenatis odio nec nisi facilisis, nec condimentum massa mollis. Donec efficitur libero quis congue aliquam. Duis sollicitudin vitae quam vitae pharetra.</p>
+
+<p>Maecenas ultricies neque ut enim pharetra sodales. Etiam dolor sapien, commodo sed sollicitudin eget, porttitor quis lorem. Praesent euismod eros sed tortor sagittis, ut pretium ex vehicula. Nam ut magna et nunc vestibulum pulvinar. Vivamus tempor, ex eu cursus aliquam, tellus eros semper orci, id ultrices dui tellus commodo mauris. In mauris odio, lobortis id lectus in, tincidunt malesuada sem. Proin eu posuere metus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla auctor, odio ut euismod luctus, metus dolor molestie urna, iaculis rutrum nulla massa ac erat. Fusce suscipit eget odio ut tincidunt. Morbi vulputate aliquet placerat. Vivamus imperdiet posuere vehicula.</p>
+
+<p>Nulla eu vestibulum metus. In leo lacus, vehicula at commodo eget, imperdiet vitae diam. Aliquam rutrum, massa eget pellentesque euismod, orci risus lobortis quam, et sollicitudin lectus augue quis nisi. Sed non justo at tellus mattis facilisis. Etiam feugiat sodales neque, at gravida lorem laoreet et. Donec convallis rhoncus sodales. Morbi erat mi, pulvinar quis ultrices a, luctus vel mauris. Aliquam vitae iaculis metus. Fusce tincidunt placerat nibh. Suspendisse lobortis libero massa, sit amet dapibus quam sodales eu.</p>
+
+<p>In rhoncus mollis purus vitae ornare. Pellentesque nisi mauris, sodales vitae tortor sed, malesuada placerat massa. Integer eleifend imperdiet dolor at luctus. Donec ullamcorper dolor id auctor suscipit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc sed ligula ipsum. Ut pulvinar iaculis volutpat. Phasellus dictum lorem non nulla pharetra, eget tincidunt justo ornare. Nulla dolor ligula, finibus id lectus vel, ornare porttitor diam. Nunc vehicula finibus commodo. Aliquam in commodo metus, a sodales libero. Donec vel dolor sed dolor ullamcorper fringilla in eu sapien. Phasellus lacinia lacus quis quam vestibulum, quis fringilla justo auctor. Integer quis ipsum porta, accumsan eros eget, pretium purus. Vestibulum eget leo tincidunt, porttitor urna a, vestibulum risus. Duis finibus neque sit amet nisi viverra, et vestibulum urna tincidunt.</p>
+
+<p>Curabitur ligula magna, tempus eget ex sed, fringilla viverra justo. Nullam elit lacus, faucibus eget mi eget, posuere sagittis nisl. Sed tincidunt placerat tellus in porta. Morbi eu nibh ac lorem vehicula finibus vel a nunc. Donec iaculis leo quam, ac mattis massa ullamcorper quis. Suspendisse elementum sollicitudin augue ornare sollicitudin. Aenean laoreet orci non lectus hendrerit, ut pellentesque justo tempor. In hac habitasse platea dictumst. Ut et nibh et leo condimentum tempor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sodales sed nulla at rutrum. Suspendisse quis pulvinar neque. Donec vestibulum, nunc id hendrerit placerat, nisl libero tristique nunc, sed semper mi nisl quis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis hendrerit fringilla tortor, interdum sodales sapien pharetra quis.</p>
+
+<p>Vivamus sed neque molestie, lobortis elit in, laoreet augue. Etiam tincidunt sodales bibendum. Quisque ultrices, ante sed maximus dignissim, ex elit pharetra ex, a sagittis massa nisi eget massa. Aliquam dolor risus, tincidunt eu urna tincidunt, consectetur porttitor lacus. Fusce feugiat dolor ut efficitur elementum. Morbi auctor maximus rutrum. Pellentesque cursus est sed lacus consequat, vestibulum mattis urna imperdiet. Duis quis porta lectus. Quisque pulvinar ex at lacus mattis sollicitudin. Morbi gravida, leo et blandit fringilla, neque risus gravida elit, vel maximus sem magna id sapien.</p>
+			',
+
 		);
 
 		for( $i = 1; $i < 6; $i++ ){
-			$content .= $random_content_types[rand( 0, 10 )];
+			$content .= $random_content_types[rand( 0, 11 )];
 		}
 
 		return $content;

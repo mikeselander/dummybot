@@ -324,7 +324,8 @@ class AdminPage{
 								$html .= "<h3 class='term-box'>";
 
 								$skipped_taxonomies = array(
-									'post_format'
+									'post_format',				// We shouldn't be making random post format classes
+									'product_shipping_class'	// These aren't used visually and are therefore skipped
 								);
 
 								// Skip banned taxonomies
