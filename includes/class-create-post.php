@@ -122,6 +122,7 @@ class CreatePost{
 
 		// Check if we have errors and return them or created message
 		if ( is_wp_error( $return ) ){
+			error_log( $return->get_error_message() );
 			return $return;
 		} else {
 			return array(
@@ -548,6 +549,7 @@ class CreatePost{
 
 		// If we're dealing with a WP Error object, just return the message for debugging
 		} elseif ( is_wp_error( $value ) ){
+			error_log( $value->get_error_message() );
 			return $value->get_error_message();
 		}
 

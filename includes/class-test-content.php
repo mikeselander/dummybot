@@ -428,7 +428,7 @@ CSSland,
 	    // Check for download errors
 	    if ( is_wp_error( $tmp ) ) {
 	        unlink( $file_array[ 'tmp_name' ] );
-	        return $tmp->get_error_message();
+	        error_log( $tmp->get_error_message() );
 	    }
 
 		// Pull the image into the media library
@@ -437,7 +437,7 @@ CSSland,
 	    // Check for handle sideload errors.
 	    if ( is_wp_error( $image_id ) ) {
 	        unlink( $file_array['tmp_name'] );
-	        return $image_id->get_error_message();
+	        error_log( $image_id->get_error_message() );
 	    }
 
 	    return $image_id;

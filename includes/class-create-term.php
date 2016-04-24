@@ -83,6 +83,7 @@ class CreateTerm{
 
 		// Check if we have errors and return them or created message
 		if ( is_wp_error( $return ) ){
+			error_log( $return->get_error_message() )''
 			return $return;
 		} else {
 			return array(
