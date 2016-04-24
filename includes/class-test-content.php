@@ -346,13 +346,12 @@ CSSland,
 
 <p>Curabitur ligula magna, tempus eget ex sed, fringilla viverra justo. Nullam elit lacus, faucibus eget mi eget, posuere sagittis nisl. Sed tincidunt placerat tellus in porta. Morbi eu nibh ac lorem vehicula finibus vel a nunc. Donec iaculis leo quam, ac mattis massa ullamcorper quis. Suspendisse elementum sollicitudin augue ornare sollicitudin. Aenean laoreet orci non lectus hendrerit, ut pellentesque justo tempor. In hac habitasse platea dictumst. Ut et nibh et leo condimentum tempor. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque sodales sed nulla at rutrum. Suspendisse quis pulvinar neque. Donec vestibulum, nunc id hendrerit placerat, nisl libero tristique nunc, sed semper mi nisl quis sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis hendrerit fringilla tortor, interdum sodales sapien pharetra quis.</p>
 
-<p>Vivamus sed neque molestie, lobortis elit in, laoreet augue. Etiam tincidunt sodales bibendum. Quisque ultrices, ante sed maximus dignissim, ex elit pharetra ex, a sagittis massa nisi eget massa. Aliquam dolor risus, tincidunt eu urna tincidunt, consectetur porttitor lacus. Fusce feugiat dolor ut efficitur elementum. Morbi auctor maximus rutrum. Pellentesque cursus est sed lacus consequat, vestibulum mattis urna imperdiet. Duis quis porta lectus. Quisque pulvinar ex at lacus mattis sollicitudin. Morbi gravida, leo et blandit fringilla, neque risus gravida elit, vel maximus sem magna id sapien.</p>
-			',
+<p>Vivamus sed neque molestie, lobortis elit in, laoreet augue. Etiam tincidunt sodales bibendum. Quisque ultrices, ante sed maximus dignissim, ex elit pharetra ex, a sagittis massa nisi eget massa. Aliquam dolor risus, tincidunt eu urna tincidunt, consectetur porttitor lacus. Fusce feugiat dolor ut efficitur elementum. Morbi auctor maximus rutrum. Pellentesque cursus est sed lacus consequat, vestibulum mattis urna imperdiet. Duis quis porta lectus. Quisque pulvinar ex at lacus mattis sollicitudin. Morbi gravida, leo et blandit fringilla, neque risus gravida elit, vel maximus sem magna id sapien.</p>',
 
 		);
 
 		for( $i = 1; $i < 6; $i++ ){
-			$content .= $random_content_types[rand( 0, 11 )];
+			$content .= $random_content_types[rand( 0, 12 )];
 		}
 
 		return $content;
