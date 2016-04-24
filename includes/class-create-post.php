@@ -424,7 +424,11 @@ class CreatePost{
 
 				break;
 
-			// case 'text_time': break;
+			case 'text_time':
+
+				$value = TestContent::time();
+
+				break;
 
 			case 'select_timezone':
 
