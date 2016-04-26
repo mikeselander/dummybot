@@ -28,6 +28,15 @@ class AdminPage{
 	 */
 	private $definitions;
 
+	/**
+	 * connected
+	 * Whether or not we're successfully connected to the Internet.
+	 *
+	 * @var boolean
+	 * @access private
+	 */
+	private $connected;
+
 
 	/**
 	 * Hooks function.
@@ -38,7 +47,9 @@ class AdminPage{
 	 */
 	public function hooks(){
 
-		$this->definitions = $this->plugin->get_definitions();
+		$connection = new ConnectionTest;
+		$this->definitions	= $this->plugin->get_definitions();
+		$this->connected	= $connection->test();
 
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
@@ -114,7 +125,7 @@ class AdminPage{
 		}
 
 		// Check the response
-		if ( $this->test_splashbase_api() ) {
+		if ( $this->connected ) {
 			// We got a response so early return
 			return;
 		} else {
@@ -123,65 +134,6 @@ class AdminPage{
 		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'otm-test-content' ).'</p>';
 		    echo '</div>';
 		}
-
-	}
-
-
-	/**
-	 * A more intelligent check to see if we can connect to Splashbase or not.
-	 *
-	 * This function checks whether or not we can connect to the Internet, and
-	 * if we can, whether we can connect to Splashbase itself. This is used by
-	 * our admin notice function to check whether or not we should display a notice
-	 * to users warning them of issues with Splashbase.
-	 *
-	 * The purpose of this is to avoid useless bug-hunting when images don't work.
-	 *
-	 * @access private
-	 *
-	 * @see fsockopen, get_site_option, wp_remote_get
-	 *
-	 * @return boolean Status of connection to Splashbase.
-	 */
-	private function test_splashbase_api(){
-
-		/*
-		 * Test #1 - Check for Airplane Mode plugin status
-		 */
-		if ( class_exists( 'Airplane_Mode_Core' ) ){
-			// Is airplane mode active?
-			$airplane_mode = get_site_option( 'airplane-mode' );
-
-			if ( $airplane_mode === 'on' ){
-				return false;
-			}
-		}
-		
-		/*
-		 * Test #2 - Check Internet connection in general
-		 */
-		// Attempt to open a socket connection to Google
-		$connected = @fsockopen( "www.google.com", 80 );
-
-		if ( !$connected ){
-			return false;
-		}
-
-		// Close out our 1st test
-		fclose( $connected );
-
-		/*
-		 * Test #3 - Check Splashbase itself
-		 */
-		$test_url = 'http://www.splashbase.co/api/v1/images/';
-		$response = wp_remote_get( $test_url );
-
-		if ( !is_array( $response ) ){
-			return false;
-		}
-
-		// We've made it this far, looks like everything checks out OK!
-		return true;
 
 	}
 
@@ -289,9 +241,6 @@ class AdminPage{
 
 			$html .= '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";
 
-			// Loop through all other cpts
-			$post_types = get_post_types( array( 'public' => true ), 'objects' );
-
 			$html .= "<div>";
 
 			$html .= "<div class='test-data-cpt'>";
@@ -301,7 +250,11 @@ class AdminPage{
 				$html .= "</h3>";
 			$html .= "</div>";
 
+			$html .= "<input type='hidden' id='connection-status' calue='".$this->connected."'>";
+
 			// Loop through every post type available on the site
+			$post_types = get_post_types( array( 'public' => true ), 'objects' );
+
 			foreach ( $post_types as $post_type ) {
 
 				$skipped_cpts = array(
