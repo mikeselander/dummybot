@@ -11,13 +11,23 @@ namespace testContent;
 class AdminPage{
 
 	/**
-	 * file
-	 * Parent file that calls this class.
+	 * plugin
+	 * Access to definitions.
 	 *
 	 * @var string
 	 * @access private
 	 */
-	private $file;
+	private $plugin;
+
+	/**
+	 * plugin
+	 * Access to definitions.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $definitions;
+
 
 	/**
 	 * Hooks function.
@@ -26,16 +36,29 @@ class AdminPage{
 	 *
 	 * @see admin_menu, wp_ajax actions
 	 */
-	public function hooks( $file ){
+	public function hooks(){
 
-		$this->file = $file;
+		$this->definitions = $this->plugin->get_definitions();
 
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
-		add_filter( 'plugin_action_links_' . plugin_basename( $file ) , array( $this, 'add_settings_link' ) );
+		add_filter( 'plugin_action_links_' . $this->definitions->basename , array( $this, 'add_settings_link' ) );
 		add_action( 'admin_notices', array( $this, 'internet_connected_admin_notice' ) );
 
+	}
+
+
+	/**
+	 * Set a reference to the main plugin instance.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param Structure_Plugin $plugin Main plugin instance.
+	 */
+	public function set_plugin( $plugin ) {
+		$this->plugin = $plugin;
+		return $this;
 	}
 
 
@@ -45,7 +68,7 @@ class AdminPage{
 	 * @see load_plugin_textdomain
 	 */
 	public function load_textdomain() {
-	    load_plugin_textdomain( 'otm-test-content', FALSE, basename( dirname( $this->file ) ) . '/languages/' );
+	    load_plugin_textdomain( 'otm-test-content', FALSE, basename( dirname( $this->definitions->file ) ) . '/languages/' );
 	}
 
 

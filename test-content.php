@@ -12,21 +12,56 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-// Define a list of subfolders to poke through for files
-$dirs = array(
-	'includes'
+namespace testContent;
+
+/**
+ * Autoloader callback.
+ *
+ * Converts a class name to a file path and requires it if it exists.
+ *
+ * @param string $class Class name.
+ */
+
+function test_content_autoloader( $class ) {
+ 	if ( __NAMESPACE__ !== explode( '\\', $class )[0] ){
+ 		return;
+ 	}
+
+	$class = str_replace( __NAMESPACE__ . '\\', '', $class );
+	$class = strtolower( preg_replace( '/(?<!^)([A-Z])/', '-\\1', $class ) );
+
+ 	$file  = dirname( __FILE__ ) . '/includes/class-' . $class . '.php';
+
+ 	if ( file_exists( $file ) ) {
+ 		require_once( $file );
+ 	}
+ }
+ spl_autoload_register( __NAMESPACE__ . '\test_content_autoloader' );
+
+ /**
+  * Retrieve the main plugin instance.
+  *
+  * @return Plugin
+  */
+ function plugin() {
+ 	static $instance;
+
+ 	if ( null === $instance ) {
+ 		$instance = new Plugin();
+ 	}
+
+ 	return $instance;
+ }
+
+ plugin()->set_definitions(
+	(object) array(
+		'basename'	=> plugin_basename( __FILE__ ),
+		'directory'	=> plugin_dir_path( __FILE__ ),
+		'file'		=> __FILE__,
+		'slug' 		=> 'structure',
+		'url'		=> plugin_dir_url( __FILE__ )
+	)
 );
 
-/*
- * Pseudo-autoload all necessary files
- *
- * Loop through our directory array and require any PHP files without individual calls.
- */
-foreach ( $dirs as $dir ){
-	foreach ( glob( plugin_dir_path( __FILE__ ) . "/$dir/*.php", GLOB_NOSORT ) as $filename ){
-	    require_once $filename;
-	}
-}
-
-$admin_page = new testContent\AdminPage;
-$admin_page->hooks( __FILE__ );
+ // Register hook providers.
+ plugin()->register_hooks( new AdminPage() );
