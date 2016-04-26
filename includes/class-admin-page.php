@@ -130,7 +130,7 @@ class AdminPage{
 			return;
 		} else {
 			// We didn't get a reponse so print the notice out
-			echo '<div class="notice notice-error is-dismissible">';
+			echo '<div class="notice notice-error">';
 		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'otm-test-content' ).'</p>';
 		    echo '</div>';
 		}
@@ -197,7 +197,7 @@ class AdminPage{
 		if ( $data['type'] == 'post' ){
 
 			$create_content = new CreatePost;
-			$create_content->create_post_type_content( $data['slug'], true, 1 );
+			$create_content->create_post_type_content( $data['slug'], $data['connection'], true, 1 );
 
 		} elseif( $data['type'] == 'term' ){
 
@@ -250,7 +250,7 @@ class AdminPage{
 				$html .= "</h3>";
 			$html .= "</div>";
 
-			$html .= "<input type='hidden' id='connection-status' calue='".$this->connected."'>";
+			$html .= "<input type='hidden' id='connection-status' value='".$this->connected."'>";
 
 			// Loop through every post type available on the site
 			$post_types = get_post_types( array( 'public' => true ), 'objects' );

@@ -50,7 +50,7 @@ class ConnectionTest{
 		}
 
 		/*
-		 * Test #3 - Check Splashbase itself
+		 * Test #3 - Check External URL itself (Splashbase here)
 		 */
 		if ( ! $this->check_external_url( 'http://www.splashbase.co/api/v1/images/' ) ){
 			return false;
@@ -60,6 +60,8 @@ class ConnectionTest{
 		return true;
 
 	}
+
+
 
 	private function check_admin_page(){
 		global $current_screen;
@@ -84,6 +86,8 @@ class ConnectionTest{
 
 	}
 
+
+
 	private function check_airplane_mode(){
 
 		if ( class_exists( 'Airplane_Mode_Core' ) ){
@@ -98,6 +102,8 @@ class ConnectionTest{
 		return true;
 
 	}
+
+
 
 	private function check_internet(){
 
@@ -114,6 +120,8 @@ class ConnectionTest{
 		return true;
 
 	}
+
+
 
 	private function check_external_url( $url ){
 

@@ -169,7 +169,7 @@ class Metaboxes{
 	 * @param int $post_id Single post ID.
 	 * @param array $cmb custom metabox array from CMB2.
 	 */
-	public function random_metabox_content( $post_id, $cmb ){
+	public function random_metabox_content( $post_id, $cmb, $connected ){
 		$value = '';
 
 		// First check that our post ID & cmb array aren't empty
@@ -311,7 +311,9 @@ class Metaboxes{
 
 			case 'file':
 
-				$value = TestContent::image( $post_id );
+				if ( true == $connected ){
+					$value = TestContent::image( $post_id );
+				}
 
 				break;
 

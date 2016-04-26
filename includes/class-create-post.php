@@ -43,10 +43,11 @@ class CreatePost{
 	 * @see $this->get_cpt_supports, $this->get_metaboxes, $this->create_test_object
 	 *
 	 * @param string $slug a custom post type ID.
+	 * @param boolean $connection Whether or not we're connected to the Internet.
 	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_post_type_content( $slug, $echo = false, $num = '' ){
+	public function create_post_type_content( $slug, $connection, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $slug ) ){
@@ -56,6 +57,9 @@ class CreatePost{
 		// Gather the necessary data to create the posts
 		$supports 	= $this->get_cpt_supports( $slug );
 		$metaboxes	= $this->metaboxes->get_metaboxes( $slug );
+
+		// Set our connection status for the rest of the methods
+		$this->connected = $connection;
 
 		// If we forgot to put in a quantity, make one for us
 		if ( empty( $num ) ){
@@ -123,7 +127,7 @@ class CreatePost{
 		add_post_meta( $post_id, 'evans_test_content', '__test__', true );
 
 		// Add thumbnail if supported
-		if ( $supports['thumbnail'] === true || in_array( $slug, array( 'post', 'page' ) ) ){
+		if ( $this->connected == true && ( $supports['thumbnail'] === true || in_array( $slug, array( 'post', 'page' ) ) ) ){
 			 update_post_meta( $post_id, '_thumbnail_id', TestContent::image( $post_id ) );
 		}
 
@@ -137,7 +141,7 @@ class CreatePost{
 		// Spin up metaboxes
 		if ( !empty( $metaboxes ) ){
 			foreach ( $metaboxes as $cmb ) :
-				$return .= $this->metaboxes->random_metabox_content( $post_id, $cmb );
+				$return .= $this->metaboxes->random_metabox_content( $post_id, $cmb, $this->connected );
 			endforeach;
 		}
 

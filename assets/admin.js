@@ -11,7 +11,8 @@ jQuery(document).ready(function($) {
 		var todo = jQuery( this ).data( 'todo' ),
 			slug = jQuery( this ).data( 'slug' ),
 			type = jQuery( this ).data( 'type' ),
-			qty  = jQuery( '#quantity-adjustment' ).val();
+			qty  = jQuery( '#quantity-adjustment' ).val(),
+			connection = jQuery( '#connection-status' ).val();
 
 		// Setup data on our help
 		var data = {
@@ -19,6 +20,7 @@ jQuery(document).ready(function($) {
 			'todo' : todo,
 			'slug' : slug,
 			'type' : type,
+			'connection' : connection,
 			'nonce' : test_content.nonce
 		};
 
