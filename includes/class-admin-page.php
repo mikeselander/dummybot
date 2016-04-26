@@ -146,7 +146,19 @@ class AdminPage{
 	private function test_splashbase_api(){
 
 		/*
-		 * Test #1 - Check Internet connection in general
+		 * Test #1 - Check for Airplane Mode plugin status
+		 */
+		if ( class_exists( 'Airplane_Mode_Core' ) ){
+			// Is airplane mode active?
+			$airplane_mode = get_site_option( 'airplane-mode' );
+
+			if ( $airplane_mode === 'on' ){
+				return false;
+			}
+		}
+		
+		/*
+		 * Test #2 - Check Internet connection in general
 		 */
 		// Attempt to open a socket connection to Google
 		$connected = @fsockopen( "www.google.com", 80 );
@@ -157,20 +169,6 @@ class AdminPage{
 
 		// Close out our 1st test
 		fclose( $connected );
-
-
-		/*
-		 * Test #2 - Check for Airplane Mode plugin status
-		 */
-		if ( class_exists( 'Airplane_Mode_Core' ) ){
-			// Is airplane mode active?
-			$airplane_mode = get_site_option( 'airplane-mode' );
-
-			if ( $airplane_mode === 'on' ){
-				return false;
-			}
-		}
-
 
 		/*
 		 * Test #3 - Check Splashbase itself

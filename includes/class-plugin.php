@@ -31,8 +31,8 @@ class Plugin{
 	/**
 	 * Set the plugin definitions.
 	 *
-	 * @param  string $basename Relative path from the main plugin directory.
-	 * @return string
+	 * @param  object $definitions Information about the plugin
+	 * @return object $this
 	 */
 	public function set_definitions( $definitions ) {
 
@@ -46,7 +46,7 @@ class Plugin{
 	 * Register hook function.
 	 *
 	 * @param  object $provider Hook provider.
-	 * @return $this
+	 * @return object $this
 	 */
 	public function register_hooks( $provider ) {
 

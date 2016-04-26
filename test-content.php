@@ -21,7 +21,6 @@ namespace testContent;
  *
  * @param string $class Class name.
  */
-
 function test_content_autoloader( $class ) {
  	if ( __NAMESPACE__ !== explode( '\\', $class )[0] ){
  		return;
@@ -38,10 +37,11 @@ function test_content_autoloader( $class ) {
  }
  spl_autoload_register( __NAMESPACE__ . '\test_content_autoloader' );
 
+
  /**
-  * Retrieve the main plugin instance.
+  * Retrieve the plugin instance.
   *
-  * @return Plugin
+  * @return object Plugin
   */
  function plugin() {
  	static $instance;
@@ -53,6 +53,7 @@ function test_content_autoloader( $class ) {
  	return $instance;
  }
 
+// Set our definitions for later use
  plugin()->set_definitions(
 	(object) array(
 		'basename'	=> plugin_basename( __FILE__ ),
