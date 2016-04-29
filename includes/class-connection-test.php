@@ -6,7 +6,7 @@ namespace testContent;
  *
  * A more intelligent check to see if we can connect to Splashbase or not.
  *
- * This function checks whether or not we can connect to the Internet, and
+ * This class checks whether or not we can connect to the Internet, and
  * if we can, whether we can connect to Splashbase itself. This is used by
  * our admin notice function to check whether or not we should display a notice
  * to users warning them of issues with Splashbase.
@@ -62,7 +62,19 @@ class ConnectionTest{
 	}
 
 
-
+	/**
+	 * Check to make sure that we're only running this check in the correct place.
+	 *
+	 * We only want these (relatively)expensive checks to run on a single admin
+	 * page, so we need to run some checks first and verify that we're on the
+	 * right screen.
+	 *
+	 * @access private
+	 *
+	 * @global object $current_screen Current admin screen info.
+	 *
+	 * @return boolean Whether or not we're in the right place.
+	 */
 	private function check_admin_page(){
 		global $current_screen;
 
@@ -87,7 +99,15 @@ class ConnectionTest{
 	}
 
 
-
+	/**
+	 * Check if we have Airplane Mode and if it's turned on or not.
+	 *
+	 * @access private
+	 *
+	 * @see get_site_option
+	 *
+	 * @return boolean Connected or not.
+	 */
 	private function check_airplane_mode(){
 
 		if ( class_exists( 'Airplane_Mode_Core' ) ){
@@ -104,7 +124,15 @@ class ConnectionTest{
 	}
 
 
-
+	/**
+	 * Attempt to open a socket to a popular, compact to check overall connectivity.
+	 *
+	 * @access private
+	 *
+	 * @see fsockopen, fsockclose
+	 *
+	 * @return boolean Connected or not.
+	 */
 	private function check_internet(){
 
 		// Attempt to open a socket connection to Google
@@ -122,7 +150,16 @@ class ConnectionTest{
 	}
 
 
-
+	/**
+	 * Check an external API to see if it's reachable or not.
+	 *
+	 * @access private
+	 *
+	 * @see wp_remote_get
+	 *
+	 * @param string $url External URL to attempt to reach.
+	 * @return boolean Connected or not.
+	 */
 	private function check_external_url( $url ){
 
 		$test_url = esc_url( $url );
