@@ -67,5 +67,5 @@ function test_content_autoloader( $class ) {
  // Register hook providers.
  plugin()->register_hooks( new AdminPage() );
 
- // Load textdomain hook
- add_action( 'plugins_loaded', array( plugin(), 'load_textdomain' ) );
+// Load textdomain hook
+add_action( 'plugins_loaded', array( plugin(), 'load_textdomain' ) );
