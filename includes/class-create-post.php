@@ -120,6 +120,11 @@ class CreatePost{
 			$post['post_content'] = TestContent::paragraphs();
 		}
 
+		// Add excerpt content if supported
+		if ( $supports['excerpt'] === true ){
+			$post['post_excerpt'] = TestContent::plain_text();
+		}
+
 		// Insert then post object
 		$post_id = wp_insert_post( $post );
 
@@ -178,6 +183,7 @@ class CreatePost{
 		$supports = array(
 			'title'		=> post_type_supports( $slug, 'title' ),
 			'editor'	=> post_type_supports( $slug, 'editor' ),
+			'excerpt'	=> post_type_supports( $slug, 'excerpt' ),
 			'thumbnail'	=> post_type_supports( $slug, 'thumbnail' )
 		);
 
