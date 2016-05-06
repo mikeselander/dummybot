@@ -2,7 +2,7 @@
 namespace testContent;
 
 /**
- * Class to build test data for custom post types.
+ * Class to handle deletion of test data for the plugin.
  *
  * @package    WordPress
  * @subpackage Evans
@@ -11,23 +11,56 @@ namespace testContent;
 class Delete{
 
 	/**
+	 * Delete all test content created ever.
+	 *
+	 * @access private
+	 */
+	public function delete_all_test_data(){
+
+		if ( !$this->user_can_delete() ){
+			return;
+		}
+
+		// Loop through all post types and remove any test data
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		foreach ( $post_types as $post_type ) :
+
+		    $this->delete_posts( $post_type->name );
+
+		endforeach;
+
+		// Loop through all taxonomies and remove any data
+		$taxonomies = get_taxonomies();
+		foreach ( $taxonomies as $tax ) :
+
+		    $this->delete_terms( $tax );
+
+		endforeach;
+
+	}
+
+
+	/**
 	 * Delete test data posts.
 	 *
 	 * This function will search for all posts of a particular post type ($slug)
 	 * and delete them all using a particular cmb flag that we set when creating
 	 * the posts. Validates the user first.
 	 *
-	 * @access private
-	 *
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $slug a custom post type ID.
+	 * @param boolean $echo Whether or not to echo the result
 	 */
 	public function delete_posts( $slug, $echo = false ){
 
+		// Make sure that the current user is logged in & has full permissions.
+		if ( !$this->user_can_delete() ){
+			return;
+		}
+
 		// Check that $cptslg has a string.
-		// Also make sure that the current user is logged in & has full permissions.
-		if ( empty( $slug ) || !is_user_logged_in() || !current_user_can( 'delete_posts' ) ){
+		if ( empty( $slug ) ){
 			return;
 		}
 
@@ -98,6 +131,12 @@ class Delete{
 	 */
 	private function delete_associated_media( $pid ){
 
+		// Make sure that the current user is logged in & has full permissions.
+		if ( !$this->user_can_delete() ){
+			return;
+		}
+
+		// Make sure $pid is, in fact, an ID
 		if ( !is_int( $pid ) ){
 			return;
 		}
@@ -116,6 +155,7 @@ class Delete{
 
 	}
 
+
 	/**
 	 * Delete test data terms.
 	 *
@@ -123,13 +163,22 @@ class Delete{
 	 * and delete them all using a particular term_meta flag that we set when creating
 	 * the posts. Validates the user first.
 	 *
-	 * @access private
-	 *
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $slug a custom post type ID.
+	 * @param boolean $echo Whether or not to echo the result
 	 */
 	public function delete_terms( $slug, $echo = false ){
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( !$this->user_can_delete() ){
+			return;
+		}
+
+		// Check that $cptslg has a string.
+		if ( empty( $slug ) ){
+			return;
+		}
 
 		// Query for our terms
 		$args = array(
@@ -175,6 +224,29 @@ class Delete{
 			echo \json_encode( $events );
 
 		}
+
+	}
+
+
+	/**
+	 * Run some checks to make sure that our user is allowed to delete data.
+	 *
+	 * @see is_user_logged_in, current_user_can
+	 */
+	private function user_can_delete(){
+
+		// User must be logged in
+		if ( !is_user_logged_in() ){
+			return false;
+		}
+
+		// User must have editor priveledges, at a minimum
+		if ( !current_user_can( 'delete_others_posts' ) ){
+			return false;
+		}
+
+		// We passed all the checks, hooray!
+		return true;
 
 	}
 

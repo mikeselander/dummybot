@@ -15,18 +15,5 @@ if ( ! current_user_can( 'activate_plugins' ) ){
 require dirname( __FILE__ ) . '/includes/class-delete.php';
 $delete = new test\Delete;
 
-// Loop through all post types and remove any test data
-$post_types = get_post_types( array( 'public' => true ), 'objects' );
-foreach ( $post_types as $post_type ) :
-
-    $delete->delete_posts( $post_type->name );
-
-endforeach;
-
-// Loop through all taxonomies and remove any data
-$taxonomies = get_taxonomies();
-foreach ( $taxonomies as $tax ) :
-
-    $delete->delete_terms( $tax );
-
-endforeach;
+// Delete all the things
+$delete->delete_all_test_data();
