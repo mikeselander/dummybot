@@ -1,12 +1,29 @@
 <?php
 namespace testContent\Views;
 
+
+/**
+ * Generate view for creating and deleting terms.
+ *
+ * @abstract
+ * @package    WordPress
+ * @subpackage Test Content
+ * @author     Old Town Media
+ */
 class Terms extends View{
 
 	protected $title	= 'Terms';
 	protected $type		= 'term';
 	protected $priority	= 2;
 
+
+	/**
+	 * Our sections action block - button to create and delete.
+	 *
+	 * @access protected
+	 *
+	 * @return string HTML content.
+	 */
 	protected function actions_section(){
 		$html = '';
 

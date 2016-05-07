@@ -1,12 +1,27 @@
 <?php
 namespace testContent\Views;
 
+/**
+ * Generate view for creating and deleting posts.
+ *
+ * @abstract
+ * @package    WordPress
+ * @subpackage Test Content
+ * @author     Old Town Media
+ */
 class Posts extends View{
 
 	protected $title	= 'Posts';
 	protected $type		= 'post';
 	protected $priority	= 1;
 
+	/**
+	 * Our sections action block - button to create and delete.
+	 *
+	 * @access protected
+	 *
+	 * @return string HTML content.
+	 */
 	protected function actions_section(){
 		$html = '';
 

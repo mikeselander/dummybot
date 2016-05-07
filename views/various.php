@@ -1,12 +1,29 @@
 <?php
 namespace testContent\Views;
 
+
+/**
+ * Generate view for other various test content action
+ *
+ * @abstract
+ * @package    WordPress
+ * @subpackage Test Content
+ * @author     Old Town Media
+ */
 class Various extends View{
 
 	protected $title	= 'Various';
 	protected $type		= 'all';
 	protected $priority	= 3;
 
+
+	/**
+	 * Our sections action block - button to create and delete.
+	 *
+	 * @access protected
+	 *
+	 * @return string HTML content.
+	 */
 	protected function actions_section(){
 		$html = '';
 
@@ -21,6 +38,19 @@ class Various extends View{
 
 		$html .= "</div>";
 
+		return $html;
+	}
+
+
+	/**
+	 * We don't need any options on this page, so returning it empty
+	 *
+	 * @access protected
+	 *
+	 * @param string $html Existing HTML content.
+	 * @return string HTML section content.
+	 */
+	protected function options_section( $html = '' ){
 		return $html;
 	}
 
