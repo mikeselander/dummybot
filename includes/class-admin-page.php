@@ -234,7 +234,6 @@ class AdminPage{
 	 * Print out our admin page to control test data.
 	 */
 	public function admin_page(){
-
 		echo '<div class="wrap" id="options_editor">' . "\n";
 
 			echo '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";

@@ -28,7 +28,7 @@ abstract class View{
 	public function view(){
 		$html = '';
 
-		$html .= "<section>";
+		$html .= "<section class='test-content-tab'>";
 			$html .= $this->actions_section();
 			$html .= $this->options_section();
 		$html .= "</section>";

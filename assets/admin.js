@@ -1,5 +1,20 @@
 jQuery(document).ready(function($) {
 
+	// Trigger our first tab to display
+	$( '#options_editor .nav-tab' ).first().addClass( 'nav-tab-active' );
+	$( '#options_editor .test-content-tab' ).first().show();
+
+	$( document ).on( 'click', '#options_editor .nav-tab', function() {
+		//
+		$( '.test-content-tab' ).hide();
+		$( '.test-content-tab' ).eq( $( this ).index() ).show();
+
+		//Swap classes from inactive tab
+		$( '#options_editor .nav-tab' ).removeClass( 'nav-tab-active' );
+		$( this ).addClass( 'nav-tab-active' );
+		return false;
+	})
+
 	// Simple script to bump down the status box to the bottom
 	function scrollToBottom( div ){
 		div.scrollTop = div.scrollHeight;

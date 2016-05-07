@@ -1,17 +1,18 @@
-.test-data-cpt span.label{
+.test-content-tab{
+	display: none;
+	border-top: 1px solid #ccc;
+}
+
+.test-content-tab span.label{
 	display: block;
 	padding-bottom: 4px;
 }
 
-.test-data-cpt .term-box{
-	padding-left: 25px;
+.test-content-tab .handle-test-data{
+	margin-right: 5px;
 }
 
-.test-data-cpt .term-box span.label{
-	font-size: .9em;
-}
-
-.handle-test-data .dashicons{
+.test-content-tab .dashicons{
 	margin-top: 4px;
 	font-size: 1.2em
 }
@@ -26,13 +27,13 @@
 }
 
 @media screen and (min-width: 500px){
-	.test-data-cpt span.label{
+	.test-content-tab span.label{
 		width: 20%;
 		display: inline-block;
 		padding-bottom: 2px;
 	}
 
-	.test-data-cpt span.label + .button-primary{
+	.test-content-tab span.label + .button-primary{
 		clear: none;
 	}
 }
