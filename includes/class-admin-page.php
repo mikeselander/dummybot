@@ -241,16 +241,15 @@ class AdminPage{
 
 			$html .= '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";
 
+			$html .= "<h2 class='nav-tab-wrapper'>";
+
+				$html .= apply_filters( 'tc-admin-tabs', '', $attr, $content );
+
+			$html .= "</h2>";
+
+			$html .= apply_filters( 'tc-admin-sections', '', $attr, $content );
+
 			$html .= "<div>";
-
-			$html .= "<div class='test-data-cpt'>";
-				$html .= "<h3>";
-					$html .= "<span class='label'>".__( 'Quantity', 'otm-test-content' )."</span>";
-					$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>".__( 'Set to 0 to keep random', 'otm-test-content' )."</i></small>";
-				$html .= "</h3>";
-			$html .= "</div>";
-
-			$html .= "<input type='hidden' id='connection-status' value='".$this->connected."'>";
 
 			// Loop through every post type available on the site
 			$post_types = get_post_types( array( 'public' => true ), 'objects' );

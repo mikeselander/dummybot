@@ -57,7 +57,7 @@ abstract class View{
 		return $html;
 	}
 
-	protected function build_button( $action, $slug ){
+	protected function build_button( $action, $slug, $text ){
 		$html = $dashicon = '';
 
 		if ( $action == 'create' ){
@@ -73,7 +73,7 @@ abstract class View{
 			$html .= " class='button-primary handle-test-data'";
 		$html .= "/>";
 			$html .= "<span class='dashicons " . $dashicon . "'></span>";
-			$html .= __( 'Create Test Data', 'otm-test-content' );
+			$html .= $text;
 		$html .= "</a>";
 
 		return $html;
