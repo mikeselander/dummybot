@@ -99,7 +99,7 @@ class CreatePost{
 		$return = '';
 
 		// Get a random title
-		$title = TestContent::title();
+		$title = apply_filters( "tc_{$slug}_post_title", TestContent::title() );
 
 		// First, insert our post
 		$post = array(
@@ -117,16 +117,16 @@ class CreatePost{
 
 		// Add main content if supported
 		if ( $supports['editor'] === true ){
-			$post['post_content'] = TestContent::paragraphs();
+			$post['post_content'] = apply_filters( "tc_{$slug}_post_content", TestContent::paragraphs() );
 		}
 
 		// Add excerpt content if supported
 		if ( $supports['excerpt'] === true ){
-			$post['post_excerpt'] = TestContent::plain_text();
+			$post['post_excerpt'] = apply_filters( "tc_{$slug}_post_excerpt", TestContent::plain_text() );
 		}
 
 		// Insert then post object
-		$post_id = wp_insert_post( $post );
+		$post_id = wp_insert_post( apply_filters( "tc_{$slug}_post_arguments", $post ) );
 
 		// Then, set a test content flag on the new post for later deletion
 		add_post_meta( $post_id, 'evans_test_content', '__test__', true );

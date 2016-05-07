@@ -67,14 +67,15 @@ class CreateTerm{
 	private function create_test_object( $slug ){
 
 		// Get a random title
-		$title = TestContent::title();
+		$title = apply_filters( "tc_{$slug}_term_title", TestContent::title() );
 
 		$return = wp_insert_term(
 			$title,
 			$slug,
-			array(
-				'description'=> TestContent::title(),
-				'slug' => sanitize_title( $title ),
+			apply_filters( "tc_{$slug}_term_arguments", array(
+					'description'=> TestContent::title(),
+					'slug' => sanitize_title( $title ),
+				)
 			)
 		);
 

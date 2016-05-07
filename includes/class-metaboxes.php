@@ -330,6 +330,11 @@ class Metaboxes{
 		// Value must exist to attempt to insert
 		if ( !empty( $value ) && !is_wp_error( $value ) ){
 
+			$type 	= $cmb['type'];
+			$id		= $cmb['id'];
+			$value = apply_filters( "tc_{$type}_metabox", $value );	// Filter by metabox type
+			$value = apply_filters( "tc_{$id}_metabox", $value ); // Filter by metabox ID
+
 			// Files must be treated separately - they use the attachment ID
 			// & url of media for separate cmb values
 			if ( $cmb['type'] != 'file' ){

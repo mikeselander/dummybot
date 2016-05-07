@@ -76,7 +76,7 @@ class TestContent{
 			$title .= $random_words[ rand( 0, 31 ) ] . " ";
 		}
 
-		return substr( $title, 0, -1 );
+		return apply_filters( "tc_title_data", substr( $title, 0, -1 ) );
 
 	}
 
@@ -354,7 +354,7 @@ CSSland,
 			$content .= $random_content_types[rand( 0, 12 )];
 		}
 
-		return $content;
+		return apply_filters( "tc_paragraphs_data", $content );
 
 	}
 
@@ -381,7 +381,7 @@ CSSland,
 			'Fusce semper erat tortor, at pulvinar risus luctus suscipit. Phasellus quis enim nisl. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas semper dapibus odio, nec pellentesque sem laoreet sit amet. Maecenas ut enim tellus. Fusce malesuada mattis sem, porta interdum ex fermentum quis. Ut eget quam mi. In molestie volutpat feugiat. Nulla vel viverra nunc. Integer lobortis nisl vitae placerat egestas. Curabitur tristique nulla at libero blandit, a eleifend augue tempus.',
 		);
 
-		return $paragraphs[ rand( 0, 9 ) ];
+		return apply_filters( "tc_plain_text_data", $paragraphs[ rand( 0, 9 ) ] );
 
 	}
 
@@ -439,7 +439,7 @@ CSSland,
 	        error_log( $image_id->get_error_message() );
 	    }
 
-	    return $image_id;
+	    return apply_filters( "tc_image_data", $image_id );
 
 	}
 
@@ -493,7 +493,9 @@ CSSland,
 	public static function date( $format ){
 
 		$num_days = rand( 1, 60 );
-		return date( $format, strtotime( " +$num_days days" ) );
+		$date = date( $format, strtotime( " +$num_days days" ) );
+
+		return apply_filters( "tc_date_data", $date );
 
 	}
 
@@ -517,7 +519,7 @@ CSSland,
 			date( 'G:i A', strtotime( " +".rand( 4, 24 )." hours" ) )
 		);
 
-		return $times[ rand( 0, 6 ) ];
+		return apply_filters( "tc_time_data", $times[ rand( 0, 6 ) ] );
 
 	}
 
@@ -547,7 +549,7 @@ CSSland,
 			'UTC'
 		);
 
-		return $timezones[ rand( 0, 12 ) ];
+		return apply_filters( "tc_timezone_data", $timezones[ rand( 0, 12 ) ] );
 
 	}
 
@@ -576,7 +578,7 @@ CSSland,
 			'+43 780 0047112'
 		);
 
-		return $phone_numbers[ rand( 0, 10 ) ];
+		return apply_filters( "tc_phone_data", $phone_numbers[ rand( 0, 10 ) ] );
 
 	}
 
@@ -601,7 +603,7 @@ CSSland,
 			'witch@theyellowbrickroad.com'
 		);
 
-		return $email_addresses[ rand( 0, 7 ) ];
+		return apply_filters( "tc_email_data", $email_addresses[ rand( 0, 7 ) ] );
 
 	}
 
@@ -628,7 +630,7 @@ CSSland,
 			'https://www.eff.org'
 		);
 
-		return $links[ rand( 0, 7 ) ];
+		return apply_filters( "tc_link_data", $links[ rand( 0, 7 ) ] );
 
 	}
 
@@ -650,7 +652,7 @@ CSSland,
 			'https://www.instagram.com/p/-eyLo0RMfX',
 		);
 
-		return $links[ rand( 0, 5 ) ];
+		return apply_filters( "tc_oembed_data", $links[ rand( 0, 5 ) ] );
 
 	}
 
@@ -708,7 +710,7 @@ CSSland,
 
 		}
 
-		return $links[ rand( 0, 8 ) ];
+		return apply_filters( "tc_video_data", $links[ rand( 0, 8 ) ] );
 
 	}
 
