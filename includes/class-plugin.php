@@ -59,6 +59,21 @@ class Plugin{
 
 	}
 
+
+	/**
+	 * Register hook function.
+	 *
+	 * @param  object $provider Hook provider.
+	 * @return object $this
+	 */
+	public function register_views( $provider ) {
+
+		$provider->register_view();
+		return $this;
+
+	}
+
+
 	/**
 	 * Load the textdomain for this plugin if translation is available
 	 *

@@ -22,20 +22,30 @@ namespace testContent;
  * @param string $class Class name.
  */
 function test_content_autoloader( $class ) {
- 	if ( __NAMESPACE__ !== explode( '\\', $class )[0] ){
+	$namespace = explode( '\\', $class );
+
+ 	if ( __NAMESPACE__ !== $namespace[0] ){
  		return;
  	}
 
-	$class = str_replace( __NAMESPACE__ . '\\', '', $class );
-	$class = strtolower( preg_replace( '/(?<!^)([A-Z])/', '-\\1', $class ) );
+    $class = str_replace( __NAMESPACE__ . '\\', '', $class );
 
- 	$file  = dirname( __FILE__ ) . '/includes/class-' . $class . '.php';
+
+	if ( 'Views' === $namespace[1] ){
+        $class = strtolower( preg_replace( '/(?<!^)([A-Z])/', '/\1', $class ) );
+        $class = str_replace( '\\', '', $class );
+     	$file  = dirname( __FILE__ ) . '/' . $class . '.php';
+    } else {
+        $class = strtolower( preg_replace( '/(?<!^)([A-Z])/', '-\\1', $class ) );
+     	$file  = dirname( __FILE__ ) . '/includes/class-' . $class . '.php';
+    }
 
  	if ( file_exists( $file ) ) {
  		require_once( $file );
  	}
  }
  spl_autoload_register( __NAMESPACE__ . '\test_content_autoloader' );
+
 
 
  /**
@@ -65,7 +75,9 @@ function test_content_autoloader( $class ) {
 );
 
  // Register hook providers.
- plugin()->register_hooks( new AdminPage() );
+ plugin()->register_hooks( new AdminPage() )
+         ->register_views( new Views\Posts() )
+         ->register_views( new Views\Terms() );
 
 // Load textdomain hook
 add_action( 'plugins_loaded', array( plugin(), 'load_textdomain' ) );

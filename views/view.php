@@ -9,23 +9,23 @@ abstract class View{
 
 	public function register_view(){
 
-		add_filter( 'tc-admin-tabs', array( $this, 'tab' ), $priority );
-		add_filter( 'tc-admin-sections', array( $this, 'view' ), $priority );
+		add_action( 'tc-admin-tabs', array( $this, 'tab' ), $this->priority );
+		add_action( 'tc-admin-sections', array( $this, 'view' ), $this->priority );
 
 	}
 
-	protected function tab(){
-		$html .= "";
+	public function tab(){
+		$html = "";
 
 		$html .= "<a class='nav-tab' href='javascript:void(0)'>";
 			$html .= $this->title;
 		$html .= "</a>";
 
-		return $html;
+		echo $html;
 
 	}
 
-	protected function view(){
+	public function view(){
 		$html = '';
 
 		$html .= "<section>";
@@ -33,7 +33,7 @@ abstract class View{
 			$html .= $this->options_section();
 		$html .= "</section>";
 
-		return $html;
+		echo $html;
 
 	}
 
@@ -51,8 +51,6 @@ abstract class View{
 				$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>".__( 'Set to 0 to keep random', 'otm-test-content' )."</i></small>";
 			$html .= "</h3>";
 		$html .= "</div>";
-
-		$html .= "<input type='hidden' id='connection-status' value='".$this->connected."'>";
 
 		return $html;
 	}

@@ -235,88 +235,27 @@ class AdminPage{
 	 */
 	public function admin_page(){
 
-		$html = "";
+		echo '<div class="wrap" id="options_editor">' . "\n";
 
-		$html .= '<div class="wrap" id="options_editor">' . "\n";
+			echo '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";
 
-			$html .= '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";
+			echo "<div class='nav-tab-wrapper'>";
 
-			$html .= "<h2 class='nav-tab-wrapper'>";
+				do_action( 'tc-admin-tabs', '' );
 
-				$html .= apply_filters( 'tc-admin-tabs', '', $attr, $content );
+			echo "</div>";
 
-			$html .= "</h2>";
+			echo "";
 
-			$html .= apply_filters( 'tc-admin-sections', '', $attr, $content );
+				do_action( 'tc-admin-sections', '' );
 
-			$html .= "<div>";
+			echo "";
 
-			// Loop through every post type available on the site
-			$post_types = get_post_types( array( 'public' => true ), 'objects' );
+			echo "<input type='hidden' id='connection-status' value='".$this->connected."'>";
 
-			foreach ( $post_types as $post_type ) {
+			echo "<pre class='test-data-status-box' id='status-updates'></pre>";
 
-				$skipped_cpts = array(
-					'attachment'
-				);
-
-				// Skip banned cpts
-				if ( in_array( $post_type->name, $skipped_cpts ) ){
-					continue;
-				}
-
-				$html .= "<div class='test-data-cpt'>";
-
-					// Create row for the post/page/cpt
-					$html .= "<h3>";
-
-						$html .= "<span class='label'>" . $post_type->labels->name . "</span>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-plus'></span> ".__( 'Create Test Data', 'otm-test-content' )."</a>";
-						$html .= " <a href='javascript:void(0);' data-type='post' data-slug='".$post_type->name."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash'></span> ".__( 'Delete Test Data', 'otm-test-content' )."</a>";
-
-					$html .= "</h3>";
-
-					// Create row for each taxonomy associated with the post/page/cpt
-					$taxonomies = get_object_taxonomies( $post_type->name );
-
-						if ( !empty( $taxonomies ) ){
-
-							foreach( $taxonomies as $tax ){
-
-								$html .= "<h3 class='term-box'>";
-
-								$skipped_taxonomies = array(
-									'post_format',				// We shouldn't be making random post format classes
-									'product_shipping_class'	// These aren't used visually and are therefore skipped
-								);
-
-								// Skip banned taxonomies
-								if ( in_array( $tax, $skipped_taxonomies ) ){
-									continue;
-								}
-
-								$taxonomy = get_taxonomy( $tax );
-
-								$html .= "<span class='label'>".$taxonomy->labels->name."</span>";
-
-								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='create' class='button-primary handle-test-data' /><span class='dashicons dashicons-category'></span> ".__( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
-
-								$html .= " <a href='javascript:void(0);' data-type='term' data-slug='".$tax."' data-todo='delete' class='button-primary handle-test-data' /><span class='dashicons dashicons-trash'></span> ".__( 'Delete', 'otm-test-content' )." ".$taxonomy->labels->name."</a>";
-
-								$html .= "</h3>";
-
-							}
-						}
-
-				$html .= "</div>";
-
-			}
-
-			$html .= "<pre class='test-data-status-box' id='status-updates'></pre>";
-
-		$html .= "</div>";
-
-		echo $html;
+		echo "</div>";
 
 	}
 

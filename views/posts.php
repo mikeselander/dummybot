@@ -8,7 +8,7 @@ class Posts extends View{
 	protected $priority	= 1;
 
 	protected function actions_section(){
-		$html .= '';
+		$html = '';
 
 		// Loop through every post type available on the site
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );

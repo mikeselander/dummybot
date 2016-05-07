@@ -3,12 +3,12 @@ namespace testContent\Views;
 
 class Terms extends View{
 
-	protected $title	= 'Posts';
-	protected $type		= 'post';
-	protected $priority	= 1;
+	protected $title	= 'Terms';
+	protected $type		= 'term';
+	protected $priority	= 2;
 
 	protected function actions_section(){
-		$html .= '';
+		$html = '';
 
 		$taxonomies = get_taxonomies();
 
