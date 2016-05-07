@@ -42,13 +42,11 @@ abstract class View{
 		return $html;
 	}
 
-	protected function options_section(){
-		$html = '';
-
+	protected function options_section( $html = '' ){
 		$html .= "<div class='test-data-cpt'>";
 			$html .= "<h3>";
 				$html .= "<span class='label'>".__( 'Quantity', 'otm-test-content' )."</span>";
-				$html .= "<input type='number' value='0' id='quantity-adjustment'> <small><i>".__( 'Set to 0 to keep random', 'otm-test-content' )."</i></small>";
+				$html .= "<input type='number' value='0' class='quantity-adjustment' for='".$this->type."' placeholder='".__( '', 'otm-test-content' )."'> ";
 			$html .= "</h3>";
 		$html .= "</div>";
 

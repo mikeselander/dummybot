@@ -26,7 +26,7 @@ jQuery(document).ready(function($) {
 		var todo = jQuery( this ).data( 'todo' ),
 			slug = jQuery( this ).data( 'slug' ),
 			type = jQuery( this ).data( 'type' ),
-			qty  = jQuery( '#quantity-adjustment' ).val(),
+			qty  = jQuery( '.quantity-adjustment[for="' + type + '"]' ).val(),
 			connection = jQuery( '#connection-status' ).val();
 
 		// Setup data on our help

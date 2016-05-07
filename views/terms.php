@@ -16,7 +16,8 @@ class Terms extends View{
 
 			$skipped_taxonomies = array(
 				'post_format',				// We shouldn't be making random post format classes
-				'product_shipping_class'	// These aren't used visually and are therefore skipped
+				'product_shipping_class',	// These aren't used visually and are therefore skipped
+				'nav_menu',					// Menus are handled seperately of taxonomies
 			);
 
 			// Skip banned taxonomies
