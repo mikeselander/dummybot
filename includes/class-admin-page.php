@@ -225,6 +225,10 @@ class AdminPage{
 
 			$delete_content->delete_terms( $data['slug'], true );
 
+		} elseif ( $data['type'] == 'all' ){
+
+			$delete_content->delete_all_test_data( true );
+
 		}
 
 	}

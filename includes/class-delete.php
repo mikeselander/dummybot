@@ -15,7 +15,7 @@ class Delete{
 	 *
 	 * @access private
 	 */
-	public function delete_all_test_data(){
+	public function delete_all_test_data( $echo = false ){
 
 		if ( !$this->user_can_delete() ){
 			return;
@@ -25,7 +25,7 @@ class Delete{
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
 		foreach ( $post_types as $post_type ) :
 
-		    $this->delete_posts( $post_type->name );
+		    $this->delete_posts( $post_type->name, $echo );
 
 		endforeach;
 
@@ -33,7 +33,7 @@ class Delete{
 		$taxonomies = get_taxonomies();
 		foreach ( $taxonomies as $tax ) :
 
-		    $this->delete_terms( $tax );
+		    $this->delete_terms( $tax, $echo );
 
 		endforeach;
 

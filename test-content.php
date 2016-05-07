@@ -74,10 +74,11 @@ function test_content_autoloader( $class ) {
 	)
 );
 
- // Register hook providers.
+ // Register hook providers and views.
  plugin()->register_hooks( new AdminPage() )
          ->register_views( new Views\Posts() )
-         ->register_views( new Views\Terms() );
+         ->register_views( new Views\Terms() )
+		 ->register_views( new Views\Various() );
 
 // Load textdomain hook
 add_action( 'plugins_loaded', array( plugin(), 'load_textdomain' ) );
