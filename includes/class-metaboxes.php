@@ -36,8 +36,105 @@ class Metaboxes{
 			$fields = $this->get_cmb1_metaboxes( $slug );
 		}
 
+		// Advanced Custom Fields (ACF Free)
+		if ( class_exists( 'acf', false ) ) {
+			$fields = $this->get_acf_free_metaboxes( $slug );
+		}
+
 		// Return our array
 		return $fields;
+
+	}
+
+
+	private function get_acf_free_metaboxes( $slug ){
+
+		// This damn plugin. Is. A. Freaking. Nightmare.
+		$fieldsets = $this->get_all_acf_field_groups();
+
+		if ( empty( $fieldsets ) ){
+			return true;
+		}
+
+		foreach ( $fieldsets as $fieldset ){
+
+			if ( $this->is_acf_field_in_post_type( $slug, $fieldset ) ){
+
+				// If this is the first group of fields, simply set the value
+				// Else, merge this group with the previous one
+				if ( empty( $fields ) ){
+					$fields = $fieldset->fields;
+				} else {
+					$fields = array_merge( $fields, $fieldset->fields );
+				}
+
+			}
+
+		}
+
+		return $fields;
+
+	}
+
+
+	private function is_acf_field_in_post_type( $slug, $fieldset ){
+
+		if ( empty( $fieldset ) ){
+			return;
+		}
+
+		foreach ( $fieldset->rules as $rule ){
+			if ( $rule['param'] === 'post_type' && $rule['value'] === $slug ){
+				return true;
+			}
+		}
+
+		return false;
+
+	}
+
+
+	private function get_all_acf_field_groups(){
+		$info = $rules = $fields = array();
+
+		$args = array(
+			'post_type'		=> 'acf',
+			'posts_per_page'=> 500
+		);
+
+		$objects = new \WP_Query( $args );
+
+		if ( $objects->have_posts() ) :
+			while ( $objects->have_posts() ) : $objects->the_post();
+
+				$data = get_metadata( 'post', get_the_id() );
+
+				foreach ( $data['rule'] as $rule ){
+					$rules[] = unserialize( $rule );
+				}
+
+				foreach ( $data as $key => $value ){
+					if ( substr( $key, 0, 6 ) == 'field_' ) :
+						$field_detail = unserialize( $value[0] );
+						$fields[] = array(
+							'key'	 => $field_detail['key'],
+							'type'	 => $field_detail['type'],
+							'name'	 => $field_detail['label'],
+							'id'	 => $field_detail['name'],
+							'source' =>'acf'
+						);
+					endif;
+				}
+
+				$info[] = (object) array(
+					'rules'		=> $rules,
+					'fields'	=> $fields
+				);
+
+			endwhile;
+		endif;
+
+		return $info;
 
 	}
 
@@ -342,6 +439,10 @@ class Metaboxes{
 			} else {
 				add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
 				add_post_meta( $post_id, $cmb['id'], wp_get_attachment_url( $value ), true );
+			}
+
+			if ( $cmb['source'] === 'acf' ){
+				add_post_meta( $post_id, '_' . $cmb['id'], $cmb['key'], true );
 			}
 
 		// If we're dealing with a WP Error object, just return the message for debugging
