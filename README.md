@@ -10,30 +10,23 @@ The panel to spin up content can be found under `Tools->Test Content`.
 
 
 ## Currently supported metabox libraries
+* [ACF](https://www.advancedcustomfields.com/)
 * [CMB2](https://github.com/WebDevStudios/CMB2)
 * [Custom-metaboxes and fields](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)
 
 
-## Planned to support in future
-* ACF-added metaboxes
-* Generically added cmbs
-* individual metadata
-* Users
-* Theme/plugin options
-
-
 ### General Notes
 * Uses namespace `testContent`
-* Currently only supports whole posts/cpts/terms on an automatic level
+* Plugin will only create and delete 'test' data - meaning that it will never delete your real information.
 
 
 ### Admin Panel
-![Admin Panel Example](https://mikeselander.com/wp-content/uploads/2016/04/screenshot1.jpg)
+![Admin Panel Example](https://mikeselander.com/wp-content/uploads/2016/05/screenshot1.png)
 
 
 ### Test Data
 
-You can spin up test data in a variety of formats using the `testContent\TestContent` class. There are a variety of formats and all methods are static because you only need one at a time. This class can be easily used stand-alone
+You can spin up test data in a variety of formats using the `testContent\TestContent` class. There are a variety of formats and all methods are static because you only need one at a time. This class can be easily used stand-alone.
 
 **Available methods:**
 
@@ -52,8 +45,25 @@ oembed()		// oembed-compatible link.
 video()			// (safe) Video link from YouTube or Vimeo
 ```
 
+### Filter All the Things!
 
-#### This is in active development - breaking changes might be made. 
+There are quite a few filters so that you can easily modify any of the content being created. Below is a list of the filters available, detailed documentation is coming.
+
+```php
+tc_{$type}_data
+tc_{$type}_metabox - Modifies created value according to type
+tc_{$id}_metabox
+tc_{$slug}_post_content
+tc_{$slug}_post_excerpt
+tc_{$slug}_post_title
+tc_{$slug}_post_arguments
+tc_{$slug}_term_title
+tc_{$slug}_term_arguments
+```
+
+
+
+#### This is in active development - breaking changes might be made.
 
 You will most likely not be affected by any since this plugin has no update mechanism. We will not remove any features, but might change HOW they are implemented without any notice. Soon, we will add filters & actions for you to be able to extend particular pieces but will not do this until we are satisfied that a section can be extended without breaking changes.
 
