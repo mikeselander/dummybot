@@ -431,25 +431,9 @@ class Metaboxes{
 		}
 
 		// Value must exist to attempt to insert
-		if ( !empty( $value ) && !is_wp_error( $value ) ){
+		if ( ! empty( $value ) && ! is_wp_error( $value ) ){
 
-			$type 	= $cmb['type'];
-			$id		= $cmb['id'];
-			$value = apply_filters( "tc_{$type}_metabox", $value );	// Filter by metabox type
-			$value = apply_filters( "tc_{$id}_metabox", $value ); // Filter by metabox ID
-
-			// Files must be treated separately - they use the attachment ID
-			// & url of media for separate cmb values
-			if ( $cmb['type'] != 'file' ){
-				add_post_meta( $post_id, $cmb['id'], $value, true );
-			} else {
-				add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
-				add_post_meta( $post_id, $cmb['id'], wp_get_attachment_url( $value ), true );
-			}
-
-			if ( $cmb['source'] === 'acf' ){
-				add_post_meta( $post_id, '_' . $cmb['id'], $cmb['key'], true );
-			}
+			$this->update_meta( $post_id, $value, $cmb );
 
 		// If we're dealing with a WP Error object, just return the message for debugging
 		} elseif ( is_wp_error( $value ) ){
@@ -458,5 +442,29 @@ class Metaboxes{
 		}
 
 	} // end random_metabox_content
+
+
+	private function update_meta( $post_id, $value, $cmb ){
+
+		$type 	= $cmb['type'];
+		$id		= $cmb['id'];
+		$value = apply_filters( "tc_{$type}_metabox", $value );	// Filter by metabox type
+		$value = apply_filters( "tc_{$id}_metabox", $value ); // Filter by metabox ID
+
+		// Files must be treated separately - they use the attachment ID
+		// & url of media for separate cmb values.
+		if ( $cmb['type'] != 'file' ){
+			add_post_meta( $post_id, $cmb['id'], $value, true );
+		} else {
+			add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
+			add_post_meta( $post_id, $cmb['id'], wp_get_attachment_url( $value ), true );
+		}
+
+		// Add extra, redundant meta. Because, why not have rows for the price of one?
+		if ( $cmb['source'] === 'acf' ){
+			add_post_meta( $post_id, '_' . $cmb['id'], $cmb['key'], true );
+		}
+
+	}
 
 }
