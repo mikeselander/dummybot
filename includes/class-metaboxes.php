@@ -23,39 +23,42 @@ class Metaboxes{
 	 * @return array Fields to fill in for our post object.
 	 */
 	public function get_metaboxes( $slug ){
-
-		$fields = array();
+		$cmb2_fields = $cmb_fields = $acf_fields = array();
 
 		// CMB2
 		if ( class_exists( 'CMB2', false ) ) {
-			$fields = $this->get_cmb2_metaboxes( $slug );
+			$cmb2_fields = $this->get_cmb2_metaboxes( $slug );
 		}
 
 		// Custom Metaboxes and Fields (CMB1)
 		if ( class_exists( 'cmb_Meta_Box', false ) ) {
-			$fields = $this->get_cmb1_metaboxes( $slug );
+			$cmb_fields = $this->get_cmb1_metaboxes( $slug );
 		}
 
 		// Advanced Custom Fields (ACF Free)
 		if ( class_exists( 'acf', false ) ) {
-			$fields = $this->get_acf_free_metaboxes( $slug );
+			$acf_fields = $this->get_acf_free_metaboxes( $slug );
 		}
 
 		// Return our array
-		return $fields;
+		return array_merge( $cmb2_fields, $cmb_fields, $acf_fields );
 
 	}
 
 
 	private function get_acf_free_metaboxes( $slug ){
 
+		$fields = array();
+
 		// This damn plugin. Is. A. Freaking. Nightmare.
 		$fieldsets = $this->get_all_acf_field_groups();
 
+		// Return empty array if there are no fieldsets at all
 		if ( empty( $fieldsets ) ){
-			return true;
+			return $fields;
 		}
 
+		// Loop through each fieldset for possible matches
 		foreach ( $fieldsets as $fieldset ){
 
 			if ( $this->is_acf_field_in_post_type( $slug, $fieldset ) ){
@@ -79,16 +82,19 @@ class Metaboxes{
 
 	private function is_acf_field_in_post_type( $slug, $fieldset ){
 
+		// Make sure we have something to parse
 		if ( empty( $fieldset ) ){
-			return;
+			return false;
 		}
 
+		// Loop through the rules to check for post type matches
 		foreach ( $fieldset->rules as $rule ){
 			if ( $rule['param'] === 'post_type' && $rule['value'] === $slug ){
 				return true;
 			}
 		}
 
+		// Everything passed, yay!
 		return false;
 
 	}
