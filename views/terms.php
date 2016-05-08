@@ -1,6 +1,6 @@
 <?php
 namespace testContent\Views;
-
+use testContent\Abstracts as Abs;
 
 /**
  * Generate view for creating and deleting terms.
@@ -10,7 +10,7 @@ namespace testContent\Views;
  * @subpackage Test Content
  * @author     Old Town Media
  */
-class Terms extends View{
+class Terms extends Abs\View{
 
 	protected $title	= 'Terms';
 	protected $type		= 'term';

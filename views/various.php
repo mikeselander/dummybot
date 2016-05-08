@@ -1,6 +1,6 @@
 <?php
 namespace testContent\Views;
-
+use testContent\Abstracts as Abs;
 
 /**
  * Generate view for other various test content action
@@ -10,7 +10,7 @@ namespace testContent\Views;
  * @subpackage Test Content
  * @author     Old Town Media
  */
-class Various extends View{
+class Various extends Abs\View{
 
 	protected $title	= 'Various';
 	protected $type		= 'all';

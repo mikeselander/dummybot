@@ -30,8 +30,12 @@ function test_content_autoloader( $class ) {
 
     $class = str_replace( __NAMESPACE__ . '\\', '', $class );
 
+	$nss = array(
+		'Abstracts',
+		'Views'
+	);
 
-	if ( 'Views' === $namespace[1] ){
+	if ( in_array( $namespace[1], $nss ) ){
         $class = strtolower( preg_replace( '/(?<!^)([A-Z])/', '/\1', $class ) );
         $class = str_replace( '\\', '', $class );
      	$file  = dirname( __FILE__ ) . '/' . $class . '.php';
@@ -40,7 +44,7 @@ function test_content_autoloader( $class ) {
      	$file  = dirname( __FILE__ ) . '/includes/class-' . $class . '.php';
     }
 
- 	if ( file_exists( $file ) ) {
+ 	if ( is_readable( $file ) ) {
  		require_once( $file );
  	}
  }

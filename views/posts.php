@@ -1,5 +1,6 @@
 <?php
 namespace testContent\Views;
+use testContent\Abstracts as Abs;
 
 /**
  * Generate view for creating and deleting posts.
@@ -9,7 +10,7 @@ namespace testContent\Views;
  * @subpackage Test Content
  * @author     Old Town Media
  */
-class Posts extends View{
+class Posts extends Abs\View{
 
 	protected $title	= 'Posts';
 	protected $type		= 'post';

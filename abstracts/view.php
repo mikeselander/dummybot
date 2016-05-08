@@ -1,5 +1,5 @@
 <?php
-namespace testContent\Views;
+namespace testContent\Abstracts;
 
 
 /**
