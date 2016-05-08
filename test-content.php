@@ -32,6 +32,7 @@ function test_content_autoloader( $class ) {
 
 	$nss = array(
 		'Abstracts',
+		'Types',
 		'Views'
 	);
 

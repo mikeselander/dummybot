@@ -1,5 +1,10 @@
 <?php
-namespace testContent;
+namespace testContent\Types;
+use testContent as Main;
+use testContent\TestContent as TestContent;
+use testContent\Delete as Delete;
+use testContent\Abstracts as Abs;
+
 
 /**
  * Class to build test data for custom post types.
@@ -8,7 +13,7 @@ namespace testContent;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class CreatePost{
+class Post extends Abs\Type{
 
 	/**
 	 * metaboxes
@@ -19,6 +24,7 @@ class CreatePost{
 	 */
 	private $metaboxes;
 
+	protected $type = 'post';
 
 	/**
 	 * Constructor to load in the Metaboxes class.
@@ -27,7 +33,7 @@ class CreatePost{
 	 */
 	public function __construct(){
 
-		$this->metaboxes = new Metaboxes;
+		$this->metaboxes = new Main\Metaboxes;
 
 	}
 
@@ -47,7 +53,7 @@ class CreatePost{
 	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_post_type_content( $slug, $connection, $echo = false, $num = '' ){
+	public function create_objects( $slug, $connection, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $slug ) ){
@@ -246,5 +252,125 @@ class CreatePost{
 		}
 
 	}
+
+	/**
+	 * Delete test data posts.
+	 *
+	 * This function will search for all posts of a particular post type ($slug)
+	 * and delete them all using a particular cmb flag that we set when creating
+	 * the posts. Validates the user first.
+	 *
+	 * @see WP_Query, wp_delete_post
+	 *
+	 * @param string $slug a custom post type ID.
+	 * @param boolean $echo Whether or not to echo the result
+	 */
+	public function delete( $slug, $echo = false ){
+
+		$delete =  new Delete;
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( !$delete->user_can_delete() ){
+			return;
+		}
+
+		// Check that $cptslg has a string.
+		if ( empty( $slug ) ){
+			return;
+		}
+
+		// Find our test data by the unique flag we set when we created the data
+		$query = array(
+			'post_type' 		=> $slug,
+			'posts_per_page'	=> 500,
+			'meta_query' 		=> array(
+				array(
+					'key'     => 'evans_test_content',
+					'value'   => '__test__',
+					'compare' => '=',
+				),
+			),
+		);
+
+		$objects = new \WP_Query( $query );
+
+		if ( $objects->have_posts() ){
+
+			$events = array();
+
+			while ( $objects->have_posts() ) : $objects->the_post();
+
+				// Find any media associated with the test post and delete it as well
+				$this->delete_associated_media( get_the_id() );
+
+				if ( $echo === true ){
+					$events[] = array(
+						'type'		=> 'deleted',
+						'pid'		=> get_the_id(),
+						'post_type'	=> get_post_type( get_the_id() ),
+						'link'		=> ''
+					);
+				}
+
+				// Force delete the post
+				wp_delete_post( get_the_id(), true );
+
+			endwhile;
+
+			$obj = get_post_type_object( $slug );
+
+			$events[] = array(
+				'type'		=> 'general',
+				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $obj->labels->all_items
+			);
+
+			echo \json_encode( $events );
+
+		}
+
+	}
+
+
+	/**
+	 * Find and delete attachments associated with a post ID.
+	 *
+	 * This function finds each attachment that is associated with a post ID
+	 * and deletes it completely from the site. This is to prevent leftover
+	 * random images from sitting on the site forever.
+	 *
+	 * @access private
+	 *
+	 * @see get_attached_media, wp_delete_attachment
+	 *
+	 * @param int $pid a custom post type ID.
+	 */
+	private function delete_associated_media( $pid ){
+
+		$delete =  new Delete;
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( !$delete->user_can_delete() ){
+			return;
+		}
+
+		// Make sure $pid is, in fact, an ID
+		if ( !is_int( $pid ) ){
+			return;
+		}
+
+		// Get our images
+		$media = get_attached_media( 'image', $pid );
+
+		if ( !empty( $media ) ){
+
+			// Loop through the media & delete each one
+			foreach ( $media as $attachment ){
+				wp_delete_attachment( $attachment->ID, true );
+			}
+
+		}
+
+	}
+
 
 }

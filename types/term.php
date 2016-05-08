@@ -1,5 +1,9 @@
 <?php
-namespace testContent;
+namespace testContent\Types;
+use testContent\Abstracts as Abs;
+use testContent\TestContent as TestContent;
+use testContent\Delete as Delete;
+
 
 /**
  * Class to build test data for terms.
@@ -8,7 +12,9 @@ namespace testContent;
  * @subpackage Evans
  * @author     Old Town Media
  */
-class CreateTerm{
+class Term extends Abs\Type{
+
+	protected $type = 'term';
 
 	/**
 	 * Create test data posts.
@@ -25,7 +31,7 @@ class CreateTerm{
 	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_terms( $slug, $echo = false, $num = '' ){
+	public function create_objects( $slug, $connection, $echo = false, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $slug ) ){
@@ -95,6 +101,79 @@ class CreateTerm{
 				'link_edit'	=> admin_url( '/edit-tags.php?action=edit&taxonomy='.$slug.'&tag_ID='.$return['term_id'] ),
 				'link_view'	=> get_term_link( $return['term_id'] )
 			);
+		}
+
+	}
+
+	/**
+	 * Delete test data terms.
+	 *
+	 * This function will search for all terms of a particular taxonomy ($slug)
+	 * and delete them all using a particular term_meta flag that we set when creating
+	 * the posts. Validates the user first.
+	 *
+	 * @see WP_Query, wp_delete_post
+	 *
+	 * @param string $slug a custom post type ID.
+	 * @param boolean $echo Whether or not to echo the result
+	 */
+	public function delete( $slug, $echo = false ){
+
+		$delete =  new Delete;
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( !$delete->user_can_delete() ){
+			return;
+		}
+
+		// Check that $cptslg has a string.
+		if ( empty( $slug ) ){
+			return;
+		}
+
+		// Query for our terms
+		$args = array(
+		    'hide_empty' => false,
+		    'meta_query' => array(
+		        array(
+		           'key'       => 'evans_test_content',
+		           'value'     => '__test__',
+		           'compare'   => '='
+		        )
+		    )
+		);
+
+		$terms = get_terms( $slug, $args );
+
+		if ( !empty( $terms ) ){
+
+			$events = array();
+
+			foreach ( $terms as $term ){
+
+				if ( $echo === true ){
+					$events[] = array(
+						'type'		=> 'deleted',
+						'pid'		=> $term->term_id,
+						'post_type'	=> $slug,
+						'link'		=> ''
+					);
+				}
+
+				// Delete our term
+				wp_delete_term( $term->term_id, $slug );
+
+			}
+
+			$taxonomy = get_taxonomy( $slug );
+
+			$events[] = array(
+				'type'		=> 'general',
+				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $taxonomy->labels->name
+			);
+
+			echo \json_encode( $events );
+
 		}
 
 	}

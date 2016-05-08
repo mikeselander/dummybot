@@ -194,17 +194,9 @@ class AdminPage{
 	 */
 	private function creation_routing( $data ){
 
-		if ( $data['type'] == 'post' ){
-
-			$create_content = new CreatePost;
-			$create_content->create_post_type_content( $data['slug'], $data['connection'], true, 1 );
-
-		} elseif( $data['type'] == 'term' ){
-
-			$create_content = new CreateTerm;
-			$create_content->create_terms( $data['slug'], true, 1 );
-
-		}
+		$type = 'testContent\Types\\' . ucwords( $data['type'] );
+		$object = new $type();
+		$object->create_objects( $data['slug'], $data['connection'], true, 1 );
 
 	}
 
@@ -217,17 +209,13 @@ class AdminPage{
 
 		$delete_content = new Delete;
 
-		if ( $data['type'] == 'post' ){
-
-			$delete_content->delete_posts( $data['slug'], true );
-
-		} elseif ( $data['type'] == 'term' ){
-
-			$delete_content->delete_terms( $data['slug'], true );
-
-		} elseif ( $data['type'] == 'all' ){
+		if ( $data['type'] == 'all' ){
 
 			$delete_content->delete_all_test_data( true );
+
+		} else {
+
+			$delete_content->delete_objects( true, $data );
 
 		}
 
