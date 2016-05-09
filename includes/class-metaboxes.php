@@ -46,6 +46,16 @@ class Metaboxes{
 	}
 
 
+	/**
+	 * Gets the metaboxes assigned to a custom post type in ACF.
+	 *
+	 * @access private
+	 *
+	 * @see get_all_acf_field_groups, is_acf_field_in_post_type
+	 *
+	 * @param string $slug Post type.
+	 * @return array Fields array.
+	 */
 	private function get_acf_free_metaboxes( $slug ){
 
 		$fields = array();
@@ -80,6 +90,15 @@ class Metaboxes{
 	}
 
 
+	/**
+	 * Check if a group of fields is in a custom post type.
+	 *
+	 * @access private
+	 *
+	 * @param string $slug Post type slug.
+	 * @param object $fieldset Fieldset group.
+	 * @return boolean Whether or not the grouping is assigned to the post type.
+	 */
 	private function is_acf_field_in_post_type( $slug, $fieldset ){
 
 		// Make sure we have something to parse
@@ -100,6 +119,17 @@ class Metaboxes{
 	}
 
 
+	/**
+	 * Loop through and retrive all acf cpts and cmb.
+	 *
+	 * ACF stores their data in custom post types and unfortunately named cmbs.
+	 * Therefore, we have to loop through all acfs and sort through the mish-mash
+	 * of messy data and make something clean of it.
+	 *
+	 * @access private
+	 *
+	 * @return array All acf fieldsets.
+	 */
 	private function get_all_acf_field_groups(){
 		$info = $rules = $fields = array();
 
@@ -444,6 +474,17 @@ class Metaboxes{
 	} // end random_metabox_content
 
 
+	/**
+	 * Update the metabox with new data.
+	 *
+	 * @access private
+	 *
+	 * @see add_post_meta
+	 *
+	 * @param int $post_id Post ID.
+	 * @param string $value Value to add into the database.
+	 * @param array $cmb SMB data.
+	 */
 	private function update_meta( $post_id, $value, $cmb ){
 
 		$type 	= $cmb['type'];
