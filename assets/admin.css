@@ -12,6 +12,18 @@
 	margin-right: 5px;
 }
 
+.test-content-tab .handle-test-data[data-todo="delete"]{
+	background-color: #a00;
+	border-color: #990000 #990000 #990000;
+	box-shadow: 0 1px 0 #990000;
+	text-shadow: 0 -1px 1px #990000,1px 0 1px #990000,0 1px 1px #990000,-1px 0 1px #990000;
+}
+
+.test-content-tab .handle-test-data[data-todo="delete"]:hover,
+.test-content-tab .handle-test-data[data-todo="delete"]:focus{
+	background-color: #8e0000;
+}
+
 .test-content-tab .dashicons{
 	margin-top: 6px;
 	font-size: 1.2em
