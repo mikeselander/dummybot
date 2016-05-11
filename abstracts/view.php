@@ -61,7 +61,7 @@ abstract class View{
 	public function tab(){
 		$html = "";
 
-		$html .= "<a class='nav-tab' href='javascript:void(0)'>";
+		$html .= "<a class='nav-tab' data-type='".sanitize_title( $this->title )."' href='javascript:void(0)'>";
 			$html .= $this->title;
 		$html .= "</a>";
 
@@ -81,7 +81,7 @@ abstract class View{
 	public function view(){
 		$html = '';
 
-		$html .= "<section class='test-content-tab'>";
+		$html .= "<section class='test-content-tab' data-type='".sanitize_title( $this->title )."'>";
 			$html .= $this->actions_section();
 			$html .= $this->options_section();
 		$html .= "</section>";
@@ -116,6 +116,8 @@ abstract class View{
 	 * @return string HTML section content.
 	 */
 	protected function options_section( $html = '' ){
+		$html .= "<hr>";
+
 		$html .= "<div class='test-data-cpt'>";
 			$html .= "<h3>";
 				$html .= "<span class='label'>".__( 'Quantity', 'otm-test-content' )."</span>";

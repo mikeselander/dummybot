@@ -1,8 +1,17 @@
 jQuery(document).ready(function($) {
 
-	// Trigger our first tab to display
-	$( '#options_editor .nav-tab' ).first().addClass( 'nav-tab-active' );
-	$( '#options_editor .test-content-tab' ).first().show();
+	var tabId = window.location.hash.substr(1);
+
+	console.log( tabId );
+
+	// Trigger our initial tab to display
+	if ( tabId != undefined ){
+		$( '.nav-tab[data-type="' + tabId + '"]' ).addClass( 'nav-tab-active' );
+		$( '.test-content-tab[data-type="' + tabId + '"]' ).show();
+	} else {
+		$( '#options_editor .nav-tab' ).first().addClass( 'nav-tab-active' );
+		$( '#options_editor .test-content-tab' ).first().show();
+	}
 
 	$( document ).on( 'click', '#options_editor .nav-tab', function() {
 		//
@@ -12,6 +21,10 @@ jQuery(document).ready(function($) {
 		//Swap classes from inactive tab
 		$( '#options_editor .nav-tab' ).removeClass( 'nav-tab-active' );
 		$( this ).addClass( 'nav-tab-active' );
+
+		// Update the URL with a hash variable
+		window.location.hash = $( this ).data( 'type' );
+
 		return false;
 	})
 
