@@ -83,6 +83,7 @@ function test_content_autoloader( $class ) {
  plugin()->register_hooks( new AdminPage() )
          ->register_views( new Views\Posts() )
          ->register_views( new Views\Terms() )
+		 ->register_views( new Views\Users() )
 		 ->register_views( new Views\Various() );
 
 // Load textdomain hook

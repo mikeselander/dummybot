@@ -14,7 +14,7 @@ class Various extends Abs\View{
 
 	protected $title	= 'Various';
 	protected $type		= 'all';
-	protected $priority	= 3;
+	protected $priority	= 10;
 
 
 	/**

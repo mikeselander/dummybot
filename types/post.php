@@ -157,9 +157,9 @@ class Post extends Abs\Type{
 		}
 
 		// Check if we have errors and return them or created message
-		if ( is_wp_error( $return ) ){
-			error_log( $return->get_error_message() );
-			return $return;
+		if ( is_wp_error( $post_id ) ){
+			error_log( $post_id->get_error_message() );
+			return $post_id;
 		} else {
 			return array(
 				'type'		=> 'created',
