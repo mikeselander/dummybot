@@ -1,5 +1,6 @@
 <?php
 namespace testContent;
+use testContent\Views\Users as Users;
 
 /**
  * Class to handle deletion of test data for the plugin.
@@ -25,7 +26,12 @@ class Delete{
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
 		foreach ( $post_types as $post_type ) :
 
-		    $this->delete_posts( $post_type->name, $echo );
+			$data = array(
+				'type'	=> 'post',
+				'slug'	=> $post_type->name
+			);
+
+		    $this->delete_objects( $echo, $data );
 
 		endforeach;
 
@@ -33,7 +39,25 @@ class Delete{
 		$taxonomies = get_taxonomies();
 		foreach ( $taxonomies as $tax ) :
 
-		    $this->delete_terms( $tax, $echo );
+			$data = array(
+				'type'	=> 'term',
+				'slug'	=> $tax
+			);
+
+		    $this->delete_objects( $echo, $data );
+
+		endforeach;
+
+		// Loop through all user roles and remove any data
+		$users = new Users;
+		foreach ( $users->get_roles() as $role ) :
+
+			$data = array(
+				'type'	=> 'user',
+				'slug'	=> $role['slug']
+			);
+
+		    $this->delete_objects( $echo, $data );
 
 		endforeach;
 
@@ -66,6 +90,7 @@ class Delete{
 		$slug = $data['slug'];
 
 		$object = new $type();
+
 		$object->delete( $slug, $echo );
 
 	}

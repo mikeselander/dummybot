@@ -96,7 +96,7 @@ class Term extends Abs\Type{
 			return array(
 				'type'		=> 'created',
 				'object'	=> 'term',
-				'tid'		=> $return['term_id'],
+				'oid'		=> $return['term_id'],
 				'taxonomy'	=> $slug,
 				'link_edit'	=> admin_url( '/edit-tags.php?action=edit&taxonomy='.$slug.'&tag_ID='.$return['term_id'] ),
 				'link_view'	=> get_term_link( $return['term_id'] )
@@ -154,7 +154,7 @@ class Term extends Abs\Type{
 				if ( $echo === true ){
 					$events[] = array(
 						'type'		=> 'deleted',
-						'pid'		=> $term->term_id,
+						'oid'		=> $term->term_id,
 						'post_type'	=> $slug,
 						'link'		=> ''
 					);

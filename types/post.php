@@ -164,7 +164,7 @@ class Post extends Abs\Type{
 			return array(
 				'type'		=> 'created',
 				'object'	=> 'post',
-				'pid'		=> $post_id,
+				'oid'		=> $post_id,
 				'post_type'	=> get_post_type( $post_id ),
 				'link_edit'	=> admin_url( '/post.php?post='.$post_id.'&action=edit' ),
 				'link_view'	=> get_permalink( $post_id ),
@@ -306,7 +306,7 @@ class Post extends Abs\Type{
 				if ( $echo === true ){
 					$events[] = array(
 						'type'		=> 'deleted',
-						'pid'		=> get_the_id(),
+						'oid'		=> get_the_id(),
 						'post_type'	=> get_post_type( get_the_id() ),
 						'link'		=> ''
 					);

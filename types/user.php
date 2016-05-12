@@ -63,7 +63,7 @@ class User extends Abs\Type{
 
 
 	/**
-	 * Creates the individual test data post.
+	 * Creates the individual test data user.
 	 *
 	 * Create individual posts for testing with. Gathers basic information such
 	 * as title, content, thumbnail, etc. and inserts them with the post. Also
@@ -89,7 +89,7 @@ class User extends Abs\Type{
 		// First, insert our post
 		$userdata = array(
 			'user_pass'			=> "tc_{$slug}_user_email", TestContent::title( 1 ),
-			'user_login'		=> strtolower( $name['first'] . $name['last'] ),
+			'user_login'		=> strtolower( $name['first'] . $name['last'] ) . rand( 10, 100 ),
 			'user_email'		=> apply_filters( "tc_{$slug}_user_email", TestContent::email( true ) ),
 			'display_name'		=> strtolower( $name['first'] . $name['last'] ),
 			'first_name'		=> $name['first'],
@@ -115,15 +115,16 @@ class User extends Abs\Type{
 			return array(
 				'type'		=> 'created',
 				'object'	=> 'user',
-				'pid'		=> $user_id,
-				'link_edit'	=> admin_url( '/user-edit.php?user_id=2' . $user_id ),
+				'oid'		=> $user_id,
+				'role'		=> $slug,
+				'link_edit'	=> admin_url( '/user-edit.php?user_id=' . $user_id ),
 			);
 		}
 
 	}
 
 	/**
-	 * Delete test data posts.
+	 * Delete test data users.
 	 *
 	 * This function will search for all posts of a particular post type ($slug)
 	 * and delete them all using a particular cmb flag that we set when creating
@@ -136,7 +137,7 @@ class User extends Abs\Type{
 	 */
 	public function delete( $slug, $echo = false ){
 
-		$delete =  new Delete;
+		$delete = new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
 		if ( !$delete->user_can_delete() ){
@@ -150,50 +151,56 @@ class User extends Abs\Type{
 
 		// Find our test data by the unique flag we set when we created the data
 		$query = array(
-			'post_type' 		=> $slug,
-			'posts_per_page'	=> 500,
-			'meta_query' 		=> array(
+			'role' 			=> $slug,
+			'number'		=> 500,
+			'meta_query' 	=> array(
 				array(
-					'key'     => 'evans_test_content',
-					'value'   => '__test__',
-					'compare' => '=',
+					'meta_key'		=> 'evans_test_content',
+					'meta_value'	=> '__test__',
+					'compare'		=> '=',
 				),
 			),
 		);
 
-		$objects = new \WP_Query( $query );
+		$objects = new \WP_User_Query( $query );
+		$users	 = $objects->get_results();
 
-		if ( $objects->have_posts() ){
+		if ( !empty( $users ) ){
 
 			$events = array();
 
-			while ( $objects->have_posts() ) : $objects->the_post();
+			foreach ( $users as $user ){
 
-				// Find any media associated with the test post and delete it as well
-				$this->delete_associated_media( get_the_id() );
+				// Make sure we can't delete ourselves by accident
+				if ( $user->ID == get_current_user_id() ){
+					continue;
+				}
+
+				// Double check our set user meta value
+				if ( '__test__' != get_user_meta( $user->ID, 'evans_test_content', true ) ){
+					continue;
+				}
 
 				if ( $echo === true ){
 					$events[] = array(
 						'type'		=> 'deleted',
-						'pid'		=> get_the_id(),
-						'post_type'	=> get_post_type( get_the_id() ),
+						'oid'		=> $user->ID,
+						'post_type'	=> $slug,
 						'link'		=> ''
 					);
 				}
 
-				// Force delete the post
-				wp_delete_post( get_the_id(), true );
+				// Force delete the user
+				wp_delete_user( $user->ID );
 
-			endwhile;
-
-			$obj = get_post_type_object( $slug );
+			}
 
 			$events[] = array(
 				'type'		=> 'general',
-				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $obj->labels->all_items
+				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $slug
 			);
 
-			echo \json_encode( $events );
+			echo json_encode( $events );
 
 		}
 

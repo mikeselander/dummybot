@@ -26,33 +26,17 @@ class Users extends Abs\View{
 	protected function actions_section(){
 		$html = '';
 
-		global $wp_roles;
-	    $role_names = $wp_roles->get_names();
-		$flipped = array_flip( $role_names );
-
-		// Loop through all available roles
-		$roles = get_editable_roles();
+		$roles = $this->get_roles();
 
 		foreach ( $roles as $role ) :
-
-			$proper_name = $flipped[ $role['name'] ];
-
-			$skipped_roles = array(
-				'Administrator'
-			);
-
-			// Skip banned cpts
-			if ( in_array( $role['name'], $skipped_roles ) ){
-				continue;
-			}
 
 			$html .= "<div class='test-data-cpt'>";
 
 				$html .= "<h3>";
 
 					$html .= "<span class='label'>" . $role['name'] . "</span>";
-					$html .= $this->build_button( 'create', $proper_name, __( 'Create Users', 'otm-test-content' ) );
-					$html .= $this->build_button( 'delete', $proper_name, __( 'Delete Users', 'otm-test-content' ) );
+					$html .= $this->build_button( 'create', $role['slug'], __( 'Create Users', 'otm-test-content' ) );
+					$html .= $this->build_button( 'delete', $role['slug'], __( 'Delete Users', 'otm-test-content' ) );
 
 				$html .= "</h3>";
 
@@ -61,6 +45,47 @@ class Users extends Abs\View{
 		endforeach;
 
 		return $html;
+	}
+
+
+	/**
+	 * Get all roles and set a cleaner array.
+	 *
+	 * @see get_editable_roles
+	 *
+	 * @global object $wp_roles WP Roles obbject
+	 *
+	 * @return array Array of roles for use in creation and deletion
+	 */
+	public function get_roles(){
+		global $wp_roles;
+		$clean_roles = array();
+
+	    $role_names = $wp_roles->get_names();
+		$flipped = array_flip( $role_names );
+
+		// Loop through all available roles
+		$roles = get_editable_roles();
+
+		$skipped_roles = array(
+			'Administrator'
+		);
+
+		foreach ( $roles as $role ){
+
+			if ( in_array( $role['name'], $skipped_roles ) ){
+				continue;
+			}
+
+			$clean_roles[] = array(
+				'name'	=> $role['name'],
+				'slug'	=> $flipped[ $role['name'] ]
+			);
+
+		}
+
+		return $clean_roles;
+
 	}
 
 }
