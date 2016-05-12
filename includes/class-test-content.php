@@ -714,4 +714,67 @@ CSSland,
 
 	}
 
+	/**
+	 * Name function.
+	 *
+	 * Makes a random name.
+	 *
+	 * @return array Randomly strung together name.
+	 */
+	public static function name(){
+
+		$first_names = array(
+			'Jacqui',
+			'Buffy',
+			'Teddy',
+			'Cindie',
+			'Carroll',
+			'Karly',
+			'Maricela',
+			'Kittie',
+			'Jetta',
+			'Denise',
+			'Guillermo',
+			'Domingo',
+			'Benjamin',
+			'Olga',
+			'Shane',
+			'Bessie',
+			'Jose',
+			'Damon',
+			'Rodolfo'
+		);
+
+		$last_names = array(
+			'Henley',
+			'Trask',
+			'Dick',
+			'Irby',
+			'Raley',
+			'Bland',
+			'Rossi',
+			'Gunther',
+			'Mchenry',
+			'Isaacs',
+			'Romero',
+			'Mcbride',
+			'Armstrong',
+			'Mccoy',
+			'Evans',
+			'Dennis',
+			'Swanson',
+			'Estrada',
+			'Johnston',
+			'Graves'
+		);
+
+		$name = array(
+			'first'	=> $first_names[ rand( 0, 19 ) ] ,
+			'last'	=> $last_names[ rand( 0, 19 ) ]
+		);
+
+		return apply_filters( "tc_name_data", $name );
+
+	}
+
 }
