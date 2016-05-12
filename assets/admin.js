@@ -5,7 +5,7 @@ jQuery(document).ready(function($) {
 	console.log( tabId );
 
 	// Trigger our initial tab to display
-	if ( tabId != undefined ){
+	if ( tabId ){
 		$( '.nav-tab[data-type="' + tabId + '"]' ).addClass( 'nav-tab-active' );
 		$( '.test-content-tab[data-type="' + tabId + '"]' ).show();
 	} else {
