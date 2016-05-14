@@ -172,6 +172,13 @@ class User extends Abs\Type{
 	}
 
 
+	/**
+	 * Delete all test data, regardless of type, within posts.
+	 *
+	 * @see Delete
+	 *
+	 * @param boolean $echo Whether or not to echo. Optional.
+	 */
 	public function delete_all( $echo = false ){
 
 		$delete =  new Delete;
