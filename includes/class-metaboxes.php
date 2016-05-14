@@ -502,7 +502,7 @@ class Metaboxes{
 		}
 
 		// Add extra, redundant meta. Because, why not have rows for the price of one?
-		if ( $cmb['source'] === 'acf' ){
+		if ( isset( $cmb['source'] ) && $cmb['source'] === 'acf' ){
 			add_post_meta( $post_id, '_' . $cmb['id'], $cmb['key'], true );
 		}
 

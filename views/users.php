@@ -1,6 +1,7 @@
 <?php
 namespace testContent\Views;
 use testContent\Abstracts as Abs;
+use testContent\Types as Type;
 
 /**
  * Generate view for creating and deleting posts.
@@ -26,7 +27,8 @@ class Users extends Abs\View{
 	protected function actions_section(){
 		$html = '';
 
-		$roles = $this->get_roles();
+		$user_class = new Type\User;
+		$roles = $user_class->get_roles();
 
 		foreach ( $roles as $role ) :
 
@@ -45,47 +47,6 @@ class Users extends Abs\View{
 		endforeach;
 
 		return $html;
-	}
-
-
-	/**
-	 * Get all roles and set a cleaner array.
-	 *
-	 * @see get_editable_roles
-	 *
-	 * @global object $wp_roles WP Roles obbject
-	 *
-	 * @return array Array of roles for use in creation and deletion
-	 */
-	public function get_roles(){
-		global $wp_roles;
-		$clean_roles = array();
-
-	    $role_names = $wp_roles->get_names();
-		$flipped = array_flip( $role_names );
-
-		// Loop through all available roles
-		$roles = get_editable_roles();
-
-		$skipped_roles = array(
-			'Administrator'
-		);
-
-		foreach ( $roles as $role ){
-
-			if ( in_array( $role['name'], $skipped_roles ) ){
-				continue;
-			}
-
-			$clean_roles[] = array(
-				'name'	=> $role['name'],
-				'slug'	=> $flipped[ $role['name'] ]
-			);
-
-		}
-
-		return $clean_roles;
-
 	}
 
 }

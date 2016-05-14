@@ -18,48 +18,24 @@ class Delete{
 	 */
 	public function delete_all_test_data( $echo = false ){
 
-		if ( !$this->user_can_delete() ){
+		if ( ! $this->user_can_delete() ){
 			return;
 		}
 
-		// Loop through all post types and remove any test data
-		$post_types = get_post_types( array( 'public' => true ), 'objects' );
-		foreach ( $post_types as $post_type ) :
+		$types = apply_filters( 'tc-types', array() );
 
-			$data = array(
-				'type'	=> 'post',
-				'slug'	=> $post_type->name
-			);
+		if ( !empty( $types ) ){
 
-		    $this->delete_objects( $echo, $data );
+			foreach ( $types as $type ){
 
-		endforeach;
+				$class = 'testContent\Types\\' . ucwords( $type );
+				$object = new $class();
 
-		// Loop through all taxonomies and remove any data
-		$taxonomies = get_taxonomies();
-		foreach ( $taxonomies as $tax ) :
+				$object->delete_all( true );
 
-			$data = array(
-				'type'	=> 'term',
-				'slug'	=> $tax
-			);
+			}
 
-		    $this->delete_objects( $echo, $data );
-
-		endforeach;
-
-		// Loop through all user roles and remove any data
-		$users = new Users;
-		foreach ( $users->get_roles() as $role ) :
-
-			$data = array(
-				'type'	=> 'user',
-				'slug'	=> $role['slug']
-			);
-
-		    $this->delete_objects( $echo, $data );
-
-		endforeach;
+		}
 
 	}
 
@@ -72,10 +48,11 @@ class Delete{
 	 *
 	 * @see WP_Query, wp_delete_post
 	 *
-	 * @param string $slug a custom post type ID.
+	 * @param string $data Information about the type.
+	 * @param string $echo Whether or not to echo the results.
 	 * @param boolean $echo Whether or not to echo the result
 	 */
-	public function delete_objects( $echo = false, $data ){
+	public function delete_objects( $data, $echo = false ){
 
 		// Make sure that the current user is logged in & has full permissions.
 		if ( !$this->user_can_delete() ){

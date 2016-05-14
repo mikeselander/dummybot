@@ -15,6 +15,13 @@ use testContent\Abstracts as Abs;
  */
 class User extends Abs\Type{
 
+	/**
+	 * type
+	 * Defines type slug for use elsewhere in the plugin
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $type = 'user';
 
 	/**
@@ -122,6 +129,75 @@ class User extends Abs\Type{
 		}
 
 	}
+
+
+	/**
+	 * Get all roles and set a cleaner array.
+	 *
+	 * @see get_editable_roles
+	 *
+	 * @global object $wp_roles WP Roles obbject
+	 *
+	 * @return array Array of roles for use in creation and deletion
+	 */
+	public function get_roles(){
+		global $wp_roles;
+		$clean_roles = array();
+
+	    $role_names = $wp_roles->get_names();
+		$flipped = array_flip( $role_names );
+
+		// Loop through all available roles
+		$roles = get_editable_roles();
+
+		$skipped_roles = array(
+			'Administrator'
+		);
+
+		foreach ( $roles as $role ){
+
+			if ( in_array( $role['name'], $skipped_roles ) ){
+				continue;
+			}
+
+			$clean_roles[] = array(
+				'name'	=> $role['name'],
+				'slug'	=> $flipped[ $role['name'] ]
+			);
+
+		}
+
+		return $clean_roles;
+
+	}
+
+
+	public function delete_all( $echo = false ){
+
+		$delete =  new Delete;
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( ! $delete->user_can_delete() ){
+			return;
+		}
+
+		// Loop through all post types and remove any test data
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		foreach ( $post_types as $post_type ) :
+
+		    $this->delete( $post_type->name, $echo );
+
+		endforeach;
+
+		// Loop through all user roles and remove any data
+		foreach ( $this->get_roles() as $role ) :
+
+			$this->delete( $role['slug'], $echo );
+
+		endforeach;
+
+	}
+
 
 	/**
 	 * Delete test data users.

@@ -26,7 +26,7 @@ abstract class Type{
 	 */
 	public function register_type(){
 
-		add_filter( 'tc-types', 'set_type' );
+		add_filter( 'tc-types', array( $this, 'set_type' ) );
 
 	}
 

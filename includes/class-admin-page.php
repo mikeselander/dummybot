@@ -215,7 +215,7 @@ class AdminPage{
 
 		} else {
 
-			$delete_content->delete_objects( true, $data );
+			$delete_content->delete_objects( $data, true );
 
 		}
 

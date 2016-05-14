@@ -66,9 +66,23 @@ class Plugin{
 	 * @param  object $provider Hook provider.
 	 * @return object $this
 	 */
-	public function register_views( $provider ) {
+	public function register_view( $provider ) {
 
 		$provider->register_view();
+		return $this;
+
+	}
+
+
+	/**
+	 * Register hook function.
+	 *
+	 * @param  object $provider Hook provider.
+	 * @return object $this
+	 */
+	public function register_type( $provider ) {
+
+		$provider->register_type();
 		return $this;
 
 	}

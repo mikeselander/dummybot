@@ -14,6 +14,13 @@ use testContent\Delete as Delete;
  */
 class Term extends Abs\Type{
 
+	/**
+	 * type
+	 * Defines type slug for use elsewhere in the plugin
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $type = 'term';
 
 	/**
@@ -104,6 +111,27 @@ class Term extends Abs\Type{
 		}
 
 	}
+
+
+	public function delete_all( $echo = false ){
+
+		$delete =  new Delete;
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( ! $delete->user_can_delete() ){
+			return;
+		}
+
+		// Loop through all taxonomies and remove any data
+		$taxonomies = get_taxonomies();
+		foreach ( $taxonomies as $tax ) :
+
+			$this->delete( $tax, $echo );
+
+		endforeach;
+
+	}
+
 
 	/**
 	 * Delete test data terms.

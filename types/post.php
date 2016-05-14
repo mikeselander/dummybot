@@ -24,6 +24,13 @@ class Post extends Abs\Type{
 	 */
 	private $metaboxes;
 
+	/**
+	 * type
+	 * Defines type slug for use elsewhere in the plugin
+	 *
+	 * @var string
+	 * @access protected
+	 */
 	protected $type = 'post';
 
 	/**
@@ -253,6 +260,27 @@ class Post extends Abs\Type{
 
 	}
 
+
+	public function delete_all( $echo = false ){
+
+		$delete =  new Delete;
+
+		// Make sure that the current user is logged in & has full permissions.
+		if ( ! $delete->user_can_delete() ){
+			return;
+		}
+
+		// Loop through all post types and remove any test data
+		$post_types = get_post_types( array( 'public' => true ), 'objects' );
+		foreach ( $post_types as $post_type ) :
+
+		    $this->delete( $post_type->name, $echo );
+
+		endforeach;
+
+	}
+
+
 	/**
 	 * Delete test data posts.
 	 *
@@ -270,7 +298,7 @@ class Post extends Abs\Type{
 		$delete =  new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( !$delete->user_can_delete() ){
+		if ( ! $delete->user_can_delete() ){
 			return;
 		}
 

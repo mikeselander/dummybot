@@ -81,10 +81,13 @@ function test_content_autoloader( $class ) {
 
  // Register hook providers and views.
  plugin()->register_hooks( new AdminPage() )
-         ->register_views( new Views\Posts() )
-         ->register_views( new Views\Terms() )
-		 ->register_views( new Views\Users() )
-		 ->register_views( new Views\Various() );
+         ->register_view( new Views\Posts() )
+         ->register_view( new Views\Terms() )
+		 ->register_view( new Views\Users() )
+		 ->register_view( new Views\Various() )
+		 ->register_type( new Types\Post() )
+		 ->register_type( new Types\Term() )
+		 ->register_type( new Types\User() );
 
 // Load textdomain hook
 add_action( 'plugins_loaded', array( plugin(), 'load_textdomain' ) );
