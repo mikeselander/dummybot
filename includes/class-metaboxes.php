@@ -467,7 +467,6 @@ class Metaboxes{
 
 		// If we're dealing with a WP Error object, just return the message for debugging
 		} elseif ( is_wp_error( $value ) ){
-			error_log( $value->get_error_message() );
 			return $value->get_error_message();
 		}
 

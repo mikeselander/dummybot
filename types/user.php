@@ -100,8 +100,6 @@ class User extends Abs\Type{
 			'role'				=> $slug,
 		);
 
-		error_log( $slug );
-
 		// Insert the user
 		$user_id = wp_insert_user( apply_filters( "tc_{$slug}_user_arguments", $userdata ) );
 
