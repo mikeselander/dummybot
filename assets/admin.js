@@ -82,16 +82,7 @@ jQuery(document).ready(function($) {
 
 				if ( todo == 'create' ){
 
-					// Assemble different strings if post or term
-					if ( parsed.object == 'post' ){
-						var type = parsed.post_type
-					} else if( parsed.object == 'term' ){
-						var type = parsed.taxonomy
-					} else if( parsed.object == 'user' ){
-						var type = parsed.role
-					}
-
-					jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.createdStr + ' ' + type + ' ' + parsed.oid + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
+					jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.createdStr + ' ' + parsed.type + ' ' + parsed.oid + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
 
 					// Re-up our number & scroll to bottom
 					innerCount++;
@@ -102,8 +93,8 @@ jQuery(document).ready(function($) {
 					count = parsed.length;
 
 					for( i=0; i<count; i++ ){
-						if ( parsed[i].type == 'deleted' ){
-							jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.deletedStr + ' ' + parsed[i].post_type + ' ' + parsed[i].oid + '\n' );
+						if ( parsed[i].action == 'deleted' ){
+							jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.deletedStr + ' ' + parsed[i].type + ' ' + parsed[i].oid + '\n' );
 						} else {
 							jQuery( '#status-updates' ).append( parsed[i].message + '\n' );
 						}

@@ -166,10 +166,10 @@ class Post extends Abs\Type{
 			return $post_id;
 		} else {
 			return array(
-				'type'		=> 'created',
+				'action'	=> 'created',
 				'object'	=> 'post',
 				'oid'		=> $post_id,
-				'post_type'	=> get_post_type( $post_id ),
+				'type'		=> get_post_type( $post_id ),
 				'link_edit'	=> admin_url( '/post.php?post='.$post_id.'&action=edit' ),
 				'link_view'	=> get_permalink( $post_id ),
 			);
@@ -333,9 +333,9 @@ class Post extends Abs\Type{
 				$this->delete_associated_media( get_the_id() );
 
 				$events[] = array(
-					'type'		=> 'deleted',
+					'action'	=> 'deleted',
 					'oid'		=> get_the_id(),
-					'post_type'	=> get_post_type( get_the_id() ),
+					'type'		=> get_post_type( get_the_id() ),
 					'link'		=> ''
 				);
 
@@ -347,7 +347,7 @@ class Post extends Abs\Type{
 			$obj = get_post_type_object( $slug );
 
 			$events[] = array(
-				'type'		=> 'general',
+				'action'	=> 'general',
 				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $obj->labels->all_items
 			);
 

@@ -781,7 +781,8 @@ CSSland,
 			'Bessie',
 			'Jose',
 			'Damon',
-			'Rodolfo'
+			'Rodolfo',
+			'George',
 		);
 
 		$last_names = array(
@@ -804,11 +805,11 @@ CSSland,
 			'Swanson',
 			'Estrada',
 			'Johnston',
-			'Graves'
+			'Graves',
 		);
 
 		$name = array(
-			'first'	=> $first_names[ rand( 0, 19 ) ] ,
+			'first'	=> $first_names[ rand( 0, 19 ) ],
 			'last'	=> $last_names[ rand( 0, 19 ) ]
 		);
 

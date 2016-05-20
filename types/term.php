@@ -98,10 +98,10 @@ class Term extends Abs\Type{
 			return $return;
 		} else {
 			return array(
-				'type'		=> 'created',
+				'action'	=> 'created',
 				'object'	=> 'term',
 				'oid'		=> $return['term_id'],
-				'taxonomy'	=> $slug,
+				'type'		=> $slug,
 				'link_edit'	=> admin_url( '/edit-tags.php?action=edit&taxonomy='.$slug.'&tag_ID='.$return['term_id'] ),
 				'link_view'	=> get_term_link( $return['term_id'] )
 			);
@@ -182,9 +182,9 @@ class Term extends Abs\Type{
 			foreach ( $terms as $term ){
 
 				$events[] = array(
-					'type'		=> 'deleted',
+					'action'	=> 'deleted',
 					'oid'		=> $term->term_id,
-					'post_type'	=> $slug,
+					'type'		=> $slug,
 					'link'		=> ''
 				);
 
@@ -196,7 +196,7 @@ class Term extends Abs\Type{
 			$taxonomy = get_taxonomy( $slug );
 
 			$events[] = array(
-				'type'		=> 'general',
+				'action'	=> 'general',
 				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $taxonomy->labels->name
 			);
 

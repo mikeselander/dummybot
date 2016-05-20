@@ -117,10 +117,10 @@ class User extends Abs\Type{
 			return $user_id;
 		} else {
 			return array(
-				'type'		=> 'created',
+				'action'	=> 'created',
 				'object'	=> 'user',
 				'oid'		=> $user_id,
-				'role'		=> $slug,
+				'type'		=> $slug,
 				'link_edit'	=> admin_url( '/user-edit.php?user_id=' . $user_id ),
 				'link_view' => get_author_posts_url( $user_id )
 			);
@@ -260,9 +260,9 @@ class User extends Abs\Type{
 				}
 
 				$events[] = array(
-					'type'		=> 'deleted',
+					'action'	=> 'deleted',
 					'oid'		=> $user->ID,
-					'post_type'	=> $slug,
+					'type'		=> $slug,
 					'link'		=> ''
 				);
 
@@ -272,7 +272,7 @@ class User extends Abs\Type{
 			}
 
 			$events[] = array(
-				'type'		=> 'general',
+				'action'	=> 'general',
 				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $slug
 			);
 
