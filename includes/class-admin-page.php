@@ -52,7 +52,6 @@ class AdminPage{
 		$this->connected	= $connection->test();
 
 		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
-		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
 		add_filter( 'plugin_action_links_' . $this->definitions->basename , array( $this, 'add_settings_link' ) );
 		add_action( 'admin_notices', array( $this, 'internet_connected_admin_notice' ) );
 
@@ -154,70 +153,6 @@ class AdminPage{
 		);
 
 		wp_localize_script( 'test-content-js', 'test_content', $data );
-
-	}
-
-
-	/**
-	 * Ajax callback function for triggering the creation & deletion of test data.
-	 *
-	 * @see wp_ajax filter, $this->add_menu_item, $this->creation_routing
-	 */
-	public function handle_test_data_callback() {
-
-		$action		= $_REQUEST['todo'];
-		$nonce		= $_REQUEST['nonce'];
-
-		// Verify that we have a proper logged in user and it's the right person
-		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'handle-test-data' ) ){
-			return;
-		}
-
-		if ( $action == 'delete' ){
-
-			$this->deletion_routing( $_REQUEST );
-
-		} elseif ( $action == 'create' ){
-
-			$this->creation_routing( $_REQUEST );
-
-		}
-
-		die();
-
-	}
-
-
-	/**
-	 * Choose which type of creation needs to be accomplished and route through
-	 * the correct class.
-	 */
-	private function creation_routing( $data ){
-
-		$type = 'testContent\Types\\' . ucwords( $data['type'] );
-		$object = new $type();
-		$object->create_objects( $data['slug'], $data['connection'], true, 1 );
-
-	}
-
-
-	/**
-	 * Choose which type of deletion needs to be accomplished and route through
-	 * the correct method of Delete.
-	 */
-	private function deletion_routing( $data ){
-
-		$delete_content = new Delete;
-
-		if ( $data['type'] == 'all' ){
-
-			$delete_content->delete_all_test_data( true );
-
-		} else {
-
-			$delete_content->delete_objects( $data, true );
-
-		}
 
 	}
 
