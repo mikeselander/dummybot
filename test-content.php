@@ -74,13 +74,14 @@ function test_content_autoloader( $class ) {
 		'basename'	=> plugin_basename( __FILE__ ),
 		'directory'	=> plugin_dir_path( __FILE__ ),
 		'file'		=> __FILE__,
-		'slug' 		=> 'structure',
+		'slug' 		=> 'test-content',
 		'url'		=> plugin_dir_url( __FILE__ )
 	)
 );
 
  // Register hook providers and views.
  plugin()->register_hooks( new AdminPage() )
+ 		 ->register_hooks( new Ajax() )
          ->register_view( new Views\Posts() )
          ->register_view( new Views\Terms() )
 		 ->register_view( new Views\Users() )

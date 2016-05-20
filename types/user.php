@@ -37,10 +37,9 @@ class User extends Abs\Type{
 	 *
 	 * @param string $slug a custom post type ID.
 	 * @param boolean $connection Whether or not we're connected to the Internet.
-	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_objects( $slug, $connection, $echo = false, $num = '' ){
+	public function create_objects( $slug, $connection, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $slug ) ){
@@ -60,9 +59,7 @@ class User extends Abs\Type{
 
 			$return = $this->create_test_object( $slug );
 
-			if ( $echo === true ){
-				echo \json_encode( $return );
-			}
+			return $return;
 
 		}
 
@@ -125,6 +122,7 @@ class User extends Abs\Type{
 				'oid'		=> $user_id,
 				'role'		=> $slug,
 				'link_edit'	=> admin_url( '/user-edit.php?user_id=' . $user_id ),
+				'link_view' => get_author_posts_url( $user_id )
 			);
 		}
 
@@ -176,10 +174,8 @@ class User extends Abs\Type{
 	 * Delete all test data, regardless of type, within posts.
 	 *
 	 * @see Delete
-	 *
-	 * @param boolean $echo Whether or not to echo. Optional.
 	 */
-	public function delete_all( $echo = false ){
+	public function delete_all(){
 
 		$delete =  new Delete;
 
@@ -192,14 +188,14 @@ class User extends Abs\Type{
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
 		foreach ( $post_types as $post_type ) :
 
-		    $this->delete( $post_type->name, $echo );
+		    $this->delete( $post_type->name );
 
 		endforeach;
 
 		// Loop through all user roles and remove any data
 		foreach ( $this->get_roles() as $role ) :
 
-			$this->delete( $role['slug'], $echo );
+			$this->delete( $role['slug'] );
 
 		endforeach;
 
@@ -216,9 +212,8 @@ class User extends Abs\Type{
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $slug a custom post type ID.
-	 * @param boolean $echo Whether or not to echo the result
 	 */
-	public function delete( $slug, $echo = false ){
+	public function delete( $slug ){
 
 		$delete = new Delete;
 
@@ -264,14 +259,12 @@ class User extends Abs\Type{
 					continue;
 				}
 
-				if ( $echo === true ){
-					$events[] = array(
-						'type'		=> 'deleted',
-						'oid'		=> $user->ID,
-						'post_type'	=> $slug,
-						'link'		=> ''
-					);
-				}
+				$events[] = array(
+					'type'		=> 'deleted',
+					'oid'		=> $user->ID,
+					'post_type'	=> $slug,
+					'link'		=> ''
+				);
 
 				// Force delete the user
 				wp_delete_user( $user->ID );
@@ -283,7 +276,7 @@ class User extends Abs\Type{
 				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $slug
 			);
 
-			echo json_encode( $events );
+			return $events;
 
 		}
 

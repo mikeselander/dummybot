@@ -16,7 +16,8 @@ class Delete{
 	 *
 	 * @access private
 	 */
-	public function delete_all_test_data( $echo = false ){
+	public function delete_all_test_data(){
+		$return = '';
 
 		if ( ! $this->user_can_delete() ){
 			return;
@@ -31,11 +32,13 @@ class Delete{
 				$class = 'testContent\Types\\' . ucwords( $type );
 				$object = new $class();
 
-				$object->delete_all( true );
+				$return .= $object->delete_all();
 
 			}
 
 		}
+
+		return $return;
 
 	}
 
@@ -49,10 +52,8 @@ class Delete{
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $data Information about the type.
-	 * @param string $echo Whether or not to echo the results.
-	 * @param boolean $echo Whether or not to echo the result
 	 */
-	public function delete_objects( $data, $echo = false ){
+	public function delete_objects( $data ){
 
 		// Make sure that the current user is logged in & has full permissions.
 		if ( !$this->user_can_delete() ){
@@ -68,7 +69,7 @@ class Delete{
 
 		$object = new $type();
 
-		$object->delete( $slug, $echo );
+		return $object->delete( $slug );
 
 	}
 

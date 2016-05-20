@@ -35,10 +35,9 @@ class Term extends Abs\Type{
 	 * @see $this->get_cpt_supports, $this->get_metaboxes, $this->create_test_object
 	 *
 	 * @param string $slug a custom post type ID.
-	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_objects( $slug, $connection, $echo = false, $num = '' ){
+	public function create_objects( $slug, $connection, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $slug ) ){
@@ -55,9 +54,7 @@ class Term extends Abs\Type{
 
 			$return = $this->create_test_object( $slug );
 
-			if ( $echo === true ){
-				echo \json_encode( $return );
-			}
+			return $return;
 
 		}
 
@@ -118,10 +115,8 @@ class Term extends Abs\Type{
 	 * Delete all test data, regardless of type, within terms.
 	 *
 	 * @see Delete
-	 *
-	 * @param boolean $echo Whether or not to echo. Optional.
 	 */
-	public function delete_all( $echo = false ){
+	public function delete_all(){
 
 		$delete =  new Delete;
 
@@ -134,7 +129,7 @@ class Term extends Abs\Type{
 		$taxonomies = get_taxonomies();
 		foreach ( $taxonomies as $tax ) :
 
-			$this->delete( $tax, $echo );
+			$this->delete( $tax );
 
 		endforeach;
 
@@ -151,9 +146,8 @@ class Term extends Abs\Type{
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $slug a custom post type ID.
-	 * @param boolean $echo Whether or not to echo the result
 	 */
-	public function delete( $slug, $echo = false ){
+	public function delete( $slug ){
 
 		$delete =  new Delete;
 
@@ -187,14 +181,12 @@ class Term extends Abs\Type{
 
 			foreach ( $terms as $term ){
 
-				if ( $echo === true ){
-					$events[] = array(
-						'type'		=> 'deleted',
-						'oid'		=> $term->term_id,
-						'post_type'	=> $slug,
-						'link'		=> ''
-					);
-				}
+				$events[] = array(
+					'type'		=> 'deleted',
+					'oid'		=> $term->term_id,
+					'post_type'	=> $slug,
+					'link'		=> ''
+				);
 
 				// Delete our term
 				wp_delete_term( $term->term_id, $slug );
@@ -208,7 +200,7 @@ class Term extends Abs\Type{
 				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $taxonomy->labels->name
 			);
 
-			echo \json_encode( $events );
+			return $events;
 
 		}
 

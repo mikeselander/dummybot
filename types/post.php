@@ -57,10 +57,9 @@ class Post extends Abs\Type{
 	 *
 	 * @param string $slug a custom post type ID.
 	 * @param boolean $connection Whether or not we're connected to the Internet.
-	 * @param boolean $echo Whether or not to echo. Optional.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_objects( $slug, $connection, $echo = false, $num = '' ){
+	public function create_objects( $slug, $connection, $num = '' ){
 
 		// If we're missing a custom post type id - don't do anything
 		if ( empty( $slug ) ){
@@ -84,9 +83,7 @@ class Post extends Abs\Type{
 
 			$return = $this->create_test_object( $slug, $supports, $metaboxes );
 
-			if ( $echo === true ){
-				echo \json_encode( $return );
-			}
+			return $return;
 
 		}
 
@@ -265,10 +262,8 @@ class Post extends Abs\Type{
 	 * Delete all test data, regardless of type, within posts.
 	 *
 	 * @see Delete
-	 *
-	 * @param boolean $echo Whether or not to echo. Optional.
 	 */
-	public function delete_all( $echo = false ){
+	public function delete_all(){
 
 		$delete =  new Delete;
 
@@ -281,7 +276,7 @@ class Post extends Abs\Type{
 		$post_types = get_post_types( array( 'public' => true ), 'objects' );
 		foreach ( $post_types as $post_type ) :
 
-		    $this->delete( $post_type->name, $echo );
+		    return $this->delete( $post_type->name );
 
 		endforeach;
 
@@ -298,9 +293,8 @@ class Post extends Abs\Type{
 	 * @see WP_Query, wp_delete_post
 	 *
 	 * @param string $slug a custom post type ID.
-	 * @param boolean $echo Whether or not to echo the result
 	 */
-	public function delete( $slug, $echo = false ){
+	public function delete( $slug ){
 
 		$delete =  new Delete;
 
@@ -338,14 +332,12 @@ class Post extends Abs\Type{
 				// Find any media associated with the test post and delete it as well
 				$this->delete_associated_media( get_the_id() );
 
-				if ( $echo === true ){
-					$events[] = array(
-						'type'		=> 'deleted',
-						'oid'		=> get_the_id(),
-						'post_type'	=> get_post_type( get_the_id() ),
-						'link'		=> ''
-					);
-				}
+				$events[] = array(
+					'type'		=> 'deleted',
+					'oid'		=> get_the_id(),
+					'post_type'	=> get_post_type( get_the_id() ),
+					'link'		=> ''
+				);
 
 				// Force delete the post
 				wp_delete_post( get_the_id(), true );
@@ -359,7 +351,7 @@ class Post extends Abs\Type{
 				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $obj->labels->all_items
 			);
 
-			echo \json_encode( $events );
+			return $events;
 
 		}
 

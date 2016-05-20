@@ -10,8 +10,18 @@ namespace testContent;
  */
 class Ajax{
 
+	/**
+	 * reporting
+	 * Reporting class instance.
+	 *
+	 * @var object
+	 * @access private
+	 */
+	private $reporting;
+
 	public function hooks(){
 
+		$this->reporting = new Reporting;
 		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
 
 	}
@@ -56,7 +66,9 @@ class Ajax{
 		$object = new $type();
 		$return = $object->create_objects( $data['slug'], $data['connection'], true, 1 );
 
-		echo $return;
+		$clean = $this->reporting->create_report( $return );
+
+		echo $clean;
 
 	}
 
@@ -79,7 +91,9 @@ class Ajax{
 
 		}
 
-		echo $return;
+		$clean = $this->reporting->create_report( $return );
+
+		echo $clean;
 
 	}
 
