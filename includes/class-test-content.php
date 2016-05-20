@@ -350,8 +350,18 @@ CSSland,
 
 		);
 
-		for( $i = 1; $i < 6; $i++ ){
-			$content .= $random_content_types[rand( 0, 12 )];
+		$used_keys = array();
+		for( $i = 1; $i < 7; $i++ ){
+
+			// Pull a new random key and make sure we're not repeating any elements
+			$key = rand( 0, 12 );
+			while( in_array( $key, $used_keys ) ){
+				$key = rand( 0, 12 );
+			}
+
+			$content .= $random_content_types[$key];
+
+			$used_keys[] = $key;
 		}
 
 		return apply_filters( "tc_paragraphs_data", $content );
