@@ -36,7 +36,7 @@ class Post extends Abs\Type{
 	/**
 	 * Constructor to load in the Metaboxes class.
 	 *
-	 * @see Metaboxes
+	 * @see object
 	 */
 	public function __construct(){
 

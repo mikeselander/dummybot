@@ -44,6 +44,9 @@ class Term extends Abs\Type{
 			return;
 		}
 
+		// Set our connection status for the rest of the methods
+		$this->connected = $connection;
+
 		// If we forgot to put in a quantity, make one for us
 		if ( empty( $num ) ){
 			$num = rand( 5, 30 );

@@ -20,6 +20,15 @@ abstract class Type{
 	 */
 	protected $type;
 
+	/**
+	 * connected
+	 * Whether or not we're successfully connected to the Internet.
+	 *
+	 * @var boolean
+	 * @access private
+	 */
+	protected $connected;
+
 
 	/**
 	 * Registers the type with the rest of the plugin

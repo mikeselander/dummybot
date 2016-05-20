@@ -78,11 +78,8 @@ class User extends Abs\Type{
 	 * @see TestContent, wp_insert_post, add_post_meta, update_post_meta, $this->random_metabox_content
 	 *
 	 * @param string $slug a custom post type ID.
-	 * @param array $supports Features that the post type supports.
-	 * @param array $supports All CMB2 metaboxes attached to the post type.
 	 */
 	private function create_test_object( $slug ){
-		$return = '';
 
 		if ( !is_user_logged_in() ){
 			return false;
