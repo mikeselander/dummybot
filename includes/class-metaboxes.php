@@ -342,9 +342,16 @@ class Metaboxes{
 
 				break;
 
-			case 'text_email':
+			case 'text_email' :
+			case 'email':
 
 				$value = TestContent::email();
+
+				break;
+
+			case 'number' :
+
+				$value = rand( 1, 10000000 );
 
 				break;
 
