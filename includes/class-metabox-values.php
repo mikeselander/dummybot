@@ -22,11 +22,11 @@ class MetaboxValues{
 	 * @param int $post_id Single post ID.
 	 * @param array $cmb custom metabox array from CMB2.
 	 */
-	public function random_metabox_content( $post_id, $cmb, $connected ){
+	public function get_values( $post_id, $cmb, $connected ){
 		$value = '';
 
 		// First check that our post ID & cmb array aren't empty
-		if ( empty( $cmb ) || empty( $post_id ) ){
+		if ( empty( $cmb ) || empty( $post_id ) || ! is_user_logged_in() ){
 			return;
 		}
 
@@ -37,66 +37,51 @@ class MetaboxValues{
 			case 'text_small':
 			case 'text_medium':
 
-				// If phone is in the id, fetch a phone #
-				if ( stripos( $cmb['id'], 'phone' ) ){
-					$value = TestContent::phone();
-
-				// If email is in the id, fetch an email address
-				} elseif ( stripos( $cmb['id'], 'email' ) ){
-					$value = TestContent::email();
-
-				// If time is in the id, fetch a time string
-				} elseif ( stripos( $cmb['id'], 'time' ) ){
-					$value = TestContent::time();
-
-				// Otherwise, just a random text string
-				} else {
-					$value = TestContent::title( rand( 10, 50 ) );
-				}
+				$value = $this->text( $cmb );
 
 				break;
 
 			case 'text_url':
 
-				$value = TestContent::link();
+				$value = $this->url( $cmb );
 
 				break;
 
 			case 'text_email' :
 			case 'email':
 
-				$value = TestContent::email();
+				$value = $this->email( $cmb );
 
 				break;
 
 			case 'number' :
 
-				$value = rand( 1, 10000000 );
+				$value = $this->number( $cmb );
 
 				break;
 
 			case 'text_time':
 
-				$value = TestContent::time();
+				$value = $this->time( $cmb );
 
 				break;
 
 			case 'select_timezone':
 
-				$value = TestContent::timezone();
+				$value = $this->timezone( $cmb );
 
 				break;
 
 			case 'text_date':
 
-				$value = TestContent::date( 'm/d/Y' );
+				$value = $this->date( $cmb );
 
 				break;
 
 			case 'text_date_timestamp':
 			case 'text_datetime_timestamp':
 
-				$value = TestContent::date( 'U' );
+				$value = $this->timestamp( $cmb );
 
 				break;
 
@@ -104,13 +89,13 @@ class MetaboxValues{
 
 			case 'text_money':
 
-				$value = rand( 0, 100000 );
+				$value = $this->money( $cmb );
 
 				break;
 
 			case 'test_colorpicker':
 
-				$value = '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
+				$value = $this->color( $cmb );
 
 				break;
 
@@ -118,7 +103,7 @@ class MetaboxValues{
 			case 'textarea_small':
 			case 'textarea_code':
 
-				$value = TestContent::plain_text();
+				$value = $this->textarea( $cmb );
 
 				break;
 
@@ -126,9 +111,7 @@ class MetaboxValues{
 			case 'radio_inline':
 			case 'radio':
 
-				// Grab a random item out of the array and return the key
-				$new_val = array_slice( $cmb['options'], rand( 0, count( $cmb['options'] ) ), 1 );
-				$value = key( $new_val );
+				$value = $this->radio( $cmb );
 
 				break;
 
@@ -138,42 +121,25 @@ class MetaboxValues{
 
 			case 'checkbox':
 
-				// 50/50 odds of being turned on
-				if ( rand( 0, 1 ) == 1 ){
-					$value = 'on';
-				}
+				$value = $this->checkbox( $cmb );
 
 				break;
 
 			case 'multicheck':
 
-				$new_option = array();
-
-				// Loop through each of our options
-				foreach ( $cmb['options'] as $key => $value ){
-
-					// 50/50 chance of being included
-					if ( rand( 0, 1 ) ){
-						$new_option[] = $key;
-					}
-
-				}
-
-				$value = $new_option;
+				$value = $this->multicheck( $cmb );
 
 				break;
 
 			case 'wysiwyg':
 
-				$value = TestContent::paragraphs();
+				$value = $this->wysiwyg( $cmb );
 
 				break;
 
 			case 'file':
 
-				if ( true == $connected ){
-					$value = TestContent::image( $post_id );
-				}
+				$value = $this->file( $cmb );
 
 				break;
 
@@ -181,7 +147,7 @@ class MetaboxValues{
 
 			case 'oembed':
 
-				$value = TestContent::oembed();
+				$value = $this->oembed( $cmb );
 
 				break;
 
@@ -199,8 +165,177 @@ class MetaboxValues{
 
 		}
 
-	} // end random_metabox_content
+	} // end get_values
 
+
+	private function text( $cmb ){
+
+		// If phone is in the id, fetch a phone #
+		if ( stripos( $cmb['id'], 'phone' ) ){
+			$value = TestContent::phone();
+
+		// If email is in the id, fetch an email address
+		} elseif ( stripos( $cmb['id'], 'email' ) ){
+			$value = TestContent::email();
+
+		// If time is in the id, fetch a time string
+		} elseif ( stripos( $cmb['id'], 'time' ) ){
+			$value = TestContent::time();
+
+		// Otherwise, just a random text string
+		} else {
+			$value = TestContent::title( rand( 10, 50 ) );
+		}
+
+		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->chars ) ){
+			$value = substr( $value, 0, $cmb['extras']->chars );
+		}
+
+		return $value;
+
+	}
+
+
+	private function url( $cmb ){
+
+		return TestContent::link();
+
+	}
+
+
+	private function email( $cmb ){
+
+		return TestContent::email();;
+
+	}
+
+
+	private function number( $cmb ){
+
+		$min = 1;
+		$max = 10000000;
+
+		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->min ) ){
+			$min = $cmb['extras']->min;
+		}
+
+		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->max ) ){
+			$max = $cmb['extras']->max;
+		}
+
+		return rand( $min, $max );
+
+	}
+
+	private function time( $cmb ){
+
+		return TestContent::time();
+
+	}
+
+	private function timezone( $cmb ){
+
+		return TestContent::timezone();
+
+	}
+
+	private function date( $cmb ){
+
+		return TestContent::date( 'm/d/Y' );
+
+	}
+
+	private function timestamp( $cmb ){
+
+		return TestContent::date( 'U' );
+
+	}
+
+	private function money( $cmb ){
+
+		return rand( 0, 100000 );
+
+	}
+
+	private function color( $cmb ){
+
+		return '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
+
+	}
+
+	private function textarea( $cmb ){
+
+		$value = TestContent::plain_text();
+
+		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->chars ) ){
+			$value = substr( $value, 0,  $cmb['extras']->chars );
+		}
+
+		return $value;
+
+	}
+
+	private function radio( $cmb ){
+
+		// Grab a random item out of the array and return the key
+		$new_val = array_slice( $cmb['options'], rand( 0, count( $cmb['options'] ) ), 1 );
+		$value = key( $new_val );
+
+		return $value;
+
+	}
+
+	private function checkbox( $cmb ){
+
+		// 50/50 odds of being turned on
+		if ( rand( 0, 1 ) == 1 ){
+			$value = 'on';
+		}
+
+		return $value;
+
+	}
+
+	private function multicheck( $cmb ){
+
+		$new_option = array();
+
+		// Loop through each of our options
+		foreach ( $cmb['options'] as $key => $value ){
+
+			// 50/50 chance of being included
+			if ( rand( 0, 1 ) ){
+				$new_option[] = $key;
+			}
+
+		}
+
+		return $new_option;
+
+	}
+
+	private function wysiwyg( $cmb ){
+
+		return TestContent::paragraphs();
+
+	}
+
+	private function file( $cmb ){
+		$value = '';
+
+		if ( true == $connected ){
+			$value = TestContent::image( $post_id );
+		}
+
+		return $value;
+
+	}
+
+	private function oembed( $cmb ){
+
+		return TestContent::oembed();
+
+	}
 
 	/**
 	 * Update the metabox with new data.

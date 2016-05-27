@@ -109,7 +109,7 @@ class Post extends Abs\Type{
 	 *
 	 * @access private
 	 *
-	 * @see TestContent, wp_insert_post, add_post_meta, update_post_meta, $this->random_metabox_content
+	 * @see TestContent, wp_insert_post, add_post_meta, update_post_meta, $this->get_values
 	 *
 	 * @param string $slug a custom post type ID.
 	 * @param array $supports Features that the post type supports.
@@ -166,7 +166,7 @@ class Post extends Abs\Type{
 		// Spin up metaboxes
 		if ( !empty( $metaboxes ) ){
 			foreach ( $metaboxes as $cmb ) :
-				$return .= $this->metabox_values->random_metabox_content( $post_id, $cmb, $this->connected );
+				$return .= $this->metabox_values->get_values( $post_id, $cmb, $this->connected );
 			endforeach;
 		}
 

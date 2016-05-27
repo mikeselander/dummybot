@@ -157,8 +157,14 @@ class MetaboxTypes{
 							'type'	 => $field_detail['type'],
 							'name'	 => $field_detail['label'],
 							'id'	 => $field_detail['name'],
-							'source' =>'acf'
+							'extras' => (object) array(
+								'chars'	 => $field_detail['maxlength'],
+								'max'	 => $field_detail['max'],
+								'min'	 => $field_detail['min'],
+							),
+							'source' =>'acf',
 						);
+
 					endif;
 				}
 
