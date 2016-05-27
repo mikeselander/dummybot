@@ -12,7 +12,7 @@ use testContent\Abstracts as Abs;
  */
 class Posts extends Abs\View{
 
-	function __construct(){
+	public function __construct(){
 
 		$this->title	= __( 'Posts', 'otm-test-content' );
 		$this->type		= 'post';

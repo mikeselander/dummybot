@@ -19,7 +19,7 @@ class Post extends Abs\Type{
 	 * metabox_types
 	 * Easy access for the MetaboxTypes class.
 	 *
-	 * @var string
+	 * @var object
 	 * @access private
 	 */
 	private $metabox_types;
@@ -28,7 +28,7 @@ class Post extends Abs\Type{
 	 * metabox_values
 	 * Easy access for the MetaboxValues class.
 	 *
-	 * @var string
+	 * @var object
 	 * @access private
 	 */
 	private $metabox_values;
@@ -45,7 +45,7 @@ class Post extends Abs\Type{
 	/**
 	 * Constructor to load in the Metaboxes class.
 	 *
-	 * @see object
+	 * @see MetaboxTypes, MetaboxValues
 	 */
 	public function __construct(){
 

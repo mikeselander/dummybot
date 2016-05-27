@@ -134,7 +134,7 @@ class MetaboxValues{
 
 			case 'file':
 
-				$value = $this->file( $cmb );
+				$value = $this->file( $cmb, $post_id, $connected );
 
 				break;
 
@@ -375,6 +375,7 @@ class MetaboxValues{
 	 * @return string cmb value
 	 */
 	private function checkbox( $cmb ){
+		$value = '';
 
 		// 50/50 odds of being turned on
 		if ( rand( 0, 1 ) == 1 ){
@@ -434,12 +435,14 @@ class MetaboxValues{
 	 * @see TestContent
 	 *
 	 * @param array $cmb Metabox data
-	 * @return string cmb value
+	 * @param int $post_id Post ID
+	 * @param bool $connected Whether we're connected to the Internets or not
+	 * @return mixed string|object cmb value or WP_Error object
 	 */
-	private function file( $cmb ){
+	private function file( $cmb, $post_id, $connected ){
 		$value = '';
 
-		if ( true == $connected ){
+		if ( true === $connected ){
 			$value = TestContent::image( $post_id );
 		}
 

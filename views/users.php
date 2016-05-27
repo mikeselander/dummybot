@@ -13,7 +13,7 @@ use testContent\Types as Type;
  */
 class Users extends Abs\View{
 
-	function __construct(){
+	public function __construct(){
 
 		$this->title	= __( 'Users', 'otm-test-content' );
 		$this->type		= 'users';

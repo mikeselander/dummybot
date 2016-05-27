@@ -12,7 +12,7 @@ use testContent\Abstracts as Abs;
  */
 class Various extends Abs\View{
 
-	function __construct(){
+	public function __construct(){
 
 		$this->title	= __( 'Various', 'otm-test-content' );
 		$this->type		= 'all';
