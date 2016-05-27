@@ -4,8 +4,8 @@
  * Plugin URI: https://github.com/oldtownmedia/test-content-suite
  * Description: Spin up test posts, pages, CPTs, and terms from an easy-to-use admin page.
  * Version: 1.0
- * Author: Old Town Media
- * Author URI: https://github.com/oldtownmedia/
+ * Author: Mike Selander
+ * Author URI: https://github.com/mikeselander/
  * Text Domain: otm-test-content
  * Domain Path: /languages
  * License: GPL2

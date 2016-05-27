@@ -19,19 +19,56 @@ class Ajax{
 	 */
 	private $reporting;
 
+	/**
+	 * plugin
+	 * Plugin class instance.
+	 *
+	 * @var object
+	 */
+	private $plugin;
+
+	/**
+	 * action
+	 * Name of the action we want to use in our AJAX calls
+	 *
+	 * @var string
+	 */
+	private $action;
+
+
+	/**
+	 * Instantiate any WP hooks that need to be fired.
+	 */
 	public function hooks(){
 
-		$this->reporting = new Reporting;
-		add_action( 'wp_ajax_handle_test_data', array( $this, 'handle_test_data_callback' ) );
+		$this->reporting    = new Reporting;
+		$this->action       = 'handle_test_data';
+
+		add_action( "wp_ajax_{$this->action}" , array( $this, 'handle_ajax' ) );
 
 	}
+
+
+	/**
+	 * Set a reference to the main plugin instance.
+	 *
+	 * @param $plugin Plugin instance.
+	 * @return Ajax instance
+	 */
+	public function set_plugin( $plugin ) {
+
+		$this->plugin = $plugin;
+		return $this;
+
+	}
+
 
 	/**
 	 * Ajax callback function for triggering the creation & deletion of test data.
 	 *
 	 * @see wp_ajax filter, $this->add_menu_item, $this->creation_routing
 	 */
-	public function handle_test_data_callback() {
+	public function handle_ajax() {
 
 		$action		= $_REQUEST['todo'];
 		$nonce		= $_REQUEST['nonce'];
