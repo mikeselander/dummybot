@@ -16,13 +16,22 @@ use testContent\Abstracts as Abs;
 class Post extends Abs\Type{
 
 	/**
-	 * metaboxes
-	 * Easy access for the Metaboxes class.
+	 * metabox_types
+	 * Easy access for the MetaboxTypes class.
 	 *
 	 * @var string
 	 * @access private
 	 */
-	private $metaboxes;
+	private $metabox_types;
+
+	/**
+	 * metabox_values
+	 * Easy access for the MetaboxValues class.
+	 *
+	 * @var string
+	 * @access private
+	 */
+	private $metabox_values;
 
 	/**
 	 * type
@@ -40,7 +49,8 @@ class Post extends Abs\Type{
 	 */
 	public function __construct(){
 
-		$this->metaboxes = new Main\Metaboxes;
+		$this->metabox_types = new Main\MetaboxTypes;
+		$this->metabox_values = new Main\MetaboxValues;
 
 	}
 
@@ -68,7 +78,7 @@ class Post extends Abs\Type{
 
 		// Gather the necessary data to create the posts
 		$supports 	= $this->get_cpt_supports( $slug );
-		$metaboxes	= $this->metaboxes->get_metaboxes( $slug );
+		$metaboxes	= $this->metabox_types->get_metaboxes( $slug );
 
 		// Set our connection status for the rest of the methods
 		$this->connected = $connection;
@@ -156,7 +166,7 @@ class Post extends Abs\Type{
 		// Spin up metaboxes
 		if ( !empty( $metaboxes ) ){
 			foreach ( $metaboxes as $cmb ) :
-				$return .= $this->metaboxes->random_metabox_content( $post_id, $cmb, $this->connected );
+				$return .= $this->metabox_values->random_metabox_content( $post_id, $cmb, $this->connected );
 			endforeach;
 		}
 
