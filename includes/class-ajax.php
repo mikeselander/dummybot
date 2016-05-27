@@ -45,6 +45,7 @@ class Ajax{
 		$this->action       = 'handle_test_data';
 
 		add_action( "wp_ajax_{$this->action}" , array( $this, 'handle_ajax' ) );
+		add_filter( 'option_active_plugins', array( $this, 'ajax_exclude_plugins' ) );
 
 	}
 
@@ -59,6 +60,37 @@ class Ajax{
 
 		$this->plugin = $plugin;
 		return $this;
+
+	}
+
+
+	/**
+	 * Turn outside plugins off during our AJAX calls to speed everything up.
+	 *
+	 * Having a lot of plugins running slows down an AJAX request, this function
+	 * turns all other plugins off temporarliy while the AJAX requests is running.
+	 *
+	 * https://deliciousbrains.com/excluding-wordpress-plugins-loading-specific-ajax-requests/
+	 *
+	 * @param array $plugins All active plugins.
+	 * @return array Whitelisted plugins.
+	 */
+	public function ajax_exclude_plugins( $plugins ) {
+
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX || ! isset( $_POST['action'] ) || false === strpos( $_POST['action'], $this->action ) ){
+			return $plugins;
+		}
+
+		foreach( $plugins as $key => $plugin ) {
+
+			if ( false !== strpos( $plugin, $this->plugin->definitions->slug ) ){
+				continue;
+			}
+
+			unset( $plugins[$key] );
+		}
+		
+		return $plugins;
 
 	}
 

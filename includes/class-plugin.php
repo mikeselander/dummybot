@@ -15,7 +15,7 @@ class Plugin{
 	 *
 	 * @var object
 	 */
-	protected $definitions;
+	public $definitions;
 
 
 	/**
