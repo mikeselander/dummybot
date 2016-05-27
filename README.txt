@@ -3,7 +3,7 @@ Contributors: mikeselander
 Donate link: https://mikeselander.com
 Tags: wp_options, development, testing, content, qa
 Requires at least: ---???---
-Tested up to: 4.5.1
+Tested up to: 4.5.3
 Stable tag: 1.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -12,7 +12,7 @@ Save time by quickly and painlessly create dummy test content for your site.
 
 == Description ==
 
-Testing with a lot of dummy content is really important to putting out quality work. However, normal methods take a lot of time and aren't flexible enough. Test Content Quite fixes all of that and makes the process easy and painless. Click a button to get X number of posts, custom post types, or categories and click another button to wipe them all away like nothing ever happened. 
+Testing with a lot of dummy content is really important to putting out quality work. However, normal methods take a lot of time and aren't flexible enough. Test Content Quite fixes all of that and makes the process easy and painless. Click a button to get X number of posts, custom post types, or categories and click another button to wipe them all away like nothing ever happened.
 
 == Installation ==
 
