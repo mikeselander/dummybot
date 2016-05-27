@@ -147,9 +147,11 @@ class AdminPage{
 
 		$data = array(
 			'nonce'			=> wp_create_nonce( 'handle-test-data' ),
-			'createdStr'	=> __( 'Created', 'otm-test-content' ),
-			'deletedStr'	=> __( 'Deleting', 'otm-test-content' ),
-			'creatingStr'	=> __( 'Creating', 'otm-test-content' ),
+			'strings'	=> array(
+				'createdStr'	=> __( 'Created', 'otm-test-content' ),
+				'deletedStr'	=> __( 'Deleting', 'otm-test-content' ),
+				'creatingStr'	=> __( 'Creating', 'otm-test-content' ),
+			),
 		);
 
 		wp_localize_script( 'test-content-js', 'test_content', $data );

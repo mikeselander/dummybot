@@ -194,7 +194,7 @@ class Post extends Abs\Type{
 			'title'		=> post_type_supports( $slug, 'title' ),
 			'editor'	=> post_type_supports( $slug, 'editor' ),
 			'excerpt'	=> post_type_supports( $slug, 'excerpt' ),
-			'thumbnail'	=> post_type_supports( $slug, 'thumbnail' )
+			'thumbnail'	=> post_type_supports( $slug, 'thumbnail' ),
 		);
 
 		return $supports;

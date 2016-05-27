@@ -121,7 +121,7 @@ abstract class View{
 		$html .= "<div class='test-data-cpt'>";
 			$html .= "<h3>";
 				$html .= "<span class='label'>".__( 'Quantity', 'otm-test-content' )."</span>";
-				$html .= "<input type='number' value='0' class='quantity-adjustment' for='".$this->type."' placeholder='".__( '', 'otm-test-content' )."'> ";
+				$html .= "<input type='number' value='0' class='quantity-adjustment' for='".$this->type."' > ";
 			$html .= "</h3>";
 		$html .= "</div>";
 

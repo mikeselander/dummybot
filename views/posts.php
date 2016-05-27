@@ -12,9 +12,13 @@ use testContent\Abstracts as Abs;
  */
 class Posts extends Abs\View{
 
-	protected $title	= 'Posts';
-	protected $type		= 'post';
-	protected $priority	= 1;
+	function __construct(){
+
+		$this->title	= __( 'Posts', 'otm-test-content' );
+		$this->type		= 'post';
+		$this->priority	= 1;
+
+	}
 
 	/**
 	 * Our sections action block - button to create and delete.

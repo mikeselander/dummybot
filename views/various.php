@@ -12,9 +12,13 @@ use testContent\Abstracts as Abs;
  */
 class Various extends Abs\View{
 
-	protected $title	= 'Various';
-	protected $type		= 'all';
-	protected $priority	= 10;
+	function __construct(){
+
+		$this->title	= __( 'Various', 'otm-test-content' );
+		$this->type		= 'all';
+		$this->priority	= 10;
+
+	}
 
 
 	/**

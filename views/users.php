@@ -13,9 +13,13 @@ use testContent\Types as Type;
  */
 class Users extends Abs\View{
 
-	protected $title	= 'Users';
-	protected $type		= 'user';
-	protected $priority	= 4;
+	function __construct(){
+
+		$this->title	= __( 'Users', 'otm-test-content' );
+		$this->type		= 'users';
+		$this->priority	= 4;
+
+	}
 
 	/**
 	 * Our sections action block - button to create and delete.
