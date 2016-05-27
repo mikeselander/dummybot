@@ -55,6 +55,7 @@ class MetaboxValues{
 				break;
 
 			case 'number' :
+			case 'text_money':
 
 				$value = $this->number( $cmb );
 
@@ -86,12 +87,6 @@ class MetaboxValues{
 				break;
 
 			// case 'text_datetime_timestamp_timezone': break;
-
-			case 'text_money':
-
-				$value = $this->money( $cmb );
-
-				break;
 
 			case 'test_colorpicker':
 
@@ -168,6 +163,14 @@ class MetaboxValues{
 	} // end get_values
 
 
+	/**
+	 * Pulls a text string for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function text( $cmb ){
 
 		// If phone is in the id, fetch a phone #
@@ -196,6 +199,14 @@ class MetaboxValues{
 	}
 
 
+	/**
+	 * Pulls a URL value CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function url( $cmb ){
 
 		return TestContent::link();
@@ -203,6 +214,14 @@ class MetaboxValues{
 	}
 
 
+	/**
+	 * Pulls an email address for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function email( $cmb ){
 
 		return TestContent::email();;
@@ -210,6 +229,12 @@ class MetaboxValues{
 	}
 
 
+	/**
+	 * Pulls a random valnumberue for CMB field.
+	 *
+	 * @param array $cmb Metabox data
+	 * @return int cmb value
+	 */
 	private function number( $cmb ){
 
 		$min = 1;
@@ -227,42 +252,88 @@ class MetaboxValues{
 
 	}
 
+
+	/**
+	 * Pulls a time of day for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function time( $cmb ){
 
 		return TestContent::time();
 
 	}
 
+
+	/**
+	 * Pulls a timezone for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function timezone( $cmb ){
 
 		return TestContent::timezone();
 
 	}
 
+
+	/**
+	 * Pulls a date for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function date( $cmb ){
 
 		return TestContent::date( 'm/d/Y' );
 
 	}
 
+
+	/**
+	 * Pulls a timestamp for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function timestamp( $cmb ){
 
 		return TestContent::date( 'U' );
 
 	}
 
-	private function money( $cmb ){
 
-		return rand( 0, 100000 );
-
-	}
-
+	/**
+	 * Pulls a random hexadecimal color code for CMB field.
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function color( $cmb ){
 
 		return '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
 
 	}
 
+
+	/**
+	 * Pulls a long text string for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function textarea( $cmb ){
 
 		$value = TestContent::plain_text();
@@ -275,6 +346,15 @@ class MetaboxValues{
 
 	}
 
+
+	/**
+	 * Pulls a random radio field value for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function radio( $cmb ){
 
 		// Grab a random item out of the array and return the key
@@ -285,6 +365,15 @@ class MetaboxValues{
 
 	}
 
+
+	/**
+	 * Pulls a random checkbox field value for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function checkbox( $cmb ){
 
 		// 50/50 odds of being turned on
@@ -296,6 +385,15 @@ class MetaboxValues{
 
 	}
 
+
+	/**
+	 * Pulls a random multicheck field value for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return array cmb value
+	 */
 	private function multicheck( $cmb ){
 
 		$new_option = array();
@@ -314,12 +412,30 @@ class MetaboxValues{
 
 	}
 
+
+	/**
+	 * Pulls an HTML paragraph string for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function wysiwyg( $cmb ){
 
 		return TestContent::paragraphs();
 
 	}
 
+
+	/**
+	 * Pulls an image URL for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function file( $cmb ){
 		$value = '';
 
@@ -331,11 +447,21 @@ class MetaboxValues{
 
 	}
 
+
+	/**
+	 * Pulls an Oembed URL for CMB field.
+	 *
+	 * @see TestContent
+	 *
+	 * @param array $cmb Metabox data
+	 * @return string cmb value
+	 */
 	private function oembed( $cmb ){
 
 		return TestContent::oembed();
 
 	}
+
 
 	/**
 	 * Update the metabox with new data.
