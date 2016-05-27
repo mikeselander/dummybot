@@ -31,6 +31,13 @@ jQuery(document).ready(function($) {
 		div.scrollTop = div.scrollHeight;
 	}
 
+	// Release our button from being blocked
+	function releaseButton( object, current, total ){
+		if ( current > total ){
+			object.removeClass( 'disabled' );
+		}
+	}
+
 	// Add our onClick event to the buttons
 	jQuery( '.handle-test-data' ).on( 'click', function(){
 
@@ -38,7 +45,8 @@ jQuery(document).ready(function($) {
 			slug = jQuery( this ).data( 'slug' ),
 			type = jQuery( this ).data( 'type' ),
 			qty  = jQuery( '.quantity-adjustment[for="' + type + '"]' ).val(),
-			connection = jQuery( '#connection-status' ).val();
+			connection = jQuery( '#connection-status' ).val(),
+			button = $( this );
 
 		// Setup data on our help
 		var data = {
@@ -49,6 +57,8 @@ jQuery(document).ready(function($) {
 			'connection' : connection,
 			'nonce' : test_content.nonce
 		};
+
+		button.addClass( 'disabled' );
 
 		// If we're creating, and not deleting choose how many objects to create
 		if ( jQuery( this ).data( 'todo' ) == 'create' ){
@@ -80,6 +90,11 @@ jQuery(document).ready(function($) {
 
 				var parsed = JSON.parse( response );
 
+				if ( null == parsed ){
+					releaseButton( button, 2, 1 );
+					return;
+				}
+
 				if ( todo == 'create' ){
 
 					jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.createdStr + ' ' + parsed.type + ' ' + parsed.oid + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
@@ -87,6 +102,8 @@ jQuery(document).ready(function($) {
 					// Re-up our number & scroll to bottom
 					innerCount++;
 					scrollToBottom( document.getElementById( 'status-updates' ) );
+
+					releaseButton( button, innerCount, count );
 
 				} else {
 
@@ -102,6 +119,9 @@ jQuery(document).ready(function($) {
 						// Re-up our number & scroll to bottom
 						innerCount++;
 						scrollToBottom( document.getElementById( 'status-updates' ) );
+
+						releaseButton( button, innerCount, count );
+
 					}
 
 				}

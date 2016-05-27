@@ -12,6 +12,12 @@
 	margin-right: 5px;
 }
 
+.test-content-tab .handle-test-data.disabled{
+	cursor: wait;
+	-webkit-filter: grayscale( 100% );
+	filter: grayscale( 100% );
+}
+
 .test-content-tab .handle-test-data[data-todo="delete"]{
 	background-color: #a00;
 	border-color: #990000 #990000 #990000;
