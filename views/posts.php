@@ -14,7 +14,7 @@ class Posts extends Abs\View{
 
 	public function __construct(){
 
-		$this->title	= __( 'Posts', 'otm-test-content' );
+		$this->title	= __( 'Posts', 'dummybot' );
 		$this->type		= 'post';
 		$this->priority	= 1;
 
@@ -49,8 +49,8 @@ class Posts extends Abs\View{
 				$html .= "<h3>";
 
 					$html .= "<span class='label'>" . $post_type->labels->name . "</span>";
-					$html .= $this->build_button( 'create', $post_type->name, __( 'Create Test Data', 'otm-test-content' ) );
-					$html .= $this->build_button( 'delete', $post_type->name, __( 'Delete Test Data', 'otm-test-content' ) );
+					$html .= $this->build_button( 'create', $post_type->name, __( 'Create Test Data', 'dummybot' ) );
+					$html .= $this->build_button( 'delete', $post_type->name, __( 'Delete Test Data', 'dummybot' ) );
 
 				$html .= "</h3>";
 

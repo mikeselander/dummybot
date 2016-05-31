@@ -14,7 +14,7 @@ class Terms extends Abs\View{
 
 	public function __construct(){
 
-		$this->title	= __( 'Terms', 'otm-test-content' );
+		$this->title	= __( 'Terms', 'dummybot' );
 		$this->type		= 'term';
 		$this->priority	= 2;
 
@@ -54,8 +54,8 @@ class Terms extends Abs\View{
 
 				$html .= "<span class='label'>".$taxonomy->labels->name."</span>";
 
-				$html .= $this->build_button( 'create', $tax, __( 'Create', 'otm-test-content' )." ".$taxonomy->labels->name );
-				$html .= $this->build_button( 'delete', $tax, __( 'Delete', 'otm-test-content' )." ".$taxonomy->labels->name );
+				$html .= $this->build_button( 'create', $tax, __( 'Create', 'dummybot' )." ".$taxonomy->labels->name );
+				$html .= $this->build_button( 'delete', $tax, __( 'Delete', 'dummybot' )." ".$taxonomy->labels->name );
 
 				$html .= "</h3>";
 

@@ -80,8 +80,8 @@ class AdminPage{
 
 		$page = add_submenu_page(
 			'tools.php',
-			__( 'Create Test Content', 'otm-test-content' ),
-			__( 'Test Content', 'otm-test-content' ),
+			__( 'Create Test Content', 'dummybot' ),
+			__( 'Test Content', 'dummybot' ),
 			'manage_options',
 			'create-test-data',
 			array( $this, 'admin_page' )
@@ -99,7 +99,7 @@ class AdminPage{
 	 */
 	public function add_settings_link( $links ) {
 
-		$settings_link = '<a href="tools.php?page=create-test-data">' . __( 'Build Test Content', 'otm-test-content' ) . '</a>';
+		$settings_link = '<a href="tools.php?page=create-test-data">' . __( 'Build Test Content', 'dummybot' ) . '</a>';
   		array_push( $links, $settings_link );
   		return $links;
 
@@ -130,7 +130,7 @@ class AdminPage{
 		} else {
 			// We didn't get a reponse so print the notice out
 			echo '<div class="notice notice-error">';
-		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'otm-test-content' ).'</p>';
+		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'dummybot' ).'</p>';
 		    echo '</div>';
 		}
 
@@ -148,9 +148,9 @@ class AdminPage{
 		$data = array(
 			'nonce'			=> wp_create_nonce( 'handle-test-data' ),
 			'strings'	=> array(
-				'createdStr'	=> __( 'Created', 'otm-test-content' ),
-				'deletedStr'	=> __( 'Deleting', 'otm-test-content' ),
-				'creatingStr'	=> __( 'Creating', 'otm-test-content' ),
+				'createdStr'	=> __( 'Created', 'dummybot' ),
+				'deletedStr'	=> __( 'Deleting', 'dummybot' ),
+				'creatingStr'	=> __( 'Creating', 'dummybot' ),
 			),
 		);
 
@@ -165,7 +165,7 @@ class AdminPage{
 	public function admin_page(){
 		echo '<div class="wrap" id="options_editor">' . "\n";
 
-			echo '<h2>' . __( 'Create Test Data' , 'otm-test-content' ) . '</h2>' . "\n";
+			echo '<h2>' . __( 'Create Test Data' , 'dummybot' ) . '</h2>' . "\n";
 
 			echo "<div class='nav-tab-wrapper'>";
 

@@ -14,7 +14,7 @@ class Various extends Abs\View{
 
 	public function __construct(){
 
-		$this->title	= __( 'Various', 'otm-test-content' );
+		$this->title	= __( 'Various', 'dummybot' );
 		$this->type		= 'all';
 		$this->priority	= 10;
 
@@ -35,8 +35,8 @@ class Various extends Abs\View{
 
 			$html .= "<h3>";
 
-				$html .= "<span class='label'>" . __( 'Clean Site', 'otm-test-content' ) . "</span>";
-				$html .= $this->build_button( 'delete', 'all', __( 'Delete All Test Data', 'otm-test-content' ) );
+				$html .= "<span class='label'>" . __( 'Clean Site', 'dummybot' ) . "</span>";
+				$html .= $this->build_button( 'delete', 'all', __( 'Delete All Test Data', 'dummybot' ) );
 
 			$html .= "</h3>";
 

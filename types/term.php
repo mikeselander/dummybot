@@ -200,7 +200,7 @@ class Term extends Abs\Type{
 
 			$events[] = array(
 				'action'	=> 'general',
-				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $taxonomy->labels->name
+				'message'	=> __( 'Deleted', 'dummybot' ) . ' ' . $taxonomy->labels->name
 			);
 
 			return $events;

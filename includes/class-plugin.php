@@ -94,7 +94,7 @@ class Plugin{
 	 * @see load_plugin_textdomain
 	 */
 	public function load_textdomain() {
-	    load_plugin_textdomain( 'otm-test-content', FALSE, basename( dirname( $this->definitions->file ) ) . '/languages/' );
+	    load_plugin_textdomain( 'dummybot', FALSE, basename( dirname( $this->definitions->file ) ) . '/languages/' );
 	}
 
 }

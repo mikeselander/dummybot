@@ -358,7 +358,7 @@ class Post extends Abs\Type{
 
 			$events[] = array(
 				'action'	=> 'general',
-				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $obj->labels->all_items
+				'message'	=> __( 'Deleted', 'dummybot' ) . ' ' . $obj->labels->all_items
 			);
 
 			return $events;

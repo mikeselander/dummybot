@@ -15,7 +15,7 @@ class Users extends Abs\View{
 
 	public function __construct(){
 
-		$this->title	= __( 'Users', 'otm-test-content' );
+		$this->title	= __( 'Users', 'dummybot' );
 		$this->type		= 'users';
 		$this->priority	= 4;
 
@@ -41,8 +41,8 @@ class Users extends Abs\View{
 				$html .= "<h3>";
 
 					$html .= "<span class='label'>" . $role['name'] . "</span>";
-					$html .= $this->build_button( 'create', $role['slug'], __( 'Create Users', 'otm-test-content' ) );
-					$html .= $this->build_button( 'delete', $role['slug'], __( 'Delete Users', 'otm-test-content' ) );
+					$html .= $this->build_button( 'create', $role['slug'], __( 'Create Users', 'dummybot' ) );
+					$html .= $this->build_button( 'delete', $role['slug'], __( 'Delete Users', 'dummybot' ) );
 
 				$html .= "</h3>";
 

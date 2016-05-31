@@ -1,12 +1,12 @@
 <?php
 /**
- * Plugin Name: Test Content Generator
- * Plugin URI: https://github.com/oldtownmedia/test-content-suite
+ * Plugin Name: DummyBody
+ * Plugin URI: https://dummybot.com
  * Description: Spin up test posts, pages, CPTs, and terms from an easy-to-use admin page.
  * Version: 1.0
  * Author: Mike Selander
  * Author URI: https://github.com/mikeselander/
- * Text Domain: otm-test-content
+ * Text Domain: dummybot
  * Domain Path: /languages
  * License: GPL2
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html

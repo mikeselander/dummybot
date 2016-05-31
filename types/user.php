@@ -268,7 +268,7 @@ class User extends Abs\Type{
 
 			$events[] = array(
 				'action'	=> 'general',
-				'message'	=> __( 'Deleted', 'otm-test-content' ) . ' ' . $slug
+				'message'	=> __( 'Deleted', 'dummybot' ) . ' ' . $slug
 			);
 
 			return $events;
