@@ -116,7 +116,11 @@ class MetaboxValues{
 
 			case 'checkbox':
 
-				$value = $this->checkbox( $cmb );
+				if ( isset( $cmb['source'] ) && 'acf' === $cmb['source'] ){
+					$value = $this->multicheck( $cmb );
+				} else {
+					$value = $this->checkbox( $cmb );
+				}
 
 				break;
 
