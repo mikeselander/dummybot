@@ -89,7 +89,7 @@ class User extends Abs\Type{
 
 		// First, insert our post
 		$userdata = array(
-			'user_pass'			=> "tc_{$slug}_user_email", TestContent::title( 1 ),
+			'user_pass'			=> wp_generate_password( 12, true, true ),
 			'user_login'		=> strtolower( $name['first'] . $name['last'] ) . rand( 10, 100 ),
 			'user_email'		=> apply_filters( "tc_{$slug}_user_email", TestContent::email( true ) ),
 			'display_name'		=> strtolower( $name['first'] . $name['last'] ),
@@ -104,7 +104,7 @@ class User extends Abs\Type{
 		$user_id = wp_insert_user( apply_filters( "tc_{$slug}_user_arguments", $userdata ) );
 
 		// Then, set a test content flag on the new post for later deletion
-		add_user_meta( $user_id, 'evans_test_content', '__test__', true );
+		add_user_meta( $user_id, 'dummypress_test_data', '__test__', true );
 
 		// Check if we have errors and return them or created message
 		if ( is_wp_error( $user_id ) ){
@@ -228,7 +228,7 @@ class User extends Abs\Type{
 			'number'		=> 500,
 			'meta_query' 	=> array(
 				array(
-					'meta_key'		=> 'evans_test_content',
+					'meta_key'		=> 'dummypress_test_data',
 					'meta_value'	=> '__test__',
 					'compare'		=> '=',
 				),
@@ -250,7 +250,7 @@ class User extends Abs\Type{
 				}
 
 				// Double check our set user meta value
-				if ( '__test__' != get_user_meta( $user->ID, 'evans_test_content', true ) ){
+				if ( '__test__' != get_user_meta( $user->ID, 'dummypress_test_data', true ) ){
 					continue;
 				}
 

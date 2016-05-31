@@ -149,7 +149,7 @@ class Post extends Abs\Type{
 		$post_id = wp_insert_post( apply_filters( "tc_{$slug}_post_arguments", $post ) );
 
 		// Then, set a test content flag on the new post for later deletion
-		add_post_meta( $post_id, 'evans_test_content', '__test__', true );
+		add_post_meta( $post_id, 'dummypress_test_data', '__test__', true );
 
 		// Add thumbnail if supported
 		if ( $this->connected == true && ( $supports['thumbnail'] === true || in_array( $slug, array( 'post', 'page' ) ) ) ){
@@ -324,7 +324,7 @@ class Post extends Abs\Type{
 			'posts_per_page'	=> 500,
 			'meta_query' 		=> array(
 				array(
-					'key'     => 'evans_test_content',
+					'key'     => 'dummypress_test_data',
 					'value'   => '__test__',
 					'compare' => '=',
 				),
@@ -341,6 +341,11 @@ class Post extends Abs\Type{
 
 				// Find any media associated with the test post and delete it as well
 				$this->delete_associated_media( get_the_id() );
+
+				// Double check our set user meta value
+				if ( '__test__' != get_post_meta( get_the_id(), 'dummypress_test_data', true ) ){
+					continue;
+				}
 
 				$events[] = array(
 					'action'	=> 'deleted',

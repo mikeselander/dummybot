@@ -93,7 +93,7 @@ class Term extends Abs\Type{
 		);
 
 		// Then, set a test content flag on the new post for later deletion
-		add_term_meta( $return['term_id'], 'evans_test_content', '__test__', true );
+		add_term_meta( $return['term_id'], 'dummypress_test_data', '__test__', true );
 
 		// Check if we have errors and return them or created message
 		if ( is_wp_error( $return ) ){
@@ -169,7 +169,7 @@ class Term extends Abs\Type{
 		    'hide_empty' => false,
 		    'meta_query' => array(
 		        array(
-		           'key'       => 'evans_test_content',
+		           'key'       => 'dummypress_test_data',
 		           'value'     => '__test__',
 		           'compare'   => '='
 		        )
@@ -183,6 +183,11 @@ class Term extends Abs\Type{
 			$events = array();
 
 			foreach ( $terms as $term ){
+
+				// Double check our set user meta value
+				if ( '__test__' != get_term_meta( $term->term_id, 'dummypress_test_data', true ) ){
+					continue;
+				}
 
 				$events[] = array(
 					'action'	=> 'deleted',
