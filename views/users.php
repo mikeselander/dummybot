@@ -16,7 +16,7 @@ class Users extends Abs\View{
 	public function __construct(){
 
 		$this->title	= __( 'Users', 'dummybot' );
-		$this->type		= 'users';
+		$this->type		= 'user';
 		$this->priority	= 4;
 
 	}
