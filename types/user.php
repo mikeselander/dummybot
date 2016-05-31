@@ -227,11 +227,17 @@ class User extends Abs\Type{
 			'role' 			=> $slug,
 			'number'		=> 500,
 			'meta_query' 	=> array(
-				array(
-					'meta_key'		=> 'dummypress_test_data',
-					'meta_value'	=> '__test__',
-					'compare'		=> '=',
-				),
+				'relation'		=> 'OR',
+		        array(
+		           'key'       => 'dummypress_test_data',
+		           'value'     => '__test__',
+		           'compare'   => '='
+			   ),
+			   array(
+				  'key'       => 'evans_test_content',
+				  'value'     => '__test__',
+				  'compare'   => '='
+			  ),
 			),
 		);
 
@@ -250,7 +256,7 @@ class User extends Abs\Type{
 				}
 
 				// Double check our set user meta value
-				if ( '__test__' != get_user_meta( $user->ID, 'dummypress_test_data', true ) ){
+				if ( '__test__' != get_user_meta( $user->ID, 'dummypress_test_data', true ) && '__test__' != get_user_meta( $user->ID, 'evans_test_content', true ) ){
 					continue;
 				}
 

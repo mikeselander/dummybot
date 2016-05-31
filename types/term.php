@@ -168,11 +168,17 @@ class Term extends Abs\Type{
 		$args = array(
 		    'hide_empty' => false,
 		    'meta_query' => array(
+				'relation'		=> 'OR',
 		        array(
 		           'key'       => 'dummypress_test_data',
 		           'value'     => '__test__',
 		           'compare'   => '='
-		        )
+			   ),
+			   array(
+				  'key'       => 'evans_test_content',
+				  'value'     => '__test__',
+				  'compare'   => '='
+			  ),
 		    )
 		);
 
@@ -185,7 +191,7 @@ class Term extends Abs\Type{
 			foreach ( $terms as $term ){
 
 				// Double check our set user meta value
-				if ( '__test__' != get_term_meta( $term->term_id, 'dummypress_test_data', true ) ){
+				if ( '__test__' != get_term_meta( $term->term_id, 'dummypress_test_data', true ) && '__test__' != get_term_meta( $term->term_id, 'evans_test_content', true ) ){
 					continue;
 				}
 

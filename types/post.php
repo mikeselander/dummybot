@@ -323,11 +323,17 @@ class Post extends Abs\Type{
 			'post_type' 		=> $slug,
 			'posts_per_page'	=> 500,
 			'meta_query' 		=> array(
-				array(
-					'key'     => 'dummypress_test_data',
-					'value'   => '__test__',
-					'compare' => '=',
-				),
+				'relation'		=> 'OR',
+		        array(
+		           'key'       => 'dummypress_test_data',
+		           'value'     => '__test__',
+		           'compare'   => '='
+			   ),
+			   array(
+				  'key'       => 'evans_test_content',
+				  'value'     => '__test__',
+				  'compare'   => '='
+			  ),
 			),
 		);
 
@@ -343,7 +349,7 @@ class Post extends Abs\Type{
 				$this->delete_associated_media( get_the_id() );
 
 				// Double check our set user meta value
-				if ( '__test__' != get_post_meta( get_the_id(), 'dummypress_test_data', true ) ){
+				if ( '__test__' != get_post_meta( get_the_id(), 'dummypress_test_data', true ) && '__test__' != get_post_meta( get_the_id(), 'evans_test_content', true ) ){
 					continue;
 				}
 
