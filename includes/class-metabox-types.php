@@ -162,6 +162,7 @@ class MetaboxTypes{
 								'max'	 => $field_detail['max'],
 								'min'	 => $field_detail['min'],
 							),
+							'options' => $field_detail['choices'],
 							'source' =>'acf',
 						);
 
