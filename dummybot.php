@@ -12,7 +12,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-namespace testContent;
+namespace DummyPress;
 
 /**
  * Autoloader callback.
@@ -21,7 +21,7 @@ namespace testContent;
  *
  * @param string $class Class name.
  */
-function test_content_autoloader( $class ) {
+function dummypress_autoloader( $class ) {
 	$namespace = explode( '\\', $class );
 
  	if ( __NAMESPACE__ !== $namespace[0] ){
@@ -49,7 +49,7 @@ function test_content_autoloader( $class ) {
  		require_once( $file );
  	}
  }
- spl_autoload_register( __NAMESPACE__ . '\test_content_autoloader' );
+ spl_autoload_register( __NAMESPACE__ . '\dummypress_autoloader' );
 
 
 

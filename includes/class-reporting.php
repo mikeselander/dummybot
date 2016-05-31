@@ -1,5 +1,5 @@
 <?php
-namespace testContent;
+namespace DummyPress;
 
 /**
  * Reporting wrapper class

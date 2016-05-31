@@ -1,5 +1,5 @@
 <?php
-namespace testContent;
+namespace DummyPress;
 
 /**
  * ConnectionTest

@@ -16,7 +16,7 @@ The panel to spin up content can be found under `Tools->Test Content`.
 
 
 ### General Notes
-* Uses namespace `testContent`
+* Uses namespace `DummyPress`
 * Plugin will only create and delete 'test' data - meaning that it will never delete your real information.
 
 
@@ -26,7 +26,7 @@ The panel to spin up content can be found under `Tools->Test Content`.
 
 ### Test Data
 
-You can spin up test data in a variety of formats using the `testContent\TestContent` class. There are a variety of formats and all methods are static because you only need one at a time. This class can be easily used stand-alone.
+You can spin up test data in a variety of formats using the `DummyPress\TestContent` class. There are a variety of formats and all methods are static because you only need one at a time. This class can be easily used stand-alone.
 
 **Available methods:**
 

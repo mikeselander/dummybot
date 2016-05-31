@@ -1,7 +1,7 @@
 <?php
-namespace testContent\Views;
-use testContent\Abstracts as Abs;
-use testContent\Types as Type;
+namespace DummyPress\Views;
+use DummyPress\Abstracts as Abs;
+use DummyPress\Types as Type;
 
 /**
  * Generate view for creating and deleting posts.

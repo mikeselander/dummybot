@@ -1,8 +1,8 @@
 <?php
-namespace testContent\Types;
-use testContent\Abstracts as Abs;
-use testContent\TestContent as TestContent;
-use testContent\Delete as Delete;
+namespace DummyPress\Types;
+use DummyPress\Abstracts as Abs;
+use DummyPress\TestContent as TestContent;
+use DummyPress\Delete as Delete;
 
 
 /**

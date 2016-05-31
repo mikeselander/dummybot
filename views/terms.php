@@ -1,6 +1,6 @@
 <?php
-namespace testContent\Views;
-use testContent\Abstracts as Abs;
+namespace DummyPress\Views;
+use DummyPress\Abstracts as Abs;
 
 /**
  * Generate view for creating and deleting terms.

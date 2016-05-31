@@ -1,5 +1,5 @@
 <?php
-namespace testContent;
+namespace DummyPress;
 
 /**
  * Class to build test data for custom post types.
@@ -80,8 +80,8 @@ class AdminPage{
 
 		$page = add_submenu_page(
 			'tools.php',
-			__( 'Create Test Content', 'dummybot' ),
-			__( 'Test Content', 'dummybot' ),
+			__( 'Create Dummy Content', 'dummybot' ),
+			__( 'DummyBot', 'dummybot' ),
 			'manage_options',
 			'create-test-data',
 			array( $this, 'admin_page' )

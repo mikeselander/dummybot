@@ -1,6 +1,6 @@
 <?php
-namespace testContent;
-use testContent\Views\Users as Users;
+namespace DummyPress;
+use DummyPress\Views\Users as Users;
 
 /**
  * Class to handle deletion of test data for the plugin.
@@ -29,7 +29,7 @@ class Delete{
 
 			foreach ( $types as $type ){
 
-				$class = 'testContent\Types\\' . ucwords( $type );
+				$class = 'DummyPress\Types\\' . ucwords( $type );
 				$object = new $class();
 
 				$return .= $object->delete_all();
@@ -64,7 +64,7 @@ class Delete{
 			return;
 		}
 
-		$type = 'testContent\Types\\' . ucwords( $data['type'] );
+		$type = 'DummyPress\Types\\' . ucwords( $data['type'] );
 		$slug = $data['slug'];
 
 		$object = new $type();

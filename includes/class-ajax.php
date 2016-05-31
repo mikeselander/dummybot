@@ -1,5 +1,5 @@
 <?php
-namespace testContent;
+namespace DummyPress;
 
 /**
  * Handling Ajax return and data
@@ -131,7 +131,7 @@ class Ajax{
 	 */
 	private function creation_routing( $data ){
 
-		$type = 'testContent\Types\\' . ucwords( $data['type'] );
+		$type = 'DummyPress\Types\\' . ucwords( $data['type'] );
 		$object = new $type();
 		$return = $object->create_objects( $data['slug'], $data['connection'], true, 1 );
 

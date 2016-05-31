@@ -1,6 +1,6 @@
 <?php
 
-use testContent as test;
+use DummyPress as test;
 
 // If uninstall is not called from WordPress, exit
 if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {

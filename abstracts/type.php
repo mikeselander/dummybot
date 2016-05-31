@@ -1,5 +1,5 @@
 <?php
-namespace testContent\Abstracts;
+namespace DummyPress\Abstracts;
 
 /**
  * Class to generate a type for the admin page.

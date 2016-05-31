@@ -1,5 +1,5 @@
 <?php
-namespace testContent\Abstracts;
+namespace DummyPress\Abstracts;
 
 
 /**
