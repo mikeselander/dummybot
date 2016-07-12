@@ -62,6 +62,7 @@ class MetaboxValues{
 				break;
 
 			case 'text_time':
+			case 'time':
 
 				$value = $this->time( $cmb );
 
@@ -81,6 +82,8 @@ class MetaboxValues{
 
 			case 'text_date_timestamp':
 			case 'text_datetime_timestamp':
+			case 'date_unix':
+			case 'datetime_unix':
 
 				$value = $this->timestamp( $cmb );
 
