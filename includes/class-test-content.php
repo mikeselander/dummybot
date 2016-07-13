@@ -62,7 +62,7 @@ class TestContent{
 			'penatibus',
 			'et',
 			'magnis',
-			'dis'
+			'dis',
 
 		);
 
@@ -556,7 +556,7 @@ CSSland,
 			'UTC+0',
 			'UTC+7',
 			'UTC-1',
-			'UTC'
+			'UTC',
 		);
 
 		return apply_filters( "tc_timezone_data", $timezones[ rand( 0, 12 ) ] );
@@ -585,7 +585,7 @@ CSSland,
 			'1-503-254-1000',
 			'1-845-354-9912',
 			'+1 253-243-3381',
-			'+43 780 0047112'
+			'+43 780 0047112',
 		);
 
 		return apply_filters( "tc_phone_data", $phone_numbers[ rand( 0, 10 ) ] );
@@ -608,16 +608,16 @@ CSSland,
 			$user = $domain = '';
 
 			$tlds = array(
-				"com",
-				"net",
-				"gov",
-				"org",
-				"edu",
-				"biz",
-				"info"
+				'com',
+				'net',
+				'gov',
+				'org',
+				'edu',
+				'biz',
+				'info',
 			);
 
-			$char = "0123456789abcdefghijklmnopqrstuvwxyz";
+			$char = '0123456789abcdefghijklmnopqrstuvwxyz';
 
 			$user_length = mt_rand( 5, 20 );
 		    $domain_length = mt_rand( 7, 12 );
@@ -637,7 +637,7 @@ CSSland,
 		} else {
 
 			$email_addresses = array(
-				'mike@oldtownmediainc.com',
+				'mike@gmail.com',
 				'me@me.com',
 				'joe@smith.org+15',
 				'jane@janedoe.com',
@@ -674,9 +674,9 @@ CSSland,
 			site_url( '/?iam=anextravariable' ),
 			'github.com',
 			'http://filebase.com',
-			'www.oldtownmediainc.com',
 			'http://facebook.com',
-			'https://www.eff.org'
+			'https://www.eff.org',
+			'https://jalopnik.com/',
 		);
 
 		return apply_filters( "tc_link_data", $links[ rand( 0, 7 ) ] );
