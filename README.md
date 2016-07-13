@@ -13,6 +13,7 @@ The panel to spin up content can be found under `Tools->Test Content`.
 * [ACF](https://www.advancedcustomfields.com/)
 * [CMB2](https://github.com/WebDevStudios/CMB2)
 * [Custom-metaboxes and fields](https://github.com/WebDevStudios/Custom-Metaboxes-and-Fields-for-WordPress)
+* [Custom Meta Boxes (Human Made)](https://github.com/humanmade/Custom-Meta-Boxes)
 
 
 ### General Notes
@@ -60,7 +61,6 @@ tc_{$slug}_post_arguments
 tc_{$slug}_term_title
 tc_{$slug}_term_arguments
 ```
-
 
 
 #### This is in active development - breaking changes might be made.
