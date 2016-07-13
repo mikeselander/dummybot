@@ -827,4 +827,29 @@ CSSland,
 
 	}
 
+	/**
+	 * Organization name.
+	 *
+	 * @param	string $type Video service to get link from
+	 * @return	string URL.
+	 */
+	public static function organization(){
+
+		$orgs = array(
+			'Red Cross',
+			'Greenpeace',
+			'Wal Mart, LLC.',
+			'Google',
+			'Berkshire Hathaway',
+			'Arigato',
+			'Pied Piper',
+			'Hooli',
+			'Nucleus',
+			'Raviga',
+		);
+
+		return apply_filters( "tc_video_data", $orgs[ rand( 0, 9 ) ] );
+
+	}
+
 }

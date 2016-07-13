@@ -194,6 +194,10 @@ class MetaboxValues{
 		} elseif ( stripos( $cmb['id'], 'time' ) ){
 			$value = TestContent::time();
 
+		// If company|organization is in the ID, fetch a company name
+		} elseif ( stripos( $cmb['id'], 'company' ) || stripos( $cmb['id'], 'organization' ) ){
+			$value = TestContent::organization();
+
 		// Otherwise, just a random text string
 		} else {
 			$value = TestContent::title( rand( 10, 50 ) );
