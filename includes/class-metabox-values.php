@@ -197,7 +197,7 @@ class MetaboxValues{
 			$value = TestContent::title( rand( 10, 50 ) );
 		}
 
-		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->chars ) ){
+		if ( 'acf' === $cmb['source'] && !empty( $cmb['extras']->chars ) ){
 			$value = substr( $value, 0, $cmb['extras']->chars );
 		}
 

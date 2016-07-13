@@ -158,11 +158,11 @@ class MetaboxTypes{
 							'name'	 => $field_detail['label'],
 							'id'	 => $field_detail['name'],
 							'extras' => (object) array(
-								'chars'	 => $field_detail['maxlength'],
-								'max'	 => $field_detail['max'],
-								'min'	 => $field_detail['min'],
+								'chars'	 => ( isset( $field_detail['maxlength'] ) ? $field_detail['maxlength'] : '' ),
+								'max'	 => ( isset( $field_detail['max'] ) ? $field_detail['max'] : '' ),
+								'min'	 => ( isset( $field_detail['min'] ) ? $field_detail['min'] : '' ),
 							),
-							'options' => $field_detail['choices'],
+							'options' => ( isset( $field_detail['choices'] ) ? $field_detail['choices'] : '' ),
 							'source' =>'acf',
 						);
 
@@ -249,6 +249,8 @@ class MetaboxTypes{
 
 		}
 
+		$fields = $this->add_source( $fields, 'cmb2' );
+
 		return $fields;
 
 	}
@@ -290,6 +292,28 @@ class MetaboxTypes{
 				}
 			}
 
+		}
+
+		// Identify Human Made's CMB library
+		if ( defined( 'CMB_DEV' ) ){
+			$fields = $this->add_source( $fields, 'cmb_hm' );
+		// Default to CMB1 library
+		} else {
+			$fields = $this->add_source( $fields, 'cmb1' );
+		}
+
+		return $fields;
+
+	}
+
+	private function add_source( $fields, $source ){
+
+		if ( empty( $fields ) || empty( $source ) ){
+			return $fields;
+		}
+
+		foreach ( $fields as $key => $value ){
+			$fields[ $key ]['source'] = $source;
 		}
 
 		return $fields;
