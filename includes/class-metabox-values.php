@@ -75,6 +75,7 @@ class MetaboxValues{
 				break;
 
 			case 'text_date':
+			case 'date':
 
 				$value = $this->date( $cmb );
 
