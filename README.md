@@ -1,6 +1,6 @@
 # Test Content Generator
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/oldtownmedia/test-content-suite/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/oldtownmedia/test-content-suite/?branch=master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mikeselander/dummybot/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mikeselander/dummybot/?branch=master)
 
 A test content creator plugin for WordPress posts, pages, CPTs, and terms from a convenient admin page.
 

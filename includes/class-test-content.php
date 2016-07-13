@@ -830,8 +830,7 @@ CSSland,
 	/**
 	 * Organization name.
 	 *
-	 * @param	string $type Video service to get link from
-	 * @return	string URL.
+	 * @return	string Organization name.
 	 */
 	public static function organization(){
 
@@ -848,7 +847,7 @@ CSSland,
 			'Raviga',
 		);
 
-		return apply_filters( "tc_video_data", $orgs[ rand( 0, 9 ) ] );
+		return apply_filters( "tc_organization_data", $orgs[ rand( 0, 9 ) ] );
 
 	}
 
