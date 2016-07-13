@@ -140,6 +140,7 @@ class MetaboxValues{
 				break;
 
 			case 'file':
+			case 'image':
 
 				$value = $this->file( $cmb, $post_id, $connected );
 
@@ -492,8 +493,8 @@ class MetaboxValues{
 		$value = apply_filters( "tc_{$id}_metabox", $value ); // Filter by metabox ID
 
 		// Files must be treated separately - they use the attachment ID
-		// & url of media for separate cmb values.
-		if ( $cmb['type'] != 'file' ){
+		// & url of media for separate cmb values. (only in cmb1 & cmb2 though)
+		if ( 'file'!== $cmb['type'] || ( 'file' === $cmb['type'] && 'cmb_hm' === $cmb['source'] ) ){
 			add_post_meta( $post_id, $cmb['id'], $value, true );
 		} else {
 			add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
@@ -501,7 +502,7 @@ class MetaboxValues{
 		}
 
 		// Add extra, redundant meta. Because, why not have two rows for the price of one?
-		if ( isset( $cmb['source'] ) && $cmb['source'] === 'acf' ){
+		if ( isset( $cmb['source'] ) && 'acf' === $cmb['source'] ){
 			add_post_meta( $post_id, '_' . $cmb['id'], $cmb['key'], true );
 		}
 
