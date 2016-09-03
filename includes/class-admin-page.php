@@ -99,7 +99,7 @@ class AdminPage{
 	 */
 	public function add_settings_link( $links ) {
 
-		$settings_link = '<a href="tools.php?page=create-test-data">' . __( 'Build Test Content', 'dummybot' ) . '</a>';
+		$settings_link = '<a href="tools.php?page=create-test-data">' . esc_html__( 'Build Test Content', 'dummybot' ) . '</a>';
   		array_push( $links, $settings_link );
   		return $links;
 
@@ -130,7 +130,7 @@ class AdminPage{
 		} else {
 			// We didn't get a reponse so print the notice out
 			echo '<div class="notice notice-error">';
-		        echo '<p>'.__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'dummybot' ).'</p>';
+		        echo '<p>' . esc_html__( 'WordPress could not connect to Splashbase and therefore images will not pull into metaboxes/thumbnails. Turn Airplane Mode off or reconnect to the Internet to get images when creating test data.', 'dummybot' ) . '</p>';
 		    echo '</div>';
 		}
 
@@ -146,7 +146,7 @@ class AdminPage{
 		wp_enqueue_style( 'test-content-css', plugins_url( 'assets/admin.css' , dirname( __FILE__ ) ) );
 
 		$data = array(
-			'nonce'			=> wp_create_nonce( 'handle-test-data' ),
+			'nonce'		=> wp_create_nonce( 'handle-test-data' ),
 			'strings'	=> array(
 				'createdStr'	=> __( 'Created', 'dummybot' ),
 				'deletedStr'	=> __( 'Deleting', 'dummybot' ),
@@ -165,7 +165,7 @@ class AdminPage{
 	public function admin_page() {
 		echo '<div class="wrap" id="options_editor">' . "\n";
 
-			echo '<h2>' . __( 'Create Test Data' , 'dummybot' ) . '</h2>' . "\n";
+			echo '<h2>' . esc_html__( 'Create Test Data' , 'dummybot' ) . '</h2>' . "\n";
 
 			echo "<div class='nav-tab-wrapper'>";
 
@@ -179,7 +179,7 @@ class AdminPage{
 
 			echo "";
 
-			echo "<input type='hidden' id='connection-status' value='".$this->connected."'>";
+			echo "<input type='hidden' id='connection-status' value='" . esc_attr( $this->connected ) . "'>";
 
 			echo "<pre class='test-data-status-box' id='status-updates'></pre>";
 

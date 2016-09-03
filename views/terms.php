@@ -52,10 +52,10 @@ class Terms extends Abs\View{
 
 				$html .= "<h3>";
 
-				$html .= "<span class='label'>".$taxonomy->labels->name."</span>";
+				$html .= "<span class='label'>" . esc_html( $taxonomy->labels->name ) . "</span>";
 
-				$html .= $this->build_button( 'create', $tax, __( 'Create', 'dummybot' )." ".$taxonomy->labels->name );
-				$html .= $this->build_button( 'delete', $tax, __( 'Delete', 'dummybot' )." ".$taxonomy->labels->name );
+				$html .= $this->build_button( 'create', $tax, __( 'Create', 'dummybot' ) . " " . $taxonomy->labels->name );
+				$html .= $this->build_button( 'delete', $tax, __( 'Delete', 'dummybot' ) . " " . $taxonomy->labels->name );
 
 				$html .= "</h3>";
 

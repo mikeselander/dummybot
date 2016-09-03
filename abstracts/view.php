@@ -61,8 +61,8 @@ abstract class View{
 	public function tab() {
 		$html = "";
 
-		$html .= "<a class='nav-tab' data-type='".sanitize_title( $this->title )."' href='javascript:void(0)'>";
-			$html .= $this->title;
+		$html .= "<a class='nav-tab' data-type='" . esc_attr( sanitize_title( $this->title ) ) . "' href='javascript:void(0)'>";
+			$html .= esc_html( $this->title );
 		$html .= "</a>";
 
 		echo $html;
@@ -81,7 +81,7 @@ abstract class View{
 	public function view() {
 		$html = '';
 
-		$html .= "<section class='test-content-tab' data-type='".sanitize_title( $this->title )."'>";
+		$html .= "<section class='test-content-tab' data-type='" . esc_attr( sanitize_title( $this->title ) ) . "'>";
 			$html .= $this->actions_section();
 			$html .= $this->options_section();
 		$html .= "</section>";
@@ -120,8 +120,8 @@ abstract class View{
 
 		$html .= "<div class='test-data-cpt'>";
 			$html .= "<h3>";
-				$html .= "<span class='label'>".__( 'Quantity', 'dummybot' )."</span>";
-				$html .= "<input type='number' value='0' class='quantity-adjustment' for='".$this->type."' > ";
+				$html .= "<span class='label'>" . esc_html__( 'Quantity', 'dummybot' ) . "</span>";
+				$html .= "<input type='number' value='0' class='quantity-adjustment' for='" . esc_attr( $this->type ) . "' > ";
 			$html .= "</h3>";
 		$html .= "</div>";
 
@@ -149,13 +149,13 @@ abstract class View{
 		}
 
 		$html .= "<a href='javascript:void(0);' ";
-			$html .= " data-type='" . $this->type . "'";
-			$html .= " data-slug='" . $slug . "'";
-			$html .= " data-todo='" . $action . "'";
+			$html .= " data-type='" . esc_attr( $this->type ) . "'";
+			$html .= " data-slug='" . esc_attr( $slug ) . "'";
+			$html .= " data-todo='" . esc_attr( $action ) . "'";
 			$html .= " class='button-primary handle-test-data'";
 		$html .= "/>";
-			$html .= "<span class='dashicons " . $dashicon . "'></span>";
-			$html .= $text;
+			$html .= "<span class='dashicons " . esc_attr( $dashicon ) . "'></span>";
+			$html .= esc_html( $text );
 		$html .= "</a>";
 
 		return $html;

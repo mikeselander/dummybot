@@ -48,7 +48,7 @@ class Posts extends Abs\View{
 
 				$html .= "<h3>";
 
-					$html .= "<span class='label'>" . $post_type->labels->name . "</span>";
+					$html .= "<span class='label'>" . esc_html( $post_type->labels->name ) . "</span>";
 					$html .= $this->build_button( 'create', $post_type->name, __( 'Create Test Data', 'dummybot' ) );
 					$html .= $this->build_button( 'delete', $post_type->name, __( 'Delete Test Data', 'dummybot' ) );
 

@@ -25,7 +25,4 @@ class Reporting{
 
 	}
 
-	// none of the reports should echo
-	// return arrays of everything
-
 }

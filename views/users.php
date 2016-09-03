@@ -40,9 +40,9 @@ class Users extends Abs\View{
 
 				$html .= "<h3>";
 
-					$html .= "<span class='label'>" . $role['name'] . "</span>";
-					$html .= $this->build_button( 'create', $role['slug'], __( 'Create Users', 'dummybot' ) );
-					$html .= $this->build_button( 'delete', $role['slug'], __( 'Delete Users', 'dummybot' ) );
+					$html .= "<span class='label'>" . esc_html( $role['name'] ) . "</span>";
+					$html .= $this->build_button( 'create', $role['slug'], esc_html__( 'Create Users', 'dummybot' ) );
+					$html .= $this->build_button( 'delete', $role['slug'], esc_html__( 'Delete Users', 'dummybot' ) );
 
 				$html .= "</h3>";
 

@@ -35,7 +35,7 @@ class Various extends Abs\View{
 
 			$html .= "<h3>";
 
-				$html .= "<span class='label'>" . __( 'Clean Site', 'dummybot' ) . "</span>";
+				$html .= "<span class='label'>" . esc_html__( 'Clean Site', 'dummybot' ) . "</span>";
 				$html .= $this->build_button( 'delete', 'all', __( 'Delete All Test Data', 'dummybot' ) );
 
 			$html .= "</h3>";
