@@ -8,7 +8,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Check if the current user has priveledges to run this method
-if ( ! current_user_can( 'activate_plugins' ) ){
+if ( ! current_user_can( 'activate_plugins' ) ) {
     return;
 }
 

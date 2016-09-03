@@ -44,7 +44,7 @@
 	padding: 10px;
 }
 
-@media screen and (min-width: 500px){
+@media screen and (min-width: 500px) {
 	.test-content-tab span.label{
 		width: 20%;
 		display: inline-block;

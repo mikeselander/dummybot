@@ -12,7 +12,7 @@ use DummyPress\Abstracts as Abs;
  */
 class Various extends Abs\View{
 
-	public function __construct(){
+	public function __construct() {
 
 		$this->title	= __( 'Various', 'dummybot' );
 		$this->type		= 'all';
@@ -28,7 +28,7 @@ class Various extends Abs\View{
 	 *
 	 * @return string HTML content.
 	 */
-	protected function actions_section(){
+	protected function actions_section() {
 		$html = '';
 
 		$html .= "<div class='test-data-cpt'>";
@@ -54,7 +54,7 @@ class Various extends Abs\View{
 	 * @param string $html Existing HTML content.
 	 * @return string HTML section content.
 	 */
-	protected function options_section( $html = '' ){
+	protected function options_section( $html = '' ) {
 		return $html;
 	}
 

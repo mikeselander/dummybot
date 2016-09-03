@@ -12,14 +12,14 @@ namespace DummyPress;
  */
 class Reporting{
 
-	public function create_report( $data ){
+	public function create_report( $data ) {
 
 		$cleaned = json_encode( $this->parse_data( $data ) );
 		return $cleaned;
 
 	}
 
-	private function parse_data( $data ){
+	private function parse_data( $data ) {
 
 		return $data;
 

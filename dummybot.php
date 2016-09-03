@@ -24,7 +24,7 @@ namespace DummyPress;
 function dummypress_autoloader( $class ) {
 	$namespace = explode( '\\', $class );
 
- 	if ( __NAMESPACE__ !== $namespace[0] ){
+ 	if ( __NAMESPACE__ !== $namespace[0] ) {
  		return;
  	}
 
@@ -36,7 +36,7 @@ function dummypress_autoloader( $class ) {
 		'Views'
 	);
 
-	if ( in_array( $namespace[1], $nss ) ){
+	if ( in_array( $namespace[1], $nss ) ) {
         $class = strtolower( preg_replace( '/(?<!^)([A-Z])/', '/\1', $class ) );
         $class = str_replace( '\\', '', $class );
      	$file  = dirname( __FILE__ ) . '/' . $class . '.php';

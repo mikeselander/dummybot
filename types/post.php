@@ -47,7 +47,7 @@ class Post extends Abs\Type{
 	 *
 	 * @see MetaboxTypes, MetaboxValues
 	 */
-	public function __construct(){
+	public function __construct() {
 
 		$this->metabox_types = new Main\MetaboxTypes;
 		$this->metabox_values = new Main\MetaboxValues;
@@ -69,10 +69,10 @@ class Post extends Abs\Type{
 	 * @param boolean $connection Whether or not we're connected to the Internet.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_objects( $slug, $connection, $num = '' ){
+	public function create_objects( $slug, $connection, $num = '' ) {
 
 		// If we're missing a custom post type id - don't do anything
-		if ( empty( $slug ) ){
+		if ( empty( $slug ) ) {
 			return;
 		}
 
@@ -84,12 +84,12 @@ class Post extends Abs\Type{
 		$this->connected = $connection;
 
 		// If we forgot to put in a quantity, make one for us
-		if ( empty( $num ) ){
+		if ( empty( $num ) ) {
 			$num = rand( 5, 30 );
 		}
 
 		// Create test posts
-		for( $i = 0; $i < $num; $i++ ){
+		for( $i = 0; $i < $num; $i++ ) {
 
 			$return = $this->create_test_object( $slug, $supports, $metaboxes );
 
@@ -115,7 +115,7 @@ class Post extends Abs\Type{
 	 * @param array $supports Features that the post type supports.
 	 * @param array $supports All CMB2 metaboxes attached to the post type.
 	 */
-	private function create_test_object( $slug, $supports, $metaboxes ){
+	private function create_test_object( $slug, $supports, $metaboxes ) {
 		$return = '';
 
 		// Get a random title
@@ -131,17 +131,17 @@ class Post extends Abs\Type{
 		);
 
 		// Add title if supported
-		if ( $supports['title'] === true ){
+		if ( $supports['title'] === true ) {
 			$post['post_title'] = $title;
 		}
 
 		// Add main content if supported
-		if ( $supports['editor'] === true ){
+		if ( $supports['editor'] === true ) {
 			$post['post_content'] = apply_filters( "tc_{$slug}_post_content", TestContent::paragraphs() );
 		}
 
 		// Add excerpt content if supported
-		if ( $supports['excerpt'] === true ){
+		if ( $supports['excerpt'] === true ) {
 			$post['post_excerpt'] = apply_filters( "tc_{$slug}_post_excerpt", TestContent::plain_text() );
 		}
 
@@ -152,26 +152,26 @@ class Post extends Abs\Type{
 		add_post_meta( $post_id, 'dummypress_test_data', '__test__', true );
 
 		// Add thumbnail if supported
-		if ( $this->connected == true && ( $supports['thumbnail'] === true || in_array( $slug, array( 'post', 'page' ) ) ) ){
+		if ( $this->connected == true && ( $supports['thumbnail'] === true || in_array( $slug, array( 'post', 'page' ) ) ) ) {
 			 update_post_meta( $post_id, '_thumbnail_id', TestContent::image( $post_id ) );
 		}
 
 		$taxonomies = get_object_taxonomies( $slug );
 
 		// Assign the post to terms
-		if ( !empty( $taxonomies ) ){
+		if ( ! empty( $taxonomies ) ) {
 			$return .= $this->assign_terms( $post_id, $taxonomies );
 		}
 
 		// Spin up metaboxes
-		if ( !empty( $metaboxes ) ){
+		if ( ! empty( $metaboxes ) ) {
 			foreach ( $metaboxes as $cmb ) :
 				$return .= $this->metabox_values->get_values( $post_id, $cmb, $this->connected );
 			endforeach;
 		}
 
 		// Check if we have errors and return them or created message
-		if ( is_wp_error( $post_id ) ){
+		if ( is_wp_error( $post_id ) ) {
 			error_log( $post_id->get_error_message() );
 			return $post_id;
 		} else {
@@ -198,7 +198,7 @@ class Post extends Abs\Type{
 	 * @param string $slug a custom post type ID.
 	 * @return array Array of necessary supports booleans.
 	 */
-	private function get_cpt_supports( $slug ){
+	private function get_cpt_supports( $slug ) {
 
 		$supports = array(
 			'title'		=> post_type_supports( $slug, 'title' ),
@@ -225,21 +225,21 @@ class Post extends Abs\Type{
 	 * @param array $taxonomies taxonomies assigned to this cpt.
 	 * @return object WP Error if there is one.
 	 */
-	private function assign_terms( $post_id, $taxonomies ){
+	private function assign_terms( $post_id, $taxonomies ) {
 
 		// Make sure it's an array & has items
-		if ( empty( $taxonomies ) || !is_array( $taxonomies ) ){
+		if ( empty( $taxonomies ) || ! is_array( $taxonomies ) ) {
 			return;
 		}
 
-		foreach ( $taxonomies as $tax ){
+		foreach ( $taxonomies as $tax ) {
 
 			// Get the individual terms already existing
 			$terms = get_terms( $tax, array( 'hide_empty'	=> false ) );
 			$count = count( $terms ) - 1;
 
 			// If there are no terms, skip to the next taxonomy
-			if ( empty( $terms ) ){
+			if ( empty( $terms ) ) {
 				continue;
 			}
 
@@ -258,7 +258,7 @@ class Post extends Abs\Type{
 			$return = wp_update_post( $post_data );
 
 			// Return the error if it exists
-			if ( is_wp_error( $return ) ){
+			if ( is_wp_error( $return ) ) {
 				error_log( $return->get_error_messages() );
 				return $return->get_error_messages();
 			}
@@ -273,12 +273,12 @@ class Post extends Abs\Type{
 	 *
 	 * @see Delete
 	 */
-	public function delete_all(){
+	public function delete_all() {
 
 		$delete =  new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( ! $delete->user_can_delete() ){
+		if ( ! $delete->user_can_delete() ) {
 			return;
 		}
 
@@ -304,17 +304,17 @@ class Post extends Abs\Type{
 	 *
 	 * @param string $slug a custom post type ID.
 	 */
-	public function delete( $slug ){
+	public function delete( $slug ) {
 
 		$delete =  new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( ! $delete->user_can_delete() ){
+		if ( ! $delete->user_can_delete() ) {
 			return;
 		}
 
 		// Check that $cptslg has a string.
-		if ( empty( $slug ) ){
+		if ( empty( $slug ) ) {
 			return;
 		}
 
@@ -339,7 +339,7 @@ class Post extends Abs\Type{
 
 		$objects = new \WP_Query( $query );
 
-		if ( $objects->have_posts() ){
+		if ( $objects->have_posts() ) {
 
 			$events = array();
 
@@ -349,7 +349,7 @@ class Post extends Abs\Type{
 				$this->delete_associated_media( get_the_id() );
 
 				// Double check our set user meta value
-				if ( '__test__' != get_post_meta( get_the_id(), 'dummypress_test_data', true ) && '__test__' != get_post_meta( get_the_id(), 'evans_test_content', true ) ){
+				if ( '__test__' != get_post_meta( get_the_id(), 'dummypress_test_data', true ) && '__test__' != get_post_meta( get_the_id(), 'evans_test_content', true ) ) {
 					continue;
 				}
 
@@ -392,27 +392,27 @@ class Post extends Abs\Type{
 	 *
 	 * @param int $pid a custom post type ID.
 	 */
-	private function delete_associated_media( $pid ){
+	private function delete_associated_media( $pid ) {
 
 		$delete =  new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( !$delete->user_can_delete() ){
+		if ( ! $delete->user_can_delete() ) {
 			return;
 		}
 
 		// Make sure $pid is, in fact, an ID
-		if ( !is_int( $pid ) ){
+		if ( ! is_int( $pid ) ) {
 			return;
 		}
 
 		// Get our images
 		$media = get_attached_media( 'image', $pid );
 
-		if ( !empty( $media ) ){
+		if ( ! empty( $media ) ) {
 
 			// Loop through the media & delete each one
-			foreach ( $media as $attachment ){
+			foreach ( $media as $attachment ) {
 				wp_delete_attachment( $attachment->ID, true );
 			}
 

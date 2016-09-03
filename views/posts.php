@@ -12,7 +12,7 @@ use DummyPress\Abstracts as Abs;
  */
 class Posts extends Abs\View{
 
-	public function __construct(){
+	public function __construct() {
 
 		$this->title	= __( 'Posts', 'dummybot' );
 		$this->type		= 'post';
@@ -27,7 +27,7 @@ class Posts extends Abs\View{
 	 *
 	 * @return string HTML content.
 	 */
-	protected function actions_section(){
+	protected function actions_section() {
 		$html = '';
 
 		// Loop through every post type available on the site
@@ -40,7 +40,7 @@ class Posts extends Abs\View{
 			);
 
 			// Skip banned cpts
-			if ( in_array( $post_type->name, $skipped_cpts ) ){
+			if ( in_array( $post_type->name, $skipped_cpts ) ) {
 				continue;
 			}
 

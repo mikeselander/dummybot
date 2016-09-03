@@ -3,7 +3,7 @@ jQuery(document).ready(function($) {
 	var tabId = window.location.hash.substr(1);
 
 	// Trigger our initial tab to display
-	if ( tabId ){
+	if ( tabId ) {
 		$( '.nav-tab[data-type="' + tabId + '"]' ).addClass( 'nav-tab-active' );
 		$( '.test-content-tab[data-type="' + tabId + '"]' ).show();
 	} else {
@@ -27,19 +27,19 @@ jQuery(document).ready(function($) {
 	})
 
 	// Simple script to bump down the status box to the bottom
-	function scrollToBottom( div ){
+	function scrollToBottom( div ) {
 		div.scrollTop = div.scrollHeight;
 	}
 
 	// Release our button from being blocked
-	function releaseButton( object, current, total ){
-		if ( current > total ){
+	function releaseButton( object, current, total ) {
+		if ( current > total ) {
 			object.removeClass( 'disabled' );
 		}
 	}
 
 	// Add our onClick event to the buttons
-	jQuery( '.handle-test-data' ).on( 'click', function(){
+	jQuery( '.handle-test-data' ).on( 'click', function() {
 
 		var todo = jQuery( this ).data( 'todo' ),
 			slug = jQuery( this ).data( 'slug' ),
@@ -61,8 +61,8 @@ jQuery(document).ready(function($) {
 		button.addClass( 'disabled' );
 
 		// If we're creating, and not deleting choose how many objects to create
-		if ( jQuery( this ).data( 'todo' ) == 'create' ){
-			if ( qty != 0 ){
+		if ( jQuery( this ).data( 'todo' ) == 'create' ) {
+			if ( qty != 0 ) {
 				var count = qty;
 			} else {
 				var count = Math.floor( ( Math.random() * 30 ) + 1 );
@@ -75,14 +75,14 @@ jQuery(document).ready(function($) {
 		var innerCount = 1;
 
 		// Loop through our count
-		for( var i=1; i<=count; i++ ){
+		for( var i=1; i<=count; i++ ) {
 
 			jQuery.post(
 				ajaxurl,
 				data,
-				function(response) {}).done(function( response ){
+				function(response) {}).done(function( response ) {
 
-				if ( !response ){
+				if ( !response ) {
 					return;
 				}
 
@@ -90,12 +90,12 @@ jQuery(document).ready(function($) {
 
 				var parsed = JSON.parse( response );
 
-				if ( null == parsed ){
+				if ( null == parsed ) {
 					releaseButton( button, 2, 1 );
 					return;
 				}
 
-				if ( todo == 'create' ){
+				if ( todo == 'create' ) {
 
 					jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.strings.createdStr + ' ' + parsed.type + ' ' + parsed.oid + ': ' + '<a href="' + parsed.link_edit + '">Edit</a> | ' + '<a href="' + parsed.link_view + '">View</a>\n' );
 
@@ -109,8 +109,8 @@ jQuery(document).ready(function($) {
 
 					count = parsed.length;
 
-					for( i=0; i<count; i++ ){
-						if ( parsed[i].action == 'deleted' ){
+					for( i=0; i<count; i++ ) {
+						if ( parsed[i].action == 'deleted' ) {
 							jQuery( '#status-updates' ).append( innerCount + ': ' + test_content.strings.deletedStr + ' ' + parsed[i].type + ' ' + parsed[i].oid + '\n' );
 						} else {
 							jQuery( '#status-updates' ).append( parsed[i].message + '\n' );
@@ -131,7 +131,7 @@ jQuery(document).ready(function($) {
 		}
 
 		// Print data to the box
-		if ( jQuery( this ).data( 'todo' ) == 'create' ){
+		if ( jQuery( this ).data( 'todo' ) == 'create' ) {
 			jQuery( '#status-updates' ).append( test_content.strings.creatingStr + ' ' + count + ' objects\n' );
 		}
 

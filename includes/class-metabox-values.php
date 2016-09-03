@@ -22,16 +22,16 @@ class MetaboxValues{
 	 * @param int $post_id Single post ID.
 	 * @param array $cmb custom metabox array from CMB2.
 	 */
-	public function get_values( $post_id, $cmb, $connected ){
+	public function get_values( $post_id, $cmb, $connected ) {
 		$value = '';
 
 		// First check that our post ID & cmb array aren't empty
-		if ( empty( $cmb ) || empty( $post_id ) || ! is_user_logged_in() ){
+		if ( empty( $cmb ) || empty( $post_id ) || ! is_user_logged_in() ) {
 			return;
 		}
 
 		// Fetch the appropriate type of data and return
-		switch( $cmb['type'] ){
+		switch( $cmb['type'] ) {
 
 			case 'text':
 			case 'text_small':
@@ -120,7 +120,7 @@ class MetaboxValues{
 
 			case 'checkbox':
 
-				if ( isset( $cmb['source'] ) && 'acf' === $cmb['source'] ){
+				if ( isset( $cmb['source'] ) && 'acf' === $cmb['source'] ) {
 					$value = $this->multicheck( $cmb );
 				} else {
 					$value = $this->checkbox( $cmb );
@@ -158,12 +158,12 @@ class MetaboxValues{
 		}
 
 		// Value must exist to attempt to insert
-		if ( ! empty( $value ) && ! is_wp_error( $value ) ){
+		if ( ! empty( $value ) && ! is_wp_error( $value ) ) {
 
 			$this->update_meta( $post_id, $value, $cmb );
 
 		// If we're dealing with a WP Error object, just return the message for debugging
-		} elseif ( is_wp_error( $value ) ){
+		} elseif ( is_wp_error( $value ) ) {
 
 			return $value->get_error_message();
 
@@ -180,22 +180,22 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function text( $cmb ){
+	private function text( $cmb ) {
 
 		// If phone is in the id, fetch a phone #
-		if ( stripos( $cmb['id'], 'phone' ) ){
+		if ( stripos( $cmb['id'], 'phone' ) ) {
 			$value = TestContent::phone();
 
 		// If email is in the id, fetch an email address
-		} elseif ( stripos( $cmb['id'], 'email' ) ){
+		} elseif ( stripos( $cmb['id'], 'email' ) ) {
 			$value = TestContent::email();
 
 		// If time is in the id, fetch a time string
-		} elseif ( stripos( $cmb['id'], 'time' ) ){
+		} elseif ( stripos( $cmb['id'], 'time' ) ) {
 			$value = TestContent::time();
 
 		// If company|organization is in the ID, fetch a company name
-		} elseif ( stripos( $cmb['id'], 'company' ) || stripos( $cmb['id'], 'organization' ) ){
+		} elseif ( stripos( $cmb['id'], 'company' ) || stripos( $cmb['id'], 'organization' ) ) {
 			$value = TestContent::organization();
 
 		// Otherwise, just a random text string
@@ -203,7 +203,7 @@ class MetaboxValues{
 			$value = TestContent::title( rand( 10, 50 ) );
 		}
 
-		if ( 'acf' === $cmb['source'] && !empty( $cmb['extras']->chars ) ){
+		if ( 'acf' === $cmb['source'] && ! empty( $cmb['extras']->chars ) ) {
 			$value = substr( $value, 0, $cmb['extras']->chars );
 		}
 
@@ -220,7 +220,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function url( $cmb ){
+	private function url( $cmb ) {
 
 		return TestContent::link();
 
@@ -235,7 +235,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function email( $cmb ){
+	private function email( $cmb ) {
 
 		return TestContent::email();;
 
@@ -248,16 +248,16 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return int cmb value
 	 */
-	private function number( $cmb ){
+	private function number( $cmb ) {
 
 		$min = 1;
 		$max = 10000000;
 
-		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->min ) ){
+		if ( 'acf' == $cmb['source'] && ! empty( $cmb['extras']->min ) ) {
 			$min = $cmb['extras']->min;
 		}
 
-		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->max ) ){
+		if ( 'acf' == $cmb['source'] && ! empty( $cmb['extras']->max ) ) {
 			$max = $cmb['extras']->max;
 		}
 
@@ -274,7 +274,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function time( $cmb ){
+	private function time( $cmb ) {
 
 		return TestContent::time();
 
@@ -289,7 +289,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function timezone( $cmb ){
+	private function timezone( $cmb ) {
 
 		return TestContent::timezone();
 
@@ -304,7 +304,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function date( $cmb ){
+	private function date( $cmb ) {
 
 		return TestContent::date( 'm/d/Y' );
 
@@ -319,7 +319,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function timestamp( $cmb ){
+	private function timestamp( $cmb ) {
 
 		return TestContent::date( 'U' );
 
@@ -332,7 +332,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function color( $cmb ){
+	private function color( $cmb ) {
 
 		return '#' . str_pad( dechex( mt_rand( 0, 0xFFFFFF ) ), 6, '0', STR_PAD_LEFT );
 
@@ -347,11 +347,11 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function textarea( $cmb ){
+	private function textarea( $cmb ) {
 
 		$value = TestContent::plain_text();
 
-		if ( 'acf' == $cmb['source'] && !empty( $cmb['extras']->chars ) ){
+		if ( 'acf' == $cmb['source'] && ! empty( $cmb['extras']->chars ) ) {
 			$value = substr( $value, 0,  $cmb['extras']->chars );
 		}
 
@@ -368,7 +368,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function radio( $cmb ){
+	private function radio( $cmb ) {
 
 		// Grab a random item out of the array and return the key
 		$new_val = array_slice( $cmb['options'], rand( 0, count( $cmb['options'] ) ), 1 );
@@ -387,11 +387,11 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function checkbox( $cmb ){
+	private function checkbox( $cmb ) {
 		$value = '';
 
 		// 50/50 odds of being turned on
-		if ( rand( 0, 1 ) == 1 ){
+		if ( rand( 0, 1 ) == 1 ) {
 			$value = 'on';
 		}
 
@@ -408,15 +408,15 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return array cmb value
 	 */
-	private function multicheck( $cmb ){
+	private function multicheck( $cmb ) {
 
 		$new_option = array();
 
 		// Loop through each of our options
-		foreach ( $cmb['options'] as $key => $value ){
+		foreach ( $cmb['options'] as $key => $value ) {
 
 			// 50/50 chance of being included
-			if ( rand( 0, 1 ) ){
+			if ( rand( 0, 1 ) ) {
 				$new_option[] = $key;
 			}
 
@@ -435,7 +435,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function wysiwyg( $cmb ){
+	private function wysiwyg( $cmb ) {
 
 		return TestContent::paragraphs();
 
@@ -452,10 +452,10 @@ class MetaboxValues{
 	 * @param bool $connected Whether we're connected to the Internets or not
 	 * @return mixed string|object cmb value or WP_Error object
 	 */
-	private function file( $cmb, $post_id, $connected ){
+	private function file( $cmb, $post_id, $connected ) {
 		$value = '';
 
-		if ( true === $connected ){
+		if ( true === $connected ) {
 			$value = TestContent::image( $post_id );
 		}
 
@@ -472,7 +472,7 @@ class MetaboxValues{
 	 * @param array $cmb Metabox data
 	 * @return string cmb value
 	 */
-	private function oembed( $cmb ){
+	private function oembed( $cmb ) {
 
 		return TestContent::oembed();
 
@@ -490,7 +490,7 @@ class MetaboxValues{
 	 * @param string $value Value to add into the database.
 	 * @param array $cmb SMB data.
 	 */
-	private function update_meta( $post_id, $value, $cmb ){
+	private function update_meta( $post_id, $value, $cmb ) {
 
 		$type 	= $cmb['type'];
 		$id		= $cmb['id'];
@@ -499,7 +499,7 @@ class MetaboxValues{
 
 		// Files must be treated separately - they use the attachment ID
 		// & url of media for separate cmb values. (only in cmb1 & cmb2 though)
-		if ( 'file'!== $cmb['type'] || ( 'file' === $cmb['type'] && 'cmb_hm' === $cmb['source'] ) ){
+		if ( 'file'!== $cmb['type'] || ( 'file' === $cmb['type'] && 'cmb_hm' === $cmb['source'] ) ) {
 			add_post_meta( $post_id, $cmb['id'], $value, true );
 		} else {
 			add_post_meta( $post_id, $cmb['id'].'_id', $value, true );
@@ -507,7 +507,7 @@ class MetaboxValues{
 		}
 
 		// Add extra, redundant meta. Because, why not have two rows for the price of one?
-		if ( isset( $cmb['source'] ) && 'acf' === $cmb['source'] ){
+		if ( isset( $cmb['source'] ) && 'acf' === $cmb['source'] ) {
 			add_post_meta( $post_id, '_' . $cmb['id'], $cmb['key'], true );
 		}
 

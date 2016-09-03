@@ -26,7 +26,7 @@ class TestContent{
 	 * @param int $num_words Number of words to return.
 	 * @return string Random title string.
 	 */
-	public static function title( $num_words = '' ){
+	public static function title( $num_words = '' ) {
 
 		$title = '';
 
@@ -67,12 +67,12 @@ class TestContent{
 		);
 
 		// If we didn't choose a count, make one
-		if ( empty( $num_words ) ){
+		if ( empty( $num_words ) ) {
 			$num_words = rand( 2, 10 );
 		}
 
 		// Pull random words
-		for( $i = 1; $i <= $num_words; $i++ ){
+		for( $i = 1; $i <= $num_words; $i++ ) {
 			$title .= $random_words[ rand( 0, 31 ) ] . " ";
 		}
 
@@ -89,7 +89,7 @@ class TestContent{
 	 *
 	 * @return string Paragraph(s) of text.
 	 */
-	public static function paragraphs(){
+	public static function paragraphs() {
 
 		$content = '';
 
@@ -351,11 +351,11 @@ CSSland,
 		);
 
 		$used_keys = array();
-		for( $i = 1; $i < 7; $i++ ){
+		for( $i = 1; $i < 7; $i++ ) {
 
 			// Pull a new random key and make sure we're not repeating any elements
 			$key = rand( 0, 12 );
-			while( in_array( $key, $used_keys ) ){
+			while( in_array( $key, $used_keys ) ) {
 				$key = rand( 0, 12 );
 			}
 
@@ -376,7 +376,7 @@ CSSland,
 	 *
 	 * @return string Plain text paragraphs.
 	 */
-	public static function plain_text(){
+	public static function plain_text() {
 
 		$paragraphs = array(
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt luctus eros, a tincidunt massa aliquet sit amet. Sed faucibus, eros non lacinia porttitor, risus odio efficitur sapien, id porta urna massa ac est. Cras efficitur lacinia magna eget tempus. Fusce ex felis, finibus consectetur mi at, finibus rhoncus augue. In ut tortor lacinia, rutrum mauris vel, maximus tortor. Praesent ac arcu nec eros pharetra tristique. Morbi congue leo sed ipsum fermentum vulputate. Ut nulla eros, porta varius pulvinar eget, bibendum quis dolor. Morbi sed diam eu dui semper ornare nec quis nisl.',
@@ -407,20 +407,20 @@ CSSland,
 	 * @param int $post_id Post ID.
 	 * @return mixed Attachment ID or WP Error.
 	 */
-	public static function image( $post_id ){
+	public static function image( $post_id ) {
 		$file_array = array();
 
 		// Get the image from the API
 		$url = self::get_image_link();
 
 		// If the returned string is empty or it's not a string, try again.
-		if ( empty( $url ) || !is_string( $url ) ){
+		if ( empty( $url ) || ! is_string( $url ) ) {
 
 			// Try again
 			$url = self::get_image_link();
 
 			// If it fails again, just give up
-			if ( empty( $url ) || !is_string( $url ) ){
+			if ( empty( $url ) || ! is_string( $url ) ) {
 				return;
 			}
 
@@ -461,7 +461,7 @@ CSSland,
 	 *
 	 * @return string Image URL.
 	 */
-	private static function get_image_link(){
+	private static function get_image_link() {
 
 		// cURL an image API for a completely random photo
 		$curl = curl_init( "http://www.splashbase.co/api/v1/images/random?images_only=true" );
@@ -485,7 +485,7 @@ CSSland,
 		// Check to make sure that the return contains a valid image extensions
 		preg_match('/[^\?]+\.(jpg|JPG|jpe|JPE|jpeg|JPEG|gif|GIF|png|PNG)/', $response['url'], $matches);
 
-		if ( !empty( $matches ) ){
+		if ( ! empty( $matches ) ) {
 			return $response['url'];
 		}
 
@@ -500,7 +500,7 @@ CSSland,
 	 * @param string $format PHP Date format.
 	 * @return mixed Date in the format requested.
 	 */
-	public static function date( $format ){
+	public static function date( $format ) {
 
 		$num_days = rand( 1, 60 );
 		$date = date( $format, strtotime( " +$num_days days" ) );
@@ -517,7 +517,7 @@ CSSland,
 	 *
 	 * @return string Time string
 	 */
-	public static function time(){
+	public static function time() {
 
 		$times = array(
 			'8:00 am',
@@ -541,7 +541,7 @@ CSSland,
 	 *
 	 * @return string Timezone
 	 */
-	public static function timezone(){
+	public static function timezone() {
 
 		$timezones = array(
 			'America/Denver',
@@ -572,7 +572,7 @@ CSSland,
 	 *
 	 * @return string Phone #.
 	 */
-	public static function phone(){
+	public static function phone() {
 
 		$phone_numbers = array(
 			'7203893101',
@@ -600,11 +600,11 @@ CSSland,
 	 *
 	 * @return string Email address.
 	 */
-	public static function email( $superrandom = false ){
+	public static function email( $superrandom = false ) {
 
 		// In certain situations we need to ensure that the email is never
 		// duplicated, like in creating new users.
-		if ( $superrandom !== false ){
+		if ( $superrandom !== false ) {
 			$user = $domain = '';
 
 			$tlds = array(
@@ -622,11 +622,11 @@ CSSland,
 			$user_length = mt_rand( 5, 20 );
 		    $domain_length = mt_rand( 7, 12 );
 
-			for ( $i = 1; $i <= $user_length; $i++ ){
+			for ( $i = 1; $i <= $user_length; $i++ ) {
 				$user .= substr( $char, mt_rand( 0, strlen( $char ) ), 1 );
 			}
 
-			for ( $i = 1; $i <= $domain_length; $i++ ){
+			for ( $i = 1; $i <= $domain_length; $i++ ) {
 				$domain .= substr( $char, mt_rand( 0, strlen( $char ) ), 1 );
 			}
 
@@ -666,7 +666,7 @@ CSSland,
 	 *
 	 * @return string URL.
 	 */
-	public static function link(){
+	public static function link() {
 
 		$links = array(
 			'http://google.com',
@@ -690,7 +690,7 @@ CSSland,
 	 *
 	 * @return string URL.
 	 */
-	public static function oembed(){
+	public static function oembed() {
 
 		$links = array(
 			'https://www.youtube.com/watch?v=A85-YQsm6pY',
@@ -715,10 +715,10 @@ CSSland,
 	 * @param	string $type Video service to get link from
 	 * @return	string URL.
 	 */
-	public static function video( $type ){
+	public static function video( $type ) {
 
 		// Switch through our video types. Expecting to add more in the future
-		switch( $type ){
+		switch( $type ) {
 
 			// YouTube videos
 			case 'youtube' :
@@ -770,7 +770,7 @@ CSSland,
 	 *
 	 * @return array Randomly strung together name.
 	 */
-	public static function name(){
+	public static function name() {
 
 		$first_names = array(
 			'Jacqui',
@@ -832,7 +832,7 @@ CSSland,
 	 *
 	 * @return	string Organization name.
 	 */
-	public static function organization(){
+	public static function organization() {
 
 		$orgs = array(
 			'Red Cross',

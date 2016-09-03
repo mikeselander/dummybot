@@ -44,7 +44,7 @@ abstract class View{
 	 *
 	 * @see tab, view
 	 */
-	public function register_view(){
+	public function register_view() {
 
 		add_action( 'tc-admin-tabs', array( $this, 'tab' ), $this->priority );
 		add_action( 'tc-admin-sections', array( $this, 'view' ), $this->priority );
@@ -58,7 +58,7 @@ abstract class View{
 	 * Each view has a tab and tab navigation - this function compiles our
 	 * navigation tab. Rarely extended.
 	 */
-	public function tab(){
+	public function tab() {
 		$html = "";
 
 		$html .= "<a class='nav-tab' data-type='".sanitize_title( $this->title )."' href='javascript:void(0)'>";
@@ -78,7 +78,7 @@ abstract class View{
 	 *
 	 * @see actions_section, options_section
 	 */
-	public function view(){
+	public function view() {
 		$html = '';
 
 		$html .= "<section class='test-content-tab' data-type='".sanitize_title( $this->title )."'>";
@@ -98,7 +98,7 @@ abstract class View{
 	 *
 	 * @return string HTML content.
 	 */
-	protected function actions_section(){
+	protected function actions_section() {
 		$html = '';
 		return $html;
 	}
@@ -115,7 +115,7 @@ abstract class View{
 	 * @param string $html Existing HTML content.
 	 * @return string HTML section content.
 	 */
-	protected function options_section( $html = '' ){
+	protected function options_section( $html = '' ) {
 		$html .= "<hr>";
 
 		$html .= "<div class='test-data-cpt'>";
@@ -139,12 +139,12 @@ abstract class View{
 	 * @param string $text Text to display in the button.
 	 * @return string HTML.
 	 */
-	protected function build_button( $action, $slug, $text ){
+	protected function build_button( $action, $slug, $text ) {
 		$html = $dashicon = '';
 
-		if ( $action == 'create' ){
+		if ( $action == 'create' ) {
 			$dashicon = 'dashicons-plus';
-		} elseif ( $action == 'delete' ){
+		} elseif ( $action == 'delete' ) {
 			$dashicon = 'dashicons-trash';
 		}
 

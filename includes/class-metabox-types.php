@@ -22,7 +22,7 @@ class MetaboxTypes{
 	 * @param string $slug Post Type slug ID.
 	 * @return array Fields to fill in for our post object.
 	 */
-	public function get_metaboxes( $slug ){
+	public function get_metaboxes( $slug ) {
 		$cmb2_fields = $cmb_fields = $acf_fields = array();
 
 		// CMB2
@@ -56,7 +56,7 @@ class MetaboxTypes{
 	 * @param string $slug Post type.
 	 * @return array Fields array.
 	 */
-	private function get_acf_free_metaboxes( $slug ){
+	private function get_acf_free_metaboxes( $slug ) {
 
 		$fields = array();
 
@@ -64,18 +64,18 @@ class MetaboxTypes{
 		$fieldsets = $this->get_all_acf_field_groups();
 
 		// Return empty array if there are no fieldsets at all
-		if ( empty( $fieldsets ) ){
+		if ( empty( $fieldsets ) ) {
 			return $fields;
 		}
 
 		// Loop through each fieldset for possible matches
-		foreach ( $fieldsets as $fieldset ){
+		foreach ( $fieldsets as $fieldset ) {
 
-			if ( $this->is_acf_field_in_post_type( $slug, $fieldset ) ){
+			if ( $this->is_acf_field_in_post_type( $slug, $fieldset ) ) {
 
 				// If this is the first group of fields, simply set the value
 				// Else, merge this group with the previous one
-				if ( empty( $fields ) ){
+				if ( empty( $fields ) ) {
 					$fields = $fieldset->fields;
 				} else {
 					$fields = array_merge( $fields, $fieldset->fields );
@@ -99,16 +99,16 @@ class MetaboxTypes{
 	 * @param object $fieldset Fieldset group.
 	 * @return boolean Whether or not the grouping is assigned to the post type.
 	 */
-	private function is_acf_field_in_post_type( $slug, $fieldset ){
+	private function is_acf_field_in_post_type( $slug, $fieldset ) {
 
 		// Make sure we have something to parse
-		if ( empty( $fieldset ) ){
+		if ( empty( $fieldset ) ) {
 			return false;
 		}
 
 		// Loop through the rules to check for post type matches
-		foreach ( $fieldset->rules as $rule ){
-			if ( $rule['param'] === 'post_type' && $rule['value'] === $slug ){
+		foreach ( $fieldset->rules as $rule ) {
+			if ( $rule['param'] === 'post_type' && $rule['value'] === $slug ) {
 				return true;
 			}
 		}
@@ -130,7 +130,7 @@ class MetaboxTypes{
 	 *
 	 * @return array All acf fieldsets.
 	 */
-	private function get_all_acf_field_groups(){
+	private function get_all_acf_field_groups() {
 		$info = $rules = $fields = array();
 
 		$args = array(
@@ -145,11 +145,11 @@ class MetaboxTypes{
 
 				$data = get_metadata( 'post', get_the_id() );
 
-				foreach ( $data['rule'] as $rule ){
+				foreach ( $data['rule'] as $rule ) {
 					$rules[] = unserialize( $rule );
 				}
 
-				foreach ( $data as $key => $value ){
+				foreach ( $data as $key => $value ) {
 					if ( substr( $key, 0, 6 ) == 'field_' ) :
 						$field_detail = unserialize( $value[0] );
 						$fields[] = array(
@@ -196,7 +196,7 @@ class MetaboxTypes{
 	 * @param string $slug a custom post type ID.
 	 * @return array Array of fields.
 	 */
-	private function get_cmb2_metaboxes( $slug ){
+	private function get_cmb2_metaboxes( $slug ) {
 
 		$fields = array();
 
@@ -204,14 +204,14 @@ class MetaboxTypes{
 		$all_metaboxes = apply_filters( 'cmb2_meta_boxes', array() );
 
 		// Loop through all possible sets of metaboxes added the old way
-		foreach ( $all_metaboxes as $metabox_array ){
+		foreach ( $all_metaboxes as $metabox_array ) {
 
 			// If the custom post type ID matches this set of fields, set & stop
 			if ( in_array( $slug, $metabox_array['object_types'] ) ) {
 
 				// If this is the first group of fields, simply set the value
 				// Else, merge this group with the previous one
-				if ( empty( $fields ) ){
+				if ( empty( $fields ) ) {
 					$fields = $metabox_array['fields'];
 				} else {
 					$fields = array_merge( $fields, $metabox_array['fields'] );
@@ -227,21 +227,21 @@ class MetaboxTypes{
 			$match = false;
 
 			// Establish correct cmb types
-			if ( is_string( $cmb->meta_box['object_types'] ) ){
-				if ( $cmb->meta_box['object_types'] == $slug ){
+			if ( is_string( $cmb->meta_box['object_types'] ) ) {
+				if ( $cmb->meta_box['object_types'] == $slug ) {
 					$match = true;
 				}
 			} else {
-				if ( in_array( $slug, $cmb->meta_box['object_types'] ) ){
+				if ( in_array( $slug, $cmb->meta_box['object_types'] ) ) {
 					$match = true;
 				}
 			}
 
-			if ( $match !== true ){
+			if ( $match !== true ) {
 				continue;
 			}
 
-			if ( empty( $fields ) ){
+			if ( empty( $fields ) ) {
 				$fields = $cmb->meta_box['fields'];
 			} else {
 				$fields = array_merge( $fields, $cmb->meta_box['fields'] );
@@ -270,7 +270,7 @@ class MetaboxTypes{
 	 * @param string $slug a custom post type ID.
 	 * @return array Array of fields.
 	 */
-	private function get_cmb1_metaboxes( $slug ){
+	private function get_cmb1_metaboxes( $slug ) {
 
 		$fields = array();
 
@@ -278,14 +278,14 @@ class MetaboxTypes{
 		$all_metaboxes = apply_filters( 'cmb_meta_boxes', array() );
 
 		// Loop through all possible sets of metaboxes
-		foreach ( $all_metaboxes as $metabox_array ){
+		foreach ( $all_metaboxes as $metabox_array ) {
 
 			// If the custom post type ID matches this set of fields, set & stop
 			if ( in_array( $slug, $metabox_array['pages'] ) ) {
 
 				// If this is the first group of fields, simply set the value
 				// Else, merge this group with the previous one
-				if ( empty( $fields ) ){
+				if ( empty( $fields ) ) {
 					$fields = $metabox_array['fields'];
 				} else {
 					$fields = array_merge( $fields, $metabox_array['fields'] );
@@ -295,7 +295,7 @@ class MetaboxTypes{
 		}
 
 		// Identify Human Made's CMB library
-		if ( defined( 'CMB_DEV' ) ){
+		if ( defined( 'CMB_DEV' ) ) {
 			$fields = $this->add_source( $fields, 'cmb_hm' );
 		// Default to CMB1 library
 		} else {
@@ -306,13 +306,13 @@ class MetaboxTypes{
 
 	}
 
-	private function add_source( $fields, $source ){
+	private function add_source( $fields, $source ) {
 
-		if ( empty( $fields ) || empty( $source ) ){
+		if ( empty( $fields ) || empty( $source ) ) {
 			return $fields;
 		}
 
-		foreach ( $fields as $key => $value ){
+		foreach ( $fields as $key => $value ) {
 			$fields[ $key ]['source'] = $source;
 		}
 

@@ -39,7 +39,7 @@ class Ajax{
 	/**
 	 * Instantiate any WP hooks that need to be fired.
 	 */
-	public function hooks(){
+	public function hooks() {
 
 		$this->reporting    = new Reporting;
 		$this->action       = 'handle_test_data';
@@ -77,13 +77,13 @@ class Ajax{
 	 */
 	public function ajax_exclude_plugins( $plugins ) {
 
-		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX || ! isset( $_POST['action'] ) || false === strpos( $_POST['action'], $this->action ) ){
+		if ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX || ! isset( $_POST['action'] ) || false === strpos( $_POST['action'], $this->action ) ) {
 			return $plugins;
 		}
 
 		foreach( $plugins as $key => $plugin ) {
 
-			if ( false !== strpos( $plugin, $this->plugin->definitions->slug ) ){
+			if ( false !== strpos( $plugin, $this->plugin->definitions->slug ) ) {
 				continue;
 			}
 
@@ -106,15 +106,15 @@ class Ajax{
 		$nonce		= $_REQUEST['nonce'];
 
 		// Verify that we have a proper logged in user and it's the right person
-		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'handle-test-data' ) ){
+		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'handle-test-data' ) ) {
 			return;
 		}
 
-		if ( $action == 'delete' ){
+		if ( $action == 'delete' ) {
 
 			$this->deletion_routing( $_REQUEST );
 
-		} elseif ( $action == 'create' ){
+		} elseif ( $action == 'create' ) {
 
 			$this->creation_routing( $_REQUEST );
 
@@ -129,7 +129,7 @@ class Ajax{
 	 * Choose which type of creation needs to be accomplished and route through
 	 * the correct class.
 	 */
-	private function creation_routing( $data ){
+	private function creation_routing( $data ) {
 
 		$type = 'DummyPress\Types\\' . ucwords( $data['type'] );
 		$object = new $type();
@@ -146,11 +146,11 @@ class Ajax{
 	 * Choose which type of deletion needs to be accomplished and route through
 	 * the correct method of Delete.
 	 */
-	private function deletion_routing( $data ){
+	private function deletion_routing( $data ) {
 
 		$delete_content = new Delete;
 
-		if ( $data['type'] == 'all' ){
+		if ( $data['type'] == 'all' ) {
 
 			$return = $delete_content->delete_all_test_data();
 

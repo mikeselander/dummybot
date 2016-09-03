@@ -45,7 +45,7 @@ class AdminPage{
 	 *
 	 * @see admin_menu, wp_ajax actions
 	 */
-	public function hooks(){
+	public function hooks() {
 
 		$connection = new ConnectionTest;
 		$this->definitions	= $this->plugin->get_definitions();
@@ -113,13 +113,13 @@ class AdminPage{
 	 * Internet, and the test fails displays a notice informing the user that
 	 * images will not pull into test data.
 	 */
-	public function internet_connected_admin_notice(){
+	public function internet_connected_admin_notice() {
 
 		// Get the current admin screen & verify that we're on the right one
 		// before continuing.
 		$screen = get_current_screen();
 
-		if ( $screen->base != 'tools_page_create-test-data' ){
+		if ( $screen->base != 'tools_page_create-test-data' ) {
 			return;
 		}
 
@@ -140,7 +140,7 @@ class AdminPage{
 	/**
 	 * Load our script in the admin section and serve in data.
 	 */
-	public function load_scripts(){
+	public function load_scripts() {
 
 		wp_enqueue_script( 'test-content-js', plugins_url( 'assets/admin.js' , dirname( __FILE__ ) ) );
 		wp_enqueue_style( 'test-content-css', plugins_url( 'assets/admin.css' , dirname( __FILE__ ) ) );
@@ -162,7 +162,7 @@ class AdminPage{
 	/**
 	 * Print out our admin page to control test data.
 	 */
-	public function admin_page(){
+	public function admin_page() {
 		echo '<div class="wrap" id="options_editor">' . "\n";
 
 			echo '<h2>' . __( 'Create Test Data' , 'dummybot' ) . '</h2>' . "\n";

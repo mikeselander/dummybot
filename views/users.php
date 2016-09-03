@@ -13,7 +13,7 @@ use DummyPress\Types as Type;
  */
 class Users extends Abs\View{
 
-	public function __construct(){
+	public function __construct() {
 
 		$this->title	= __( 'Users', 'dummybot' );
 		$this->type		= 'user';
@@ -28,7 +28,7 @@ class Users extends Abs\View{
 	 *
 	 * @return string HTML content.
 	 */
-	protected function actions_section(){
+	protected function actions_section() {
 		$html = '';
 
 		$user_class = new Type\User;

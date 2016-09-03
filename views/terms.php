@@ -12,7 +12,7 @@ use DummyPress\Abstracts as Abs;
  */
 class Terms extends Abs\View{
 
-	public function __construct(){
+	public function __construct() {
 
 		$this->title	= __( 'Terms', 'dummybot' );
 		$this->type		= 'term';
@@ -28,7 +28,7 @@ class Terms extends Abs\View{
 	 *
 	 * @return string HTML content.
 	 */
-	protected function actions_section(){
+	protected function actions_section() {
 		$html = '';
 
 		$taxonomies = get_taxonomies();
@@ -42,7 +42,7 @@ class Terms extends Abs\View{
 			);
 
 			// Skip banned taxonomies
-			if ( in_array( $tax, $skipped_taxonomies ) ){
+			if ( in_array( $tax, $skipped_taxonomies ) ) {
 				continue;
 			}
 

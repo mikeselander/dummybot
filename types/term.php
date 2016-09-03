@@ -37,10 +37,10 @@ class Term extends Abs\Type{
 	 * @param string $slug a custom post type ID.
 	 * @param int $num Optional. Number of posts to create.
 	 */
-	public function create_objects( $slug, $connection, $num = '' ){
+	public function create_objects( $slug, $connection, $num = '' ) {
 
 		// If we're missing a custom post type id - don't do anything
-		if ( empty( $slug ) ){
+		if ( empty( $slug ) ) {
 			return;
 		}
 
@@ -48,12 +48,12 @@ class Term extends Abs\Type{
 		$this->connected = $connection;
 
 		// If we forgot to put in a quantity, make one for us
-		if ( empty( $num ) ){
+		if ( empty( $num ) ) {
 			$num = rand( 5, 30 );
 		}
 
 		// Create test terms
-		for( $i = 0; $i < $num; $i++ ){
+		for( $i = 0; $i < $num; $i++ ) {
 
 			$return = $this->create_test_object( $slug );
 
@@ -77,7 +77,7 @@ class Term extends Abs\Type{
 	 *
 	 * @param string $slug a custom post type ID.
 	 */
-	private function create_test_object( $slug ){
+	private function create_test_object( $slug ) {
 
 		// Get a random title
 		$title = apply_filters( "tc_{$slug}_term_title", TestContent::title() );
@@ -96,7 +96,7 @@ class Term extends Abs\Type{
 		add_term_meta( $return['term_id'], 'dummypress_test_data', '__test__', true );
 
 		// Check if we have errors and return them or created message
-		if ( is_wp_error( $return ) ){
+		if ( is_wp_error( $return ) ) {
 			error_log( $return->get_error_message() );
 			return $return;
 		} else {
@@ -119,12 +119,12 @@ class Term extends Abs\Type{
 	 *
 	 * @see Delete
 	 */
-	public function delete_all(){
+	public function delete_all() {
 
 		$delete =  new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( ! $delete->user_can_delete() ){
+		if ( ! $delete->user_can_delete() ) {
 			return;
 		}
 
@@ -150,17 +150,17 @@ class Term extends Abs\Type{
 	 *
 	 * @param string $slug a custom post type ID.
 	 */
-	public function delete( $slug ){
+	public function delete( $slug ) {
 
 		$delete =  new Delete;
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( !$delete->user_can_delete() ){
+		if ( ! $delete->user_can_delete() ) {
 			return;
 		}
 
 		// Check that $cptslg has a string.
-		if ( empty( $slug ) ){
+		if ( empty( $slug ) ) {
 			return;
 		}
 
@@ -184,14 +184,14 @@ class Term extends Abs\Type{
 
 		$terms = get_terms( $slug, $args );
 
-		if ( !empty( $terms ) ){
+		if ( ! empty( $terms ) ) {
 
 			$events = array();
 
-			foreach ( $terms as $term ){
+			foreach ( $terms as $term ) {
 
 				// Double check our set user meta value
-				if ( '__test__' != get_term_meta( $term->term_id, 'dummypress_test_data', true ) && '__test__' != get_term_meta( $term->term_id, 'evans_test_content', true ) ){
+				if ( '__test__' != get_term_meta( $term->term_id, 'dummypress_test_data', true ) && '__test__' != get_term_meta( $term->term_id, 'evans_test_content', true ) ) {
 					continue;
 				}
 

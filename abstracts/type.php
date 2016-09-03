@@ -33,7 +33,7 @@ abstract class Type{
 	/**
 	 * Registers the type with the rest of the plugin
 	 */
-	public function register_type(){
+	public function register_type() {
 
 		add_filter( 'tc-types', array( $this, 'set_type' ) );
 
@@ -46,7 +46,7 @@ abstract class Type{
 	 * @param array $types Original types array
 	 * @return array Modified types array with our current type
 	 */
-	public function set_type( $types ){
+	public function set_type( $types ) {
 
 		$types[] = $this->type;
 		return $types;

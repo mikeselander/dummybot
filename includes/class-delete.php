@@ -16,18 +16,18 @@ class Delete{
 	 *
 	 * @access private
 	 */
-	public function delete_all_test_data(){
+	public function delete_all_test_data() {
 		$return = '';
 
-		if ( ! $this->user_can_delete() ){
+		if ( ! $this->user_can_delete() ) {
 			return;
 		}
 
 		$types = apply_filters( 'tc-types', array() );
 
-		if ( !empty( $types ) ){
+		if ( ! empty( $types ) ) {
 
-			foreach ( $types as $type ){
+			foreach ( $types as $type ) {
 
 				$class = 'DummyPress\Types\\' . ucwords( $type );
 				$object = new $class();
@@ -53,14 +53,14 @@ class Delete{
 	 *
 	 * @param string $data Information about the type.
 	 */
-	public function delete_objects( $data ){
+	public function delete_objects( $data ) {
 
 		// Make sure that the current user is logged in & has full permissions.
-		if ( !$this->user_can_delete() ){
+		if ( ! $this->user_can_delete() ) {
 			return;
 		}
 
-		if ( empty( $data ) ){
+		if ( empty( $data ) ) {
 			return;
 		}
 
@@ -79,15 +79,15 @@ class Delete{
 	 *
 	 * @see is_user_logged_in, current_user_can
 	 */
-	public function user_can_delete(){
+	public function user_can_delete() {
 
 		// User must be logged in
-		if ( !is_user_logged_in() ){
+		if ( ! is_user_logged_in() ) {
 			return false;
 		}
 
 		// User must have editor priveledges, at a minimum
-		if ( !current_user_can( 'delete_others_posts' ) ){
+		if ( ! current_user_can( 'delete_others_posts' ) ) {
 			return false;
 		}
 
