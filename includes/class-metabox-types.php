@@ -6,9 +6,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class MetaboxTypes{
+class MetaboxTypes {
 
 	/**
 	 * Decide which cmb library to try and loop to get our metaboxes.

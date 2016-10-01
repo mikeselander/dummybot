@@ -11,9 +11,9 @@ use DummyPress\Abstracts as Abs;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class User extends Abs\Type{
+class User extends Abs\Type {
 
 	/**
 	 * type

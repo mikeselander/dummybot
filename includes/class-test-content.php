@@ -12,9 +12,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class TestContent{
+class TestContent {
 
 	/**
 	 * Title function.
@@ -524,9 +524,9 @@ CSSland,
 			'5:00PM',
 			'13:00',
 			'2015',
-			date( 'G:i', strtotime( " +".rand( 4, 24 )." hours" ) ),
-			date( 'g:i', strtotime( " +".rand( 4, 24 )." hours" ) ),
-			date( 'G:i A', strtotime( " +".rand( 4, 24 )." hours" ) )
+			date( 'G:i', strtotime( " +" . rand( 4, 24 ) . " hours" ) ),
+			date( 'g:i', strtotime( " +" . rand( 4, 24 ) . " hours" ) ),
+			date( 'G:i A', strtotime( " +" . rand( 4, 24 ) . " hours" ) )
 		);
 
 		return apply_filters( "tc_time_data", $times[ rand( 0, 6 ) ] );

@@ -8,9 +8,9 @@ use DummyPress\Abstracts as Abs;
  * @abstract
  * @package    WordPress
  * @subpackage Test Content
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Various extends Abs\View{
+class Various extends Abs\View {
 
 	public function __construct() {
 

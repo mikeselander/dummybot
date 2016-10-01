@@ -8,9 +8,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Reporting{
+class Reporting {
 
 	public function create_report( $data ) {
 

@@ -15,9 +15,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class ConnectionTest{
+class ConnectionTest {
 
 	/**
 	 * Run all of our connection tests.
@@ -138,7 +138,7 @@ class ConnectionTest{
 		// Attempt to open a socket connection to Google
 		$connected = @fsockopen( "www.google.com", 80 );
 
-		if ( !$connected ) {
+		if ( ! $connected ) {
 			return false;
 		}
 
@@ -165,7 +165,7 @@ class ConnectionTest{
 		$test_url = esc_url( $url );
 		$response = wp_remote_get( $test_url );
 
-		if ( !is_array( $response ) ) {
+		if ( ! is_array( $response ) ) {
 			return false;
 		}
 

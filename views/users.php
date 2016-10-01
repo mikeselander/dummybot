@@ -9,9 +9,9 @@ use DummyPress\Types as Type;
  * @abstract
  * @package    WordPress
  * @subpackage Test Content
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Users extends Abs\View{
+class Users extends Abs\View {
 
 	public function __construct() {
 

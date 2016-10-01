@@ -6,9 +6,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Ajax{
+class Ajax {
 
 	/**
 	 * reporting
@@ -44,7 +44,7 @@ class Ajax{
 		$this->reporting    = new Reporting;
 		$this->action       = 'handle_test_data';
 
-		add_action( "wp_ajax_{$this->action}" , array( $this, 'handle_ajax' ) );
+		add_action( "wp_ajax_{$this->action}", array( $this, 'handle_ajax' ) );
 		add_filter( 'option_active_plugins', array( $this, 'ajax_exclude_plugins' ) );
 
 	}
@@ -89,7 +89,7 @@ class Ajax{
 
 			unset( $plugins[$key] );
 		}
-		
+
 		return $plugins;
 
 	}

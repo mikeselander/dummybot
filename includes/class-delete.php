@@ -7,9 +7,9 @@ use DummyPress\Views\Users as Users;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Delete{
+class Delete {
 
 	/**
 	 * Delete all test content created ever.

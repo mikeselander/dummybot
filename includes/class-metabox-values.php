@@ -6,9 +6,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class MetaboxValues{
+class MetaboxValues {
 
 	/**
 	 * Assigns the proper testing data to a custom metabox.
@@ -237,7 +237,7 @@ class MetaboxValues{
 	 */
 	private function email( $cmb ) {
 
-		return TestContent::email();;
+		return TestContent::email();
 
 	}
 

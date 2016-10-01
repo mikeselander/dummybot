@@ -7,9 +7,9 @@ namespace DummyPress\Abstracts;
  * @abstract
  * @package    WordPress
  * @subpackage Test Content
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-abstract class Type{
+abstract class Type {
 
 	/**
 	 * type

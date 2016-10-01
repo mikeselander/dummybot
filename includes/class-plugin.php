@@ -6,9 +6,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Plugin{
+class Plugin {
 
 	/**
 	 * Plugin definitions.

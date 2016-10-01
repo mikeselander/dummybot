@@ -86,7 +86,7 @@ msgid ""
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Old Town Media"
+msgid "Mike Selander"
 msgstr ""
 
 #. Author URI of the plugin/theme

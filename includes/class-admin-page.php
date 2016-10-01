@@ -6,9 +6,9 @@ namespace DummyPress;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class AdminPage{
+class AdminPage {
 
 	/**
 	 * plugin
@@ -51,8 +51,8 @@ class AdminPage{
 		$this->definitions	= $this->plugin->get_definitions();
 		$this->connected	= $connection->test();
 
-		add_action( 'admin_menu' , array( $this, 'add_menu_item' ) );
-		add_filter( 'plugin_action_links_' . $this->definitions->basename , array( $this, 'add_settings_link' ) );
+		add_action( 'admin_menu', array( $this, 'add_menu_item' ) );
+		add_filter( 'plugin_action_links_' . $this->definitions->basename, array( $this, 'add_settings_link' ) );
 		add_action( 'admin_notices', array( $this, 'internet_connected_admin_notice' ) );
 
 	}
@@ -165,7 +165,7 @@ class AdminPage{
 	public function admin_page() {
 		echo '<div class="wrap" id="options_editor">' . "\n";
 
-			echo '<h2>' . esc_html__( 'Create Test Data' , 'dummybot' ) . '</h2>' . "\n";
+			echo '<h2>' . esc_html__( 'Create Test Data', 'dummybot' ) . '</h2>' . "\n";
 
 			echo "<div class='nav-tab-wrapper'>";
 

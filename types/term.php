@@ -10,9 +10,9 @@ use DummyPress\Delete as Delete;
  *
  * @package    WordPress
  * @subpackage Evans
- * @author     Old Town Media
+ * @author     Mike Selander
  */
-class Term extends Abs\Type{
+class Term extends Abs\Type {
 
 	/**
 	 * type
