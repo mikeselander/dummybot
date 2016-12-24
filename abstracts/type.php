@@ -1,5 +1,5 @@
 <?php
-namespace DummyPress\Abstracts;
+namespace DummyBot\Abstracts;
 
 /**
  * Class to generate a type for the admin page.
@@ -12,45 +12,59 @@ namespace DummyPress\Abstracts;
 abstract class Type {
 
 	/**
-	 * type
-	 * Type of objects we'll be dealing with i.e.: post or term.
-	 *
-	 * @var string
-	 * @access protected
-	 */
-	protected $type;
-
-	/**
-	 * connected
-	 * Whether or not we're successfully connected to the Internet.
-	 *
-	 * @var boolean
-	 * @access private
-	 */
-	protected $connected;
-
-
-	/**
 	 * Registers the type with the rest of the plugin
 	 */
-	public function register_type() {
-
-		add_filter( 'tc-types', array( $this, 'set_type' ) );
-
+	public function get_type( $object_type ) {
+		return [
+			'core_fields' => $this->get_core_fields( $object_type ),
+			'meta_fields' => $this->get_meta_fields( $object_type ),
+		];
 	}
 
+	abstract public function insert();
 
-	/**
-	 * Sets the type in the type array for use by the rest of the plugin.
-	 *
-	 * @param array $types Original types array
-	 * @return array Modified types array with our current type
-	 */
-	public function set_type( $types ) {
+	abstract public function delete();
 
-		$types[] = $this->type;
-		return $types;
+	abstract public function update();
 
+	abstract public function get_core_fields();
+
+	public function get_meta_fields( $object_type ) {
+		$providers = $this->get_providers();
+		$fields   = [];
+
+		if ( empty( $providers ) ) {
+			return [];
+		}
+
+		foreach ( $providers as $name => $instance ) {
+			$fields = array_merge( $fields, $instance->get_fields( $this->type, $object_type ) );
+		}
+
+		return $fields;
+	};
+
+	public function get_providers() {
+		$providers = Master::providers();
+		$active    = [];
+
+		// If we have no providers, bail now.
+		if ( empty( $providers ) ) {
+			return;
+		}
+
+		foreach ( $providers as $type => $class ) {
+			if ( ! is_callable( [ $class, 'is_active' ) ) {
+				continue;
+			}
+
+			$instance = new $class;
+			if ( $instance->is_active() ) {
+				$active[ $type ] => $class;
+			}
+		}
+
+		return $active;
 	}
 
 }
