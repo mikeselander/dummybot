@@ -16,5 +16,9 @@ abstract class Data {
 		return $this->$method( $field );
 	}
 
+	public static random( array $data ) {
+		return $data[ mt_rand( 0, ( count( $data ) - 1 ) ) ];
+	}
+
 	abstract protected data( $field );
 }

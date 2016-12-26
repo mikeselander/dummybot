@@ -34,6 +34,8 @@ class Post extends Abstracts\Type {
 
 	public function insert() {
 		// wp_insert_post();
+		// Assign to random taxonomies
+		// Assign all metaboxes
 	};
 
 	public function delete() {
